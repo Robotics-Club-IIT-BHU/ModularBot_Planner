@@ -1,9 +1,11 @@
 import sys
+import numpy as np
 
 class Graph:
 	def __init__(self,vertices):
 		self.vertices = vertices
-		self.graph = [ [0 for _ in range(vertices)] for _ in range(vertices)]
+		self.graph = [ [0.0 for _ in range(vertices)] for _ in range(vertices)]
+		self.graph = np.array(self.graph)
 
 	#edit graph manually
 	def makeEdge(self,v1,v2,weight):
@@ -17,6 +19,7 @@ class Graph:
 		print(self.graph)
 
 	def printTree(self,parent):
+		print('parent child')
 		for v in range(self.vertices):
 			if parent[v]==-1:
 				continue
@@ -36,7 +39,7 @@ class Graph:
 		return min_index 
 
 	#build the minimum spanning tree
-	def mnst(self):
+	def mnst(self,head):
 
 		#creating the key list
 		key = [sys.maxsize]*self.vertices
@@ -61,7 +64,8 @@ class Graph:
 					key[v] = self.graph[u][v]
 					parent[v]=u
 
-		self.printTree(parent)
+		# self.printTree(parent)
+		return parent
 
 if __name__=='__main__':
 	#define cluster head here
@@ -74,4 +78,4 @@ if __name__=='__main__':
 	            [7, 8, 0, 0, 9],
 	            [0, 5, 7, 9, 0]]
 
-	g.mnst()
+	g.mnst(head)
