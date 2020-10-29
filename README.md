@@ -6,4 +6,4 @@ This is your virtual world derby to break and make bots as you wish
 - [ ] Try the representation of the same and test out if you are able to make sense of the inputs
 - [ ] How could you ease things out for rl
 ## Resources
-- Add as much as you wish
+- code -> code_cluster folder
