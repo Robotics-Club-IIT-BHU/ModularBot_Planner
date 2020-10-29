@@ -1,5 +1,5 @@
 ## File Description
-- basic_sim.py : spawns blocks in pybullet
+- sim_tree.py : pybullet simulation and creation of trees in specific time steps
 - dabba.urdf : the block object
 - graph.py : not required (basic graph implementation)
 - main.py : the main file that needs to be executed, calls and uses code from other files listed
