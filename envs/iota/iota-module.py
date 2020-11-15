@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import QUIT, KEYDOWN, K_ESCAPE
 import Box2D
-from Box2D.b2 import staticBody, dynamicBody, polygonShape, world
+from Box2D.b2 import staticBody, dynamicBody, polygonShape,circleShape, world
 
 PPM = 20.0
 TARGET_FPS = 60
@@ -14,34 +14,42 @@ clock = pygame.time.Clock()
 
 world = world(gravity=(0, -10), doSleep=True )
 ground_body = world.CreateStaticBody(
-    position = (0,1),
-    shapes = polygonShape(box=(50,5)),
+    position = (0,0),
+    shapes = polygonShape(box=(50,1)),
 )
-
-dynamic_body = world.CreateDynamicBody(
-    position = (10,15),
-    angle=15,
-)
-box = dynamic_body.CreatePolygonFixture(box=(2,1), density = 1, friction=0.3)
+body = world.CreateDynamicBody(position=(20,45))
+circle = body.CreateCircleFixture(radius=0.5, density=1, friction=0.3)
+body = world.CreateDynamicBody(position=(30,45), angle=15)
+box = body.CreatePolygonFixture(box=(2,1), density=1, friction=0.3)
 
 colors = {
-    staticBody:(255, 255, 255, 255),
-    dynamicBody:(127, 127, 127, 255),
+    staticBody: (255, 255, 255, 255),
+    dynamicBody: (127, 127, 127, 255),
 }
+
+def my_draw_polygon(polygon, body, fixture):
+    vertices = [(body.transform*v)*PPM for v in polygon.vertices]
+    vertices = [(v[0], SCREEN_HEIGHT - v[1]) for v in vertices]
+    pygame.draw.polygon(screen, colors[body.type], vertices)
+polygonShape.draw = my_draw_polygon
+
+def my_draw_circle(circle, body, fixture):
+    position = body.transform * circle.pos * PPM
+    position = (position[0], SCREEN_HEIGHT - position[1])
+    pygame.draw.circle(screen, colors[body.type], [int(x) for x in position], int(circle.radius*PPM))
+circleShape.draw = my_draw_circle
+
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
             running = False
     screen.fill((0,0,0,0))
-    for body in (ground_body, dynamic_body):
+    for body in world.bodies:
         for fixture in body.fixtures:
-            shape = fixture.shape
-            vertices = [(body.transform*v)*PPM for v in shape.vertices]
-            vertices = [(v[0], SCREEN_HEIGHT - v[1]) for v in vertices]
-            pygame.draw.polygon(screen, colors[body.type], vertices )
+            fixture.shape.draw(body, fixture)
     world.Step(TIME_STEP, 10, 10)
     pygame.display.flip()
     clock.tick(TARGET_FPS)
 
-pygme.quit()
+pygame.quit()
