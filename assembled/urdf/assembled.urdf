@@ -3,21 +3,21 @@
      Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
-  name="Aseembled.SLDASM">
+  name="assembled">
   <link
     name="base_link">
     <inertial>
       <origin
-        xyz="0.0238549643811551 -0.0687402008780061 0.0509934507184344"
+        xyz="0.0238549643811552 -0.0687402008780061 0.0509934507184343"
         rpy="0 0 0" />
       <mass
         value="0.0158442666258974" />
       <inertia
-        ixx="8.64186137417573E-06"
-        ixy="2.93045621432061E-10"
-        ixz="-1.3990652682278E-10"
+        ixx="8.64186137417576E-06"
+        ixy="2.93045621438576E-10"
+        ixz="-1.3990652681983E-10"
         iyy="1.14111044288373E-05"
-        iyz="1.40453418487303E-06"
+        iyz="1.40453418487302E-06"
         izz="1.38941125169339E-05" />
     </inertial>
     <visual>
@@ -26,7 +26,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Aseembled.SLDASM/meshes/base_link.STL" />
+          filename="package://assembled/meshes/base_link.STL" />
       </geometry>
       <material
         name="">
@@ -40,7 +40,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Aseembled.SLDASM/meshes/base_link.STL" />
+          filename="package://assembled/meshes/base_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -54,9 +54,9 @@
         value="0.00677100561965019" />
       <inertia
         ixx="4.31149660500128E-07"
-        ixy="8.82228336546791E-11"
-        ixz="-3.10904675105348E-08"
-        iyy="6.7193855500407E-07"
+        ixy="8.8222833654665E-11"
+        ixz="-3.10904675105349E-08"
+        iyy="6.71938555004069E-07"
         iyz="1.06334246644925E-09"
         izz="3.91967419165482E-07" />
     </inertial>
@@ -66,7 +66,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Aseembled.SLDASM/meshes/Servo1.STL" />
+          filename="package://assembled/meshes/Servo1.STL" />
       </geometry>
       <material
         name="">
@@ -80,7 +80,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Aseembled.SLDASM/meshes/Servo1.STL" />
+          filename="package://assembled/meshes/Servo1.STL" />
       </geometry>
     </collision>
   </link>
@@ -107,10 +107,10 @@
         value="0.00122139767518029" />
       <inertia
         ixx="1.19200352550562E-07"
-        ixy="4.96308367531817E-24"
-        ixz="-3.63959469523332E-23"
+        ixy="3.41212002678124E-24"
+        ixz="-4.63221143029695E-23"
         iyy="1.25310058948455E-07"
-        iyz="-4.25998015464809E-23"
+        iyz="-4.32201870058957E-23"
         izz="2.4430684521982E-07" />
     </inertial>
     <visual>
@@ -119,7 +119,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Aseembled.SLDASM/meshes/DockingPlate1.STL" />
+          filename="package://assembled/meshes/DockingPlate1.STL" />
       </geometry>
       <material
         name="">
@@ -133,7 +133,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Aseembled.SLDASM/meshes/DockingPlate1.STL" />
+          filename="package://assembled/meshes/DockingPlate1.STL" />
       </geometry>
     </collision>
   </link>
@@ -160,7 +160,7 @@
         value="0.00677100554095321" />
       <inertia
         ixx="4.31149651639776E-07"
-        ixy="8.82223307448155E-11"
+        ixy="8.82223307448188E-11"
         ixz="-3.10904721063372E-08"
         iyy="6.71938546412863E-07"
         iyz="1.06334913720177E-09"
@@ -172,7 +172,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Aseembled.SLDASM/meshes/Servo2.STL" />
+          filename="package://assembled/meshes/Servo2.STL" />
       </geometry>
       <material
         name="">
@@ -186,7 +186,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Aseembled.SLDASM/meshes/Servo2.STL" />
+          filename="package://assembled/meshes/Servo2.STL" />
       </geometry>
     </collision>
   </link>
@@ -207,14 +207,14 @@
     name="DockingPlate2">
     <inertial>
       <origin
-        xyz="0 0 0.000250000000000035"
+        xyz="0 0 0.000250000000000021"
         rpy="0 0 0" />
       <mass
         value="0.00122139767518029" />
       <inertia
         ixx="1.19200352550563E-07"
-        ixy="2.02269032574888E-27"
-        ixz="-2.4893208725855E-25"
+        ixy="-1.75798640133397E-25"
+        ixz="-1.02543784875983E-25"
         iyy="1.25310058948456E-07"
         iyz="-5.29395592033938E-23"
         izz="2.44306845219822E-07" />
@@ -225,7 +225,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Aseembled.SLDASM/meshes/DockingPlate2.STL" />
+          filename="package://assembled/meshes/DockingPlate2.STL" />
       </geometry>
       <material
         name="">
@@ -239,7 +239,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Aseembled.SLDASM/meshes/DockingPlate2.STL" />
+          filename="package://assembled/meshes/DockingPlate2.STL" />
       </geometry>
     </collision>
   </link>
@@ -266,7 +266,7 @@
         value="0.00140743350880823" />
       <inertia
         ixx="7.9989137750601E-08"
-        ixy="1.19980782609539E-44"
+        ixy="1.19980782609563E-44"
         ixz="-3.95987936179367E-23"
         iyy="7.9989137750601E-08"
         iyz="-4.11615671294591E-41"
@@ -278,7 +278,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Aseembled.SLDASM/meshes/Wheel1.STL" />
+          filename="package://assembled/meshes/Wheel1.STL" />
       </geometry>
       <material
         name="">
@@ -292,7 +292,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Aseembled.SLDASM/meshes/Wheel1.STL" />
+          filename="package://assembled/meshes/Wheel1.STL" />
       </geometry>
     </collision>
   </link>
@@ -313,13 +313,13 @@
     name="Wheel2">
     <inertial>
       <origin
-        xyz="-1.38777878078145E-17 1.38777878078145E-17 0.001"
+        xyz="0 6.93889390390723E-18 0.001"
         rpy="0 0 0" />
       <mass
         value="0.00140743350880823" />
       <inertia
         ixx="7.9989137750601E-08"
-        ixy="0"
+        ixy="6.61744490042422E-24"
         ixz="3.41971218980057E-24"
         iyy="7.99891377506009E-08"
         iyz="-7.12973258412668E-24"
@@ -331,7 +331,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Aseembled.SLDASM/meshes/Wheel2.STL" />
+          filename="package://assembled/meshes/Wheel2.STL" />
       </geometry>
       <material
         name="">
@@ -345,7 +345,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Aseembled.SLDASM/meshes/Wheel2.STL" />
+          filename="package://assembled/meshes/Wheel2.STL" />
       </geometry>
     </collision>
   </link>
