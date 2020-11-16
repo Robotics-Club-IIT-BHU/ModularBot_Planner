@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="Aseembled.SLDASM">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.0238549643811551 -0.0687402008780061 0.0509934507184344"
+        rpy="0 0 0" />
+      <mass
+        value="0.0158442666258974" />
+      <inertia
+        ixx="8.64186137417573E-06"
+        ixy="2.93045621432061E-10"
+        ixz="-1.3990652682278E-10"
+        iyy="1.14111044288373E-05"
+        iyz="1.40453418487303E-06"
+        izz="1.38941125169339E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Aseembled.SLDASM/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Aseembled.SLDASM/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="Servo1">
+    <inertial>
+      <origin
+        xyz="0.00498028326335194 -3.52397354019054E-05 0.00976351523861422"
+        rpy="0 0 0" />
+      <mass
+        value="0.00677100561965019" />
+      <inertia
+        ixx="4.31149660500128E-07"
+        ixy="8.82228336546791E-11"
+        ixz="-3.10904675105348E-08"
+        iyy="6.7193855500407E-07"
+        iyz="1.06334246644925E-09"
+        izz="3.91967419165482E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Aseembled.SLDASM/meshes/Servo1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Aseembled.SLDASM/meshes/Servo1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Servo1"
+    type="continuous">
+    <origin
+      xyz="0.0238555018573711 -0.0454528518302611 0.0462255832648354"
+      rpy="-2.92344819487844 -1.03312497959637 -1.82337173201453" />
+    <parent
+      link="base_link" />
+    <child
+      link="Servo1" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="DockingPlate1">
+    <inertial>
+      <origin
+        xyz="1.38777878078145E-17 -1.04083408558608E-17 -0.00797500625000004"
+        rpy="0 0 0" />
+      <mass
+        value="0.00122139767518029" />
+      <inertia
+        ixx="1.19200352550562E-07"
+        ixy="4.96308367531817E-24"
+        ixz="-3.63959469523332E-23"
+        iyy="1.25310058948455E-07"
+        iyz="-4.25998015464809E-23"
+        izz="2.4430684521982E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Aseembled.SLDASM/meshes/DockingPlate1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Aseembled.SLDASM/meshes/DockingPlate1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Docker"
+    type="continuous">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 2.97583807838417" />
+    <parent
+      link="Servo1" />
+    <child
+      link="DockingPlate1" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="Servo2">
+    <inertial>
+      <origin
+        xyz="0.0049802831852009 -3.52396307270741E-05 -0.00518649714855853"
+        rpy="0 0 0" />
+      <mass
+        value="0.00677100554095321" />
+      <inertia
+        ixx="4.31149651639776E-07"
+        ixy="8.82223307448155E-11"
+        ixz="-3.10904721063372E-08"
+        iyy="6.71938546412863E-07"
+        iyz="1.06334913720177E-09"
+        izz="3.91967418044199E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Aseembled.SLDASM/meshes/Servo2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Aseembled.SLDASM/meshes/Servo2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Servo2"
+    type="continuous">
+    <origin
+      xyz="0.0238555018573711 -0.0779348729743754 0.0623630957648355"
+      rpy="-1.04701686895547 -0.0250141124981463 -0.0144454198491116" />
+    <parent
+      link="base_link" />
+    <child
+      link="Servo2" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="DockingPlate2">
+    <inertial>
+      <origin
+        xyz="0 0 0.000250000000000035"
+        rpy="0 0 0" />
+      <mass
+        value="0.00122139767518029" />
+      <inertia
+        ixx="1.19200352550563E-07"
+        ixy="2.02269032574888E-27"
+        ixz="-2.4893208725855E-25"
+        iyy="1.25310058948456E-07"
+        iyz="-5.29395592033938E-23"
+        izz="2.44306845219822E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Aseembled.SLDASM/meshes/DockingPlate2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Aseembled.SLDASM/meshes/DockingPlate2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Docker2"
+    type="continuous">
+    <origin
+      xyz="0 0 -0.02267501875"
+      rpy="-3.14159265358979 0 0.0288848135569953" />
+    <parent
+      link="Servo2" />
+    <child
+      link="DockingPlate2" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="Wheel1">
+    <inertial>
+      <origin
+        xyz="-6.93889390390723E-18 0 0.00100000000000001"
+        rpy="0 0 0" />
+      <mass
+        value="0.00140743350880823" />
+      <inertia
+        ixx="7.9989137750601E-08"
+        ixy="1.19980782609539E-44"
+        ixz="-3.95987936179367E-23"
+        iyy="7.9989137750601E-08"
+        iyz="-4.11615671294591E-41"
+        izz="1.5903998649533E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Aseembled.SLDASM/meshes/Wheel1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Aseembled.SLDASM/meshes/Wheel1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel1"
+    type="fixed">
+    <origin
+      xyz="0.0505218271830018 -0.0560519890686226 0.0356478678368601"
+      rpy="1.5707963267949 0 1.5707963267949" />
+    <parent
+      link="base_link" />
+    <child
+      link="Wheel1" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="Wheel2">
+    <inertial>
+      <origin
+        xyz="-1.38777878078145E-17 1.38777878078145E-17 0.001"
+        rpy="0 0 0" />
+      <mass
+        value="0.00140743350880823" />
+      <inertia
+        ixx="7.9989137750601E-08"
+        ixy="0"
+        ixz="3.41971218980057E-24"
+        iyy="7.99891377506009E-08"
+        iyz="-7.12973258412668E-24"
+        izz="1.5903998649533E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Aseembled.SLDASM/meshes/Wheel2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Aseembled.SLDASM/meshes/Wheel2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel2"
+    type="fixed">
+    <origin
+      xyz="-0.00281082346825967 -0.0554988150154021 0.0349160009815279"
+      rpy="1.5707963267949 -0.816243207117493 -1.5707963267949" />
+    <parent
+      link="base_link" />
+    <child
+      link="Wheel2" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>
