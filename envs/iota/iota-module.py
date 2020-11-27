@@ -12,15 +12,15 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT),0 ,32)
 pygame.display.set_caption('Simple pygame example')
 clock = pygame.time.Clock()
 
-world = world(gravity=(0, -10), doSleep=True )
+world = world(gravity=(0,0), doSleep=True )
 ground_body = world.CreateStaticBody(
     position = (0,0),
     shapes = polygonShape(box=(50,1)),
 )
-body = world.CreateDynamicBody(position=(20,45))
-circle = body.CreateCircleFixture(radius=0.5, density=1, friction=0.3)
-body = world.CreateDynamicBody(position=(30,45), angle=15)
-box = body.CreatePolygonFixture(box=(2,1), density=1, friction=0.3)
+bodies1 = [world.CreateDynamicBody(position=( 3 + 0.1*i , 9)) for i in range(5)]
+circles = [body.CreateCircleFixture(radius=0.5, density=1, friction=0.3) for body in bodies1]
+bodies2 = [world.CreateDynamicBody(position=(5*i + 3 , 5)) for i in range(5)]
+boxes = [body.CreatePolygonFixture(box=(2,1), density=1, friction=0.3) for body in bodies2]
 
 colors = {
     staticBody: (255, 255, 255, 255),
