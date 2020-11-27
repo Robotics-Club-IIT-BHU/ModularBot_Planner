@@ -18,7 +18,7 @@ ground_body = world.CreateStaticBody(
     position = (0,0),
     shapes = polygonShape(box=(50,1)),
 )
-bodies1 = [world.CreateDynamicBody(position=( 3 + 0.1*i , 9)) for i in range(5)]
+bodies1 = [world.CreateDynamicBody(position=( 3 + 0.1*i , 9),angle=1) for i in range(5)]
 circles = [body.CreateCircleFixture(radius=0.5, density=1, friction=0.3) for body in bodies1]
 bodies2 = [world.CreateDynamicBody(position=(5*i + 3 , 5)) for i in range(5)]
 boxes = [body.CreatePolygonFixture(box=(2,1), density=1, friction=0.3) for body in bodies2]
@@ -34,11 +34,11 @@ def init_arrow(color, scale=None):
             scale = 1
         else:
             scale = PPM/20.0
-    x , y = 8*scale, 8*scale
+    x , y, t = 8*scale, 8*scale, 2*scale
     arrow = pygame.Surface((x,y))
     arrow.fill((0,0,0))
-    pygame.draw.line(arrow,color,(0,0),(x//2,y//2))
-    pygame.draw.line(arrow,color,(0,y),(x//2,y//2))
+    pygame.draw.line(arrow,color,(0,0),(x//2,y//2),int(t))
+    pygame.draw.line(arrow,color,(0,y),(x//2,y//2),int(t))
     arrow.set_colorkey((0,0,0))
     return arrow
 global_arrow = init_arrow((0,0,255))
