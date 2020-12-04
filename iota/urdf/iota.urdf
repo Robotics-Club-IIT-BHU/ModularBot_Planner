@@ -1,0 +1,1523 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="iota">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.0146696445687201 -0.0486777860978674 0.0326742856006349"
+        rpy="0 0 0" />
+      <mass
+        value="0.00744227077052705" />
+      <inertia
+        ixx="1.77056593470069E-06"
+        ixy="1.16133976971193E-12"
+        ixz="-2.22246311267754E-09"
+        iyy="1.82778051828238E-06"
+        iyz="6.15154458998786E-12"
+        izz="3.59069142343677E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="dfront_right_motor">
+    <inertial>
+      <origin
+        xyz="-6.93889390390723E-18 -1.73472347597681E-17 -0.0123129472999349"
+        rpy="0 0 0" />
+      <mass
+        value="0.000603578488570939" />
+      <inertia
+        ixx="2.44410297985248E-08"
+        ixy="0"
+        ixz="-1.63308101554042E-24"
+        iyy="2.44410297985248E-08"
+        iyz="1.46730981817685E-24"
+        izz="2.67959445581754E-09" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/dfront_right_motor.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/dfront_right_motor.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="dfront_right_motor "
+    type="fixed">
+    <origin
+      xyz="-0.012155 -0.025518 0.036899"
+      rpy="1.5708 -0.89092 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="dfront_right_motor" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="dfront_right_wheel">
+    <inertial>
+      <origin
+        xyz="6.93889390390723E-18 -6.93889390390723E-18 -0.000500000000000011"
+        rpy="0 0 0" />
+      <mass
+        value="0.000538940219723329" />
+      <inertia
+        ixx="6.20095634476667E-09"
+        ixy="-1.55096364853693E-25"
+        ixz="3.90053466811277E-26"
+        iyy="6.20095634476667E-09"
+        iyz="5.33073414725857E-26"
+        izz="1.01563284406861E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/dfront_right_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/dfront_right_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="dfront_right_wheel"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="3.1416 0 2.3355" />
+    <parent
+      link="dfront_right_motor" />
+    <child
+      link="dfront_right_wheel" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="dfront_left_motor">
+    <inertial>
+      <origin
+        xyz="1.73472347597681E-18 0 0.0106870527000651"
+        rpy="0 0 0" />
+      <mass
+        value="0.000603578488570939" />
+      <inertia
+        ixx="2.44410297985248E-08"
+        ixy="0"
+        ixz="5.24849782568612E-25"
+        iyy="2.44410297985248E-08"
+        iyz="-1.0416450583389E-26"
+        izz="2.67959445581755E-09" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/dfront_left_motor.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/dfront_left_motor.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="dfront_left_motor"
+    type="fixed">
+    <origin
+      xyz="-0.012155 -0.048518 0.036899"
+      rpy="1.5708 -0.056767 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="dfront_left_motor" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="dfront_left_wheel">
+    <inertial>
+      <origin
+        xyz="0 -6.93889390390723E-18 0.0025"
+        rpy="0 0 0" />
+      <mass
+        value="0.00053894021972333" />
+      <inertia
+        ixx="6.20095634476668E-09"
+        ixy="-1.71338556610421E-43"
+        ixz="-1.41453782260183E-41"
+        iyy="6.20095634476668E-09"
+        iyz="-1.71612772689084E-41"
+        izz="1.01563284406862E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/dfront_left_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/dfront_left_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="dfront_left_wheel"
+    type="prismatic">
+    <origin
+      xyz="0 0 0.021"
+      rpy="0 0 -0.056767" />
+    <parent
+      link="dfront_left_motor" />
+    <child
+      link="dfront_left_wheel" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="dback_left_motor">
+    <inertial>
+      <origin
+        xyz="-6.93889390390723E-18 3.46944695195361E-18 0.0106870527000651"
+        rpy="0 0 0" />
+      <mass
+        value="0.000603578488570939" />
+      <inertia
+        ixx="2.44410297985248E-08"
+        ixy="0"
+        ixz="-5.78078247717176E-25"
+        iyy="2.44410297985248E-08"
+        iyz="-8.40548146398037E-26"
+        izz="2.67959445581755E-09" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/dback_left_motor.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/dback_left_motor.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="dback_left_motor"
+    type="fixed">
+    <origin
+      xyz="0.040369 -0.049305 0.036899"
+      rpy="1.5708 -0.34478 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="dback_left_motor" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="dback_left_wheel">
+    <inertial>
+      <origin
+        xyz="-1.38777878078145E-17 -1.38777878078145E-17 0.00250000000000002"
+        rpy="0 0 0" />
+      <mass
+        value="0.00053894021972333" />
+      <inertia
+        ixx="6.20095634476669E-09"
+        ixy="5.16987882845642E-26"
+        ixz="-1.36893455920729E-25"
+        iyy="6.20095634476668E-09"
+        iyz="-1.79819689037758E-26"
+        izz="1.01563284406862E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/dback_left_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/dback_left_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="dback_left_wheel"
+    type="revolute">
+    <origin
+      xyz="0 0 0.021"
+      rpy="0 0 -0.42076" />
+    <parent
+      link="dback_left_motor" />
+    <child
+      link="dback_left_wheel" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="dback_right_motor">
+    <inertial>
+      <origin
+        xyz="-6.93889390390723E-18 3.46944695195361E-18 0.0106870527000651"
+        rpy="0 0 0" />
+      <mass
+        value="0.000603578488570939" />
+      <inertia
+        ixx="2.44410297985248E-08"
+        ixy="0"
+        ixz="-5.45635370788724E-25"
+        iyy="2.44410297985248E-08"
+        iyz="1.87885313832483E-25"
+        izz="2.67959445581755E-09" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/dback_right_motor.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/dback_right_motor.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="dback_right_motor"
+    type="fixed">
+    <origin
+      xyz="0.040369 -0.049305 0.036899"
+      rpy="1.5708 0.66152 -3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="dback_right_motor" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="dback_right_wheel">
+    <inertial>
+      <origin
+        xyz="-1.38777878078145E-17 -1.38777878078145E-17 -0.0025"
+        rpy="0 0 0" />
+      <mass
+        value="0.000538940219723329" />
+      <inertia
+        ixx="6.20095634476668E-09"
+        ixy="0"
+        ixz="1.54530891848207E-25"
+        iyy="6.20095634476668E-09"
+        iyz="-1.34061952819571E-26"
+        izz="1.01563284406861E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/dback_right_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/dback_right_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="dback_right_wheel"
+    type="revolute">
+    <origin
+      xyz="0 0 0.021"
+      rpy="3.1416 0 -2.5805" />
+    <parent
+      link="dback_right_motor" />
+    <child
+      link="dback_right_wheel" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="right_panel">
+    <inertial>
+      <origin
+        xyz="0.036453781512605 0.0225 0.001"
+        rpy="0 0 0" />
+      <mass
+        value="0.00526947793730914" />
+      <inertia
+        ixx="8.58473780689096E-07"
+        ixy="-2.05809769072127E-07"
+        ixz="3.73413703673822E-24"
+        iyy="1.56820227574802E-06"
+        iyz="1.21532970829356E-24"
+        izz="2.42316307114558E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/right_panel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/right_panel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_panel"
+    type="fixed">
+    <origin
+      xyz="-0.015636 -0.018678 0.033899"
+      rpy="1.5708 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_panel" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="lower_bracket">
+    <inertial>
+      <origin
+        xyz="1.8357600118171E-07 -3.46042638987853E-14 0.027899999999396"
+        rpy="0 0 0" />
+      <mass
+        value="0.0002232" />
+      <inertia
+        ixx="5.7988103997496E-08"
+        ixy="-1.78867801722819E-24"
+        ixz="-3.80570184208052E-13"
+        iyy="5.7988104E-08"
+        iyz="7.17516294660565E-20"
+        izz="1.4880000250407E-10" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/lower_bracket.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/lower_bracket.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="lower_bracket"
+    type="fixed">
+    <origin
+      xyz="0.0285891386480857 0.0132472543654309 0.00312388554404198"
+      rpy="0.0572535613550783 0 -0.279334860442379" />
+    <parent
+      link="right_panel" />
+    <child
+      link="lower_bracket" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="front_servo">
+    <inertial>
+      <origin
+        xyz="-0.000369716820088163 -3.52395606977723E-05 -0.00131147866176589"
+        rpy="0 0 0" />
+      <mass
+        value="0.00677100575579448" />
+      <inertia
+        ixx="4.31149666383788E-07"
+        ixy="8.82221194039368E-11"
+        ixz="-3.10904728009683E-08"
+        iyy="6.71938564058982E-07"
+        iyz="1.06335363009129E-09"
+        izz="3.91967417754935E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/front_servo.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/front_servo.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_servo"
+    type="fixed">
+    <origin
+      xyz="-0.00327850155878186 0.00710820887028432 0.0211565538865111"
+      rpy="0 1.5707963267949 0" />
+    <parent
+      link="lower_bracket" />
+    <child
+      link="front_servo" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="front_dock">
+    <inertial>
+      <origin
+        xyz="-0.000692612454533323 4.82253126321552E-16 0.00065064021255486"
+        rpy="0 0 0" />
+      <mass
+        value="0.000904401871349701" />
+      <inertia
+        ixx="3.23776998441177E-08"
+        ixy="6.61744490042422E-24"
+        ixz="1.34658538416809E-09"
+        iyy="3.34082495225981E-08"
+        iyz="1.00203366869432E-23"
+        izz="6.4040362339396E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/front_dock.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/front_dock.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_dock"
+    type="revolute">
+    <origin
+      xyz="-0.00535 0 -0.019059"
+      rpy="3.1416 0 -0.62637" />
+    <parent
+      link="front_servo" />
+    <child
+      link="front_dock" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="front_panel">
+    <inertial>
+      <origin
+        xyz="0.00105315517766193 -0.00185708279952023 -0.000528295422204238"
+        rpy="0 0 0" />
+      <mass
+        value="0.00216216616649216" />
+      <inertia
+        ixx="1.70953253081341E-07"
+        ixy="-1.1986043012638E-09"
+        ixz="-2.24804170341982E-11"
+        iyy="7.25272517548678E-07"
+        iyz="1.16680032076836E-09"
+        izz="8.9480467044258E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/front_panel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/front_panel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_panel"
+    type="fixed">
+    <origin
+      xyz="0.00865558382549677 0.0247696852084958 0.0299937554182314"
+      rpy="0.279335238189619 1.5707963267949 0" />
+    <parent
+      link="right_panel" />
+    <child
+      link="front_panel" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="left_panel">
+    <inertial>
+      <origin
+        xyz="0.036453781512605 0.0225 0.001"
+        rpy="0 0 0" />
+      <mass
+        value="0.00526947793730915" />
+      <inertia
+        ixx="8.58473780689097E-07"
+        ixy="-2.05809769072127E-07"
+        ixz="1.28979331339458E-26"
+        iyy="1.56820227574802E-06"
+        iyz="1.57649964736085E-24"
+        izz="2.42316307114558E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/left_panel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/left_panel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_panel"
+    type="fixed">
+    <origin
+      xyz="-0.015594256799817 -0.0766777315109957 0.0338985670725845"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_panel" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="upper_bracket">
+    <inertial>
+      <origin
+        xyz="0 0 0.0279"
+        rpy="0 0 0" />
+      <mass
+        value="0.0002232" />
+      <inertia
+        ixx="5.7988104E-08"
+        ixy="0"
+        ixz="1.87616612644405E-24"
+        iyy="5.7988104E-08"
+        iyz="3.09028386242997E-27"
+        izz="1.48800000000001E-10" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/upper_bracket.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/upper_bracket.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="upper_bracket"
+    type="fixed">
+    <origin
+      xyz="0.045176397046141 0.0355758226897028 -0.056"
+      rpy="0 0 -0.279104698918359" />
+    <parent
+      link="left_panel" />
+    <child
+      link="upper_bracket" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="back_servo">
+    <inertial>
+      <origin
+        xyz="-0.000369716814866583 -3.523963099758E-05 -0.00131147869095147"
+        rpy="0 0 0" />
+      <mass
+        value="0.00677100577989105" />
+      <inertia
+        ixx="4.31149668793827E-07"
+        ixy="8.8222281090352E-11"
+        ixz="-3.1090472607926E-08"
+        iyy="6.71938565978269E-07"
+        iyz="1.06334906260128E-09"
+        izz="3.9196741868065E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/back_servo.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/back_servo.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="back_servo"
+    type="fixed">
+    <origin
+      xyz="0.0034656966666195 -0.00820924646147805 0.0226525215937532"
+      rpy="-1.57079632679489 1.51354276544107 1.57056578752365" />
+    <parent
+      link="upper_bracket" />
+    <child
+      link="back_servo" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="back_dock">
+    <inertial>
+      <origin
+        xyz="-0.000692612454533205 -6.93889390390723E-18 0.000650640212554919"
+        rpy="0 0 0" />
+      <mass
+        value="0.000904401871349701" />
+      <inertia
+        ixx="3.23776998441177E-08"
+        ixy="3.30872245021211E-24"
+        ixz="1.34658538416808E-09"
+        iyy="3.34082495225981E-08"
+        iyz="-8.97646645511503E-26"
+        izz="6.4040362339396E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/back_dock.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/back_dock.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="back_dock"
+    type="revolute">
+    <origin
+      xyz="-0.00535 0 -0.019059"
+      rpy="3.1416 0 0.173" />
+    <parent
+      link="back_servo" />
+    <child
+      link="back_dock" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="back_plate">
+    <inertial>
+      <origin
+        xyz="0.00105475514322637 0.000672862260630749 0.00058269934770537"
+        rpy="0 0 0" />
+      <mass
+        value="0.0021588204490292" />
+      <inertia
+        ixx="1.72294395794538E-07"
+        ixy="4.59923587310499E-10"
+        ixz="6.00000395273335E-11"
+        iyy="7.26055161949289E-07"
+        iyz="-1.18587095725912E-08"
+        izz="8.9529557932051E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/back_plate.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/back_plate.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="back_plate"
+    type="fixed">
+    <origin
+      xyz="0.0644825369743734 0.0211802219227158 -0.0280062445817686"
+      rpy="-1.36380991527172 1.57079631189374 -1.56665611972111" />
+    <parent
+      link="left_panel" />
+    <child
+      link="back_plate" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="top_plate">
+    <inertial>
+      <origin
+        xyz="-0.000248014804284234 0.00120854199304864 3.97822336045683E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.00723409205260635" />
+      <inertia
+        ixx="1.74270065435217E-06"
+        ixy="-8.85509040009651E-10"
+        ixz="1.3546704844253E-12"
+        iyy="3.40239438645811E-06"
+        iyz="-3.5068658417301E-12"
+        izz="1.66708233299329E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/top_plate.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/top_plate.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="top_plate"
+    type="fixed">
+    <origin
+      xyz="0.042248384032793 0.045 -0.028"
+      rpy="0 0 0" />
+    <parent
+      link="left_panel" />
+    <child
+      link="top_plate" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="uback_left_motor">
+    <inertial>
+      <origin
+        xyz="0 0 0.0106870527000651"
+        rpy="0 0 0" />
+      <mass
+        value="0.000603578488570939" />
+      <inertia
+        ixx="2.44410297985248E-08"
+        ixy="0"
+        ixz="-2.15902735443962E-25"
+        iyy="2.44410297985248E-08"
+        iyz="9.54085217851547E-26"
+        izz="2.67959445581754E-09" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/uback_left_motor.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/uback_left_motor.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="uback_left_motor"
+    type="fixed">
+    <origin
+      xyz="0.026934 -0.003 0.00021146"
+      rpy="0 0 -0.77263" />
+    <parent
+      link="top_plate" />
+    <child
+      link="uback_left_motor" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="uback_left_wheel">
+    <inertial>
+      <origin
+        xyz="0 -1.38777878078145E-17 0.00250000000000002"
+        rpy="0 0 0" />
+      <mass
+        value="0.00053894021972333" />
+      <inertia
+        ixx="6.20095634476669E-09"
+        ixy="5.16987882845642E-26"
+        ixz="1.04372719530144E-25"
+        iyy="6.20095634476668E-09"
+        iyz="2.96885887400922E-27"
+        izz="1.01563284406862E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/uback_left_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/uback_left_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="uback_left_wheel"
+    type="revolute">
+    <origin
+      xyz="0 0 0.021"
+      rpy="0 0 0.8839" />
+    <parent
+      link="uback_left_motor" />
+    <child
+      link="uback_left_wheel" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="uback_right_motor">
+    <inertial>
+      <origin
+        xyz="0 1.38777878078145E-17 0.0106870527000651"
+        rpy="0 0 0" />
+      <mass
+        value="0.000603578488570939" />
+      <inertia
+        ixx="2.44410297985248E-08"
+        ixy="0"
+        ixz="1.11096050455966E-23"
+        iyy="2.44410297985248E-08"
+        iyz="-8.54155842699879E-25"
+        izz="2.67959445581754E-09" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/uback_right_motor.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/uback_right_motor.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="uback_right_motor"
+    type="fixed">
+    <origin
+      xyz="0.026934 -0.003 0.00021146"
+      rpy="3.1416 0 1.4682" />
+    <parent
+      link="top_plate" />
+    <child
+      link="uback_right_motor" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="uback_right_wheel">
+    <inertial>
+      <origin
+        xyz="-1.38777878078145E-17 -1.38777878078145E-17 -0.0025"
+        rpy="0 0 0" />
+      <mass
+        value="0.000538940219723329" />
+      <inertia
+        ixx="6.20095634476668E-09"
+        ixy="-1.71338556610435E-43"
+        ixz="1.46479900139599E-25"
+        iyy="6.20095634476668E-09"
+        iyz="-1.71612772689083E-41"
+        izz="1.01563284406861E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/uback_right_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/uback_right_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="uback_right_wheel"
+    type="revolute">
+    <origin
+      xyz="0 0 0.021"
+      rpy="3.1416 0 1.4682" />
+    <parent
+      link="uback_right_motor" />
+    <child
+      link="uback_right_wheel" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="ufront_left_motor">
+    <inertial>
+      <origin
+        xyz="-2.16840434497101E-19 0 0.0106870527000651"
+        rpy="0 0 0" />
+      <mass
+        value="0.000603578488570939" />
+      <inertia
+        ixx="2.44410297985248E-08"
+        ixy="-1.01398018399423E-45"
+        ixz="2.38994663244727E-26"
+        iyy="2.44410297985248E-08"
+        iyz="-4.06883312015145E-41"
+        izz="2.67959445581754E-09" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/ufront_left_motor.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/ufront_left_motor.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ufront_left_motor"
+    type="fixed">
+    <origin
+      xyz="-0.024961 -0.003 5.2693E-05"
+      rpy="0 0 0" />
+    <parent
+      link="top_plate" />
+    <child
+      link="ufront_left_motor" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="ufront_left_wheel">
+    <inertial>
+      <origin
+        xyz="1.95156391047391E-18 0 0.00250000000000002"
+        rpy="0 0 0" />
+      <mass
+        value="0.00053894021972333" />
+      <inertia
+        ixx="6.20095634476668E-09"
+        ixy="-1.71338556610421E-43"
+        ixz="-1.47058976117482E-41"
+        iyy="6.20095634476668E-09"
+        iyz="-1.71612772689084E-41"
+        izz="1.01563284406862E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/ufront_left_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/ufront_left_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ufront_left_wheel"
+    type="continuous">
+    <origin
+      xyz="0 0 0.021"
+      rpy="0 0 0" />
+    <parent
+      link="ufront_left_motor" />
+    <child
+      link="ufront_left_wheel" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="ufront_right_motor">
+    <inertial>
+      <origin
+        xyz="-1.73472347597681E-18 0 0.0106870527000651"
+        rpy="0 0 0" />
+      <mass
+        value="0.000603578488570939" />
+      <inertia
+        ixx="2.44410297985248E-08"
+        ixy="-2.06795153138257E-25"
+        ixz="2.08704477346829E-24"
+        iyy="2.44410297985248E-08"
+        iyz="3.51063267274942E-25"
+        izz="2.67959445581754E-09" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/ufront_right_motor.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/ufront_right_motor.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ufront_right_motor"
+    type="fixed">
+    <origin
+      xyz="-0.024961 -0.003 5.2693E-05"
+      rpy="3.1416 0 0.10603" />
+    <parent
+      link="top_plate" />
+    <child
+      link="ufront_right_motor" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="ufront_right_wheel">
+    <inertial>
+      <origin
+        xyz="2.60208521396521E-18 0 -0.0025"
+        rpy="0 0 0" />
+      <mass
+        value="0.000538940219723329" />
+      <inertia
+        ixx="6.20095634476668E-09"
+        ixy="-1.71338556610408E-43"
+        ixz="-1.46479900139599E-25"
+        iyy="6.20095634476668E-09"
+        iyz="-1.71612772689083E-41"
+        izz="1.01563284406861E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/ufront_right_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://iota/meshes/ufront_right_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ufront_right_wheel"
+    type="revolute">
+    <origin
+      xyz="0 0 0.021"
+      rpy="3.1416 0 0.10603" />
+    <parent
+      link="ufront_right_motor" />
+    <child
+      link="ufront_right_wheel" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+</robot>

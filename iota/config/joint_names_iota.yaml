@@ -1,0 +1,1 @@
+controller_joint_names: ['', 'dfront_right_wheel', 'dfront_left_wheel', 'dback_left_wheel', 'dback_right_wheel', 'front_dock', 'back_dock', 'uback_left_wheel', 'uback_right_wheel', 'ufront_left_wheel', 'ufront_right_wheel', ]
