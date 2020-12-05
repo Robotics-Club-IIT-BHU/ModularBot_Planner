@@ -14,10 +14,10 @@
         value="0.00774047849628879" />
       <inertia
         ixx="1.86468970015682E-06"
-        ixy="-1.44949741836624E-12"
-        ixz="-9.47494672810325E-10"
+        ixy="-1.44949741835261E-12"
+        ixz="-9.47494672810329E-10"
         iyy="1.78377809630282E-06"
-        iyz="3.75234645076705E-12"
+        iyz="3.75234645076469E-12"
         izz="3.64056199351018E-06" />
     </inertial>
     <visual>
@@ -139,16 +139,21 @@
   </link>
   <joint
     name="db_r_wheel"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 0 0.021"
-      rpy="3.14159265358979 0 0.106028806705873" />
+      rpy="3.1416 0 0.10603" />
     <parent
       link="db_r_motor" />
     <child
       link="db_r_wheel" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="db_l_motor">
@@ -160,7 +165,7 @@
         value="0.000645828982770904" />
       <inertia
         ixx="2.61519018844216E-08"
-        ixy="-1.08495879687383E-45"
+        ixy="-1.08495879687379E-45"
         ixz="2.55724289671858E-26"
         iyy="2.61519018844216E-08"
         iyz="-4.35365143856206E-41"
@@ -245,7 +250,7 @@
   </link>
   <joint
     name="db_l_wheel"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 0 0.021"
       rpy="0 0 0" />
@@ -255,6 +260,11 @@
       link="db_l_wheel" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="df_l_motor">
@@ -318,7 +328,7 @@
       <mass
         value="0.000576666035103963" />
       <inertia
-        ixx="6.63502328890035E-09"
+        ixx="6.63502328890036E-09"
         ixy="-2.06795153138257E-25"
         ixz="1.11678809897254E-25"
         iyy="6.63502328890035E-09"
@@ -351,22 +361,27 @@
   </link>
   <joint
     name="df_l_wheel"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 0 0.021"
-      rpy="0 0 0.88390039009553" />
+      rpy="0 0 0.8839" />
     <parent
       link="df_l_motor" />
     <child
       link="df_l_wheel" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="df_r_motor">
     <inertial>
       <origin
-        xyz="0 1.38777878078145E-17 0.0106870527000651"
+        xyz="1.38777878078145E-17 1.38777878078145E-17 0.0106870527000651"
         rpy="0 0 0" />
       <mass
         value="0.000645828982770904" />
@@ -457,16 +472,21 @@
   </link>
   <joint
     name="df_r_wheel"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 0 0.021"
-      rpy="3.14159265358979 0 1.46819705601191" />
+      rpy="3.1416 0 1.4682" />
     <parent
       link="df_r_motor" />
     <child
       link="df_r_wheel" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="l_panel">
@@ -479,9 +499,9 @@
       <inertia
         ixx="9.18566945337334E-07"
         ixy="-2.20216452907176E-07"
-        ixz="1.38007884533224E-26"
+        ixz="-1.13531492879934E-24"
         iyy="1.67797643505038E-06"
-        iyz="1.68685462267611E-24"
+        iyz="1.86901867840681E-24"
         izz="2.59278448612577E-06" />
     </inertial>
     <visual>
@@ -512,8 +532,8 @@
     name="l_panel"
     type="fixed">
     <origin
-      xyz="-0.015594256799817 -0.0766777315109957 0.0338985670725845"
-      rpy="1.5707963267949 0 0" />
+      xyz="-0.015594 -0.076678 0.033899"
+      rpy="1.5708 0 0" />
     <parent
       link="base_link" />
     <child
@@ -525,16 +545,16 @@
     name="lower_bracket">
     <inertial>
       <origin
-        xyz="-3.46944695195361E-18 0 0.0279"
+        xyz="0 0 0.0279"
         rpy="0 0 0" />
       <mass
         value="0.000238824" />
       <inertia
         ixx="6.204727128E-08"
         ixy="0"
-        ixz="2.00749775529513E-24"
+        ixz="1.74900285238205E-24"
         iyy="6.204727128E-08"
-        iyz="3.30660373279987E-27"
+        iyz="-1.36255432729087E-25"
         izz="1.59216000000001E-10" />
     </inertial>
     <visual>
@@ -578,16 +598,16 @@
     name="front_servo">
     <inertial>
       <origin
-        xyz="-0.000369716814866583 -3.523963099758E-05 -0.00131147869095147"
+        xyz="-0.00036971681486659 -3.523963099758E-05 -0.00131147869095147"
         rpy="0 0 0" />
       <mass
         value="0.00677100577989105" />
       <inertia
         ixx="4.31149668793827E-07"
-        ixy="8.82222810903454E-11"
+        ixy="8.82222810903504E-11"
         ixz="-3.1090472607926E-08"
-        iyy="6.71938565978269E-07"
-        iyz="1.06334906260128E-09"
+        iyy="6.71938565978268E-07"
+        iyz="1.0633490626013E-09"
         izz="3.9196741868065E-07" />
     </inertial>
     <visual>
@@ -618,8 +638,8 @@
     name="front_servo"
     type="fixed">
     <origin
-      xyz="0.0034656966666195 -0.00820924646147805 0.0226525215937532"
-      rpy="-1.57079632679489 1.51354276544107 1.57056578752365" />
+      xyz="0.0034657 -0.0082092 0.022653"
+      rpy="-1.5708 1.5135 1.5706" />
     <parent
       link="lower_bracket" />
     <child
@@ -637,10 +657,10 @@
         value="0.00096771000234418" />
       <inertia
         ixx="3.46441388332059E-08"
-        ixy="1.65436122510606E-24"
+        ixy="2.8951321439356E-24"
         ixz="1.44084636105985E-09"
         iyy="3.57468269891799E-08"
-        iyz="3.16769631333481E-24"
+        iyz="7.12003869818008E-25"
         izz="6.85231877031537E-08" />
     </inertial>
     <visual>
@@ -669,29 +689,34 @@
   </link>
   <joint
     name="front_dock"
-    type="continuous">
+    type="revolute">
     <origin
-      xyz="-0.00535000000000001 0 -0.0190593320349418"
-      rpy="3.14159265358979 0 0.173000373416657" />
+      xyz="-0.00535 0 -0.019059"
+      rpy="3.1416 0 0.173" />
     <parent
       link="front_servo" />
     <child
       link="front_dock" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="front_panel">
     <inertial>
       <origin
-        xyz="0.00105475514322637 0.000672862260630749 0.00058269934770537"
+        xyz="0.00105475514322636 0.000672862260630749 0.00058269934770537"
         rpy="0 0 0" />
       <mass
         value="0.00230993788046124" />
       <inertia
         ixx="1.84355003500156E-07"
-        ixy="4.92118238422236E-10"
-        ixz="6.42000422942462E-11"
+        ixy="4.92118238422253E-10"
+        ixz="6.42000422942475E-11"
         iyy="7.76879023285739E-07"
         iyz="-1.26888192426726E-08"
         izz="9.57966269872945E-07" />
@@ -744,9 +769,9 @@
       <inertia
         ixx="1.89450555012974E-06"
         ixy="-2.37803553056497E-09"
-        ixz="-1.24263355358396E-12"
+        ixz="-1.24263355360239E-12"
         iyy="3.84203982307735E-06"
-        iyz="-6.58215271117168E-12"
+        iyz="-6.58215271117221E-12"
         izz="1.95572515456215E-06" />
     </inertial>
     <visual>
@@ -796,7 +821,7 @@
         value="0.000645828982770904" />
       <inertia
         ixx="2.61519018844216E-08"
-        ixy="0"
+        ixy="2.06795153138257E-25"
         ixz="5.61589267348415E-25"
         iyy="2.61519018844216E-08"
         iyz="-1.11456021242263E-26"
@@ -830,8 +855,8 @@
     name="ub_l_motor"
     type="fixed">
     <origin
-      xyz="-0.0278596823124971 0.00550000000000001 -0.000160189778555461"
-      rpy="0 0 0.0567673670058895" />
+      xyz="-0.02786 0.0055 -0.00016019"
+      rpy="0 0 0.056767" />
     <parent
       link="top_panel" />
     <child
@@ -881,16 +906,21 @@
   </link>
   <joint
     name="ub_l_wheel"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 0 0.021"
-      rpy="0 0 -0.0567673670058895" />
+      rpy="0 0 -0.056767" />
     <parent
       link="ub_l_motor" />
     <child
       link="ub_l_wheel" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="ub_r_motor">
@@ -949,17 +979,17 @@
     name="ub_r_wheel">
     <inertial>
       <origin
-        xyz="1.73472347597681E-18 0 -0.0025"
+        xyz="1.7347E-18 0 -0.0025"
         rpy="0 0 0" />
       <mass
-        value="0.000576666035103962" />
+        value="0.00057667" />
       <inertia
-        ixx="6.63502328890034E-09"
-        ixy="-1.55096364853693E-25"
-        ixz="4.17357209488066E-26"
-        iyy="6.63502328890034E-09"
-        iyz="5.70388553756667E-26"
-        izz="1.08672714315342E-08" />
+        ixx="6.635E-09"
+        ixy="-5.1699E-26"
+        ixz="4.1736E-26"
+        iyy="6.635E-09"
+        iyz="5.7039E-26"
+        izz="1.0867E-08" />
     </inertial>
     <visual>
       <origin
@@ -987,32 +1017,37 @@
   </link>
   <joint
     name="ub_r_wheel"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 0 0.021"
-      rpy="-3.14159265358979 0 2.33553651872795" />
+      rpy="-3.1416 0 2.3355" />
     <parent
       link="ub_r_motor" />
     <child
       link="ub_r_wheel" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="uf_l_motor">
     <inertial>
       <origin
-        xyz="0 0 0.0106870527000651"
+        xyz="0 0 0.010687"
         rpy="0 0 0" />
       <mass
-        value="0.000645828982770904" />
+        value="0.00064583" />
       <inertia
-        ixx="2.61519018844216E-08"
+        ixx="2.6152E-08"
         ixy="0"
-        ixz="-6.18543725057378E-25"
-        iyy="2.61519018844216E-08"
-        iyz="-8.993865166459E-26"
-        izz="2.86716606772477E-09" />
+        ixz="-6.1854E-25"
+        iyy="2.6152E-08"
+        iyz="-8.9939E-26"
+        izz="2.8672E-09" />
     </inertial>
     <visual>
       <origin
@@ -1093,16 +1128,21 @@
   </link>
   <joint
     name="uf_l_wheel"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 0 0.021"
-      rpy="0 0 -0.420760994096352" />
+      rpy="0 0 -0.42076" />
     <parent
       link="uf_l_motor" />
     <child
       link="uf_l_wheel" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="uf_r_motor">
@@ -1167,7 +1207,7 @@
         value="0.000576666035103962" />
       <inertia
         ixx="6.63502328890035E-09"
-        ixy="-5.16987882845642E-26"
+        ixy="-1.03397576569128E-25"
         ixz="1.65348054277582E-25"
         iyy="6.63502328890035E-09"
         iyz="-1.43446289516941E-26"
@@ -1199,32 +1239,37 @@
   </link>
   <joint
     name="uf_r_Wheel"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0 0 0.021"
-      rpy="3.14159265358979 0 -2.58049522466332" />
+      rpy="3.1416 0 -2.5805" />
     <parent
       link="uf_r_motor" />
     <child
       link="uf_r_wheel" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="r_panel">
     <inertial>
       <origin
-        xyz="0.036453781512605 0.0225 0.000999999999999997"
+        xyz="0 0 0"
         rpy="0 0 0" />
       <mass
-        value="0.00563834139292078" />
+        value="0" />
       <inertia
-        ixx="9.18566945337333E-07"
-        ixy="-2.20216452907176E-07"
-        ixz="3.9955266293099E-24"
-        iyy="1.67797643505038E-06"
-        iyz="1.3004027878741E-24"
-        izz="2.59278448612577E-06" />
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
     </inertial>
     <visual>
       <origin
@@ -1237,7 +1282,7 @@
       <material
         name="">
         <color
-          rgba="1 1 1 0.32" />
+          rgba="1 1 1 1" />
       </material>
     </visual>
     <collision>
@@ -1267,16 +1312,16 @@
     name="upper_bracket">
     <inertial>
       <origin
-        xyz="1.8357600118171E-07 -3.46181416865932E-14 0.027899999999396"
+        xyz="1.8357600118171E-07 -3.46112027926893E-14 0.027899999999396"
         rpy="0 0 0" />
       <mass
         value="0.000238824" />
       <inertia
         ixx="6.20472712773207E-08"
-        ixy="-1.49698236656339E-24"
-        ixz="-4.07210097102362E-13"
+        ixy="-1.47923141847411E-24"
+        ixz="-4.07210097101754E-13"
         iyy="6.204727128E-08"
-        iyz="7.67734671986729E-20"
+        iyz="7.6773758004357E-20"
         izz="1.59216002679355E-10" />
     </inertial>
     <visual>
@@ -1320,16 +1365,16 @@
     name="back_servo">
     <inertial>
       <origin
-        xyz="-0.000369716820088163 -3.52395606977723E-05 -0.00131147866176589"
+        xyz="-0.000369716820088163 -3.52395606977654E-05 -0.00131147866176589"
         rpy="0 0 0" />
       <mass
         value="0.00677100575579448" />
       <inertia
         ixx="4.31149666383788E-07"
-        ixy="8.82221194039368E-11"
+        ixy="8.82221194039401E-11"
         ixz="-3.10904728009683E-08"
         iyy="6.71938564058982E-07"
-        iyz="1.06335363009129E-09"
+        iyz="1.06335363009127E-09"
         izz="3.91967417754935E-07" />
     </inertial>
     <visual>
@@ -1381,8 +1426,8 @@
         ixx="3.46441388332059E-08"
         ixy="8.27180612553028E-24"
         ixz="1.44084636105986E-09"
-        iyy="3.574682698918E-08"
-        iyz="7.4057999744573E-24"
+        iyy="3.57468269891799E-08"
+        iyz="6.42352299705058E-24"
         izz="6.85231877031537E-08" />
     </inertial>
     <visual>
@@ -1411,16 +1456,21 @@
   </link>
   <joint
     name="back_dock"
-    type="continuous">
+    type="revolute">
     <origin
-      xyz="-0.00534999999999996 0 -0.019059332034942"
-      rpy="3.14159265358979 0 -0.626368079302037" />
+      xyz="-0.00535 0 -0.019059"
+      rpy="3.1416 0 -0.62637" />
     <parent
       link="back_servo" />
     <child
       link="back_dock" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="back_panel">
@@ -1432,8 +1482,8 @@
         value="0.00231351779814661" />
       <inertia
         ixx="1.82919980797035E-07"
-        ixy="-1.28250660235226E-09"
-        ixz="-2.40540462265927E-11"
+        ixy="-1.28250660235222E-09"
+        ixz="-2.40540462265903E-11"
         iyy="7.76041593777085E-07"
         iyz="1.24847634322208E-09"
         izz="9.5744099737356E-07" />
