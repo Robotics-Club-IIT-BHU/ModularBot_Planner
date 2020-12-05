@@ -14,8 +14,8 @@
         value="0.00774047849628879" />
       <inertia
         ixx="1.86468970015682E-06"
-        ixy="-1.44949741836624E-12"
-        ixz="-9.47494672810325E-10"
+        ixy="-1.44949741835584E-12"
+        ixz="-9.47494672810326E-10"
         iyy="1.78377809630282E-06"
         iyz="3.75234645076705E-12"
         izz="3.64056199351018E-06" />
@@ -26,7 +26,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/base_link.STL" />
+          filename="package://iota/meshes/base_link.STL" />
       </geometry>
       <material
         name="">
@@ -40,7 +40,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/base_link.STL" />
+          filename="package://iota/meshes/base_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -54,7 +54,7 @@
         value="0.000645828982770904" />
       <inertia
         ixx="2.61519018844216E-08"
-        ixy="0"
+        ixy="-2.06795153138257E-25"
         ixz="2.23313790761107E-24"
         iyy="2.61519018844215E-08"
         iyz="3.75637695984187E-25"
@@ -66,7 +66,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/db_r_motor.STL" />
+          filename="package://iota/meshes/db_r_motor.STL" />
       </geometry>
       <material
         name="">
@@ -80,7 +80,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/db_r_motor.STL" />
+          filename="package://iota/meshes/db_r_motor.STL" />
       </geometry>
     </collision>
   </link>
@@ -119,7 +119,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/db_r_wheel.STL" />
+          filename="package://iota/meshes/db_r_wheel.STL" />
       </geometry>
       <material
         name="">
@@ -133,7 +133,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/db_r_wheel.STL" />
+          filename="package://iota/meshes/db_r_wheel.STL" />
       </geometry>
     </collision>
   </link>
@@ -149,6 +149,11 @@
       link="db_r_wheel" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="db_l_motor">
@@ -172,7 +177,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/db_l_motor.STL" />
+          filename="package://iota/meshes/db_l_motor.STL" />
       </geometry>
       <material
         name="">
@@ -186,7 +191,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/db_l_motor.STL" />
+          filename="package://iota/meshes/db_l_motor.STL" />
       </geometry>
     </collision>
   </link>
@@ -225,7 +230,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/db_l_wheel.STL" />
+          filename="package://iota/meshes/db_l_wheel.STL" />
       </geometry>
       <material
         name="">
@@ -239,7 +244,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/db_l_wheel.STL" />
+          filename="package://iota/meshes/db_l_wheel.STL" />
       </geometry>
     </collision>
   </link>
@@ -255,6 +260,11 @@
       link="db_l_wheel" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="df_l_motor">
@@ -278,7 +288,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/df_l_motor.STL" />
+          filename="package://iota/meshes/df_l_motor.STL" />
       </geometry>
       <material
         name="">
@@ -292,7 +302,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/df_l_motor.STL" />
+          filename="package://iota/meshes/df_l_motor.STL" />
       </geometry>
     </collision>
   </link>
@@ -318,7 +328,7 @@
       <mass
         value="0.000576666035103963" />
       <inertia
-        ixx="6.63502328890035E-09"
+        ixx="6.63502328890036E-09"
         ixy="-2.06795153138257E-25"
         ixz="1.11678809897254E-25"
         iyy="6.63502328890035E-09"
@@ -331,7 +341,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/df_l_wheel.STL" />
+          filename="package://iota/meshes/df_l_wheel.STL" />
       </geometry>
       <material
         name="">
@@ -345,7 +355,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/df_l_wheel.STL" />
+          filename="package://iota/meshes/df_l_wheel.STL" />
       </geometry>
     </collision>
   </link>
@@ -361,12 +371,17 @@
       link="df_l_wheel" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="df_r_motor">
     <inertial>
       <origin
-        xyz="0 1.38777878078145E-17 0.0106870527000651"
+        xyz="1.38777878078145E-17 1.38777878078145E-17 0.0106870527000651"
         rpy="0 0 0" />
       <mass
         value="0.000645828982770904" />
@@ -384,7 +399,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/df_r_motor.STL" />
+          filename="package://iota/meshes/df_r_motor.STL" />
       </geometry>
       <material
         name="">
@@ -398,7 +413,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/df_r_motor.STL" />
+          filename="package://iota/meshes/df_r_motor.STL" />
       </geometry>
     </collision>
   </link>
@@ -437,7 +452,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/df_r_wheel.STL" />
+          filename="package://iota/meshes/df_r_wheel.STL" />
       </geometry>
       <material
         name="">
@@ -451,7 +466,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/df_r_wheel.STL" />
+          filename="package://iota/meshes/df_r_wheel.STL" />
       </geometry>
     </collision>
   </link>
@@ -467,6 +482,11 @@
       link="df_r_wheel" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="l_panel">
@@ -490,7 +510,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/l_panel.STL" />
+          filename="package://iota/meshes/l_panel.STL" />
       </geometry>
       <material
         name="">
@@ -504,7 +524,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/l_panel.STL" />
+          filename="package://iota/meshes/l_panel.STL" />
       </geometry>
     </collision>
   </link>
@@ -534,7 +554,7 @@
         ixy="0"
         ixz="2.00749775529513E-24"
         iyy="6.204727128E-08"
-        iyz="3.30660373279987E-27"
+        iyz="3.30660373280005E-27"
         izz="1.59216000000001E-10" />
     </inertial>
     <visual>
@@ -543,7 +563,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/lower_bracket.STL" />
+          filename="package://iota/meshes/lower_bracket.STL" />
       </geometry>
       <material
         name="">
@@ -557,7 +577,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/lower_bracket.STL" />
+          filename="package://iota/meshes/lower_bracket.STL" />
       </geometry>
     </collision>
   </link>
@@ -584,10 +604,10 @@
         value="0.00677100577989105" />
       <inertia
         ixx="4.31149668793827E-07"
-        ixy="8.82222810903454E-11"
+        ixy="8.8222281090352E-11"
         ixz="-3.1090472607926E-08"
         iyy="6.71938565978269E-07"
-        iyz="1.06334906260128E-09"
+        iyz="1.06334906260127E-09"
         izz="3.9196741868065E-07" />
     </inertial>
     <visual>
@@ -596,7 +616,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/front_servo.STL" />
+          filename="package://iota/meshes/front_servo.STL" />
       </geometry>
       <material
         name="">
@@ -610,7 +630,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/front_servo.STL" />
+          filename="package://iota/meshes/front_servo.STL" />
       </geometry>
     </collision>
   </link>
@@ -631,16 +651,16 @@
     name="front_dock">
     <inertial>
       <origin
-        xyz="-0.000692612454533212 6.93889390390723E-18 0.000650640212554926"
+        xyz="-0.000692612454533212 -6.93889390390723E-18 0.000650640212554926"
         rpy="0 0 0" />
       <mass
         value="0.00096771000234418" />
       <inertia
         ixx="3.46441388332059E-08"
-        ixy="1.65436122510606E-24"
+        ixy="4.13590306276514E-24"
         ixz="1.44084636105985E-09"
         iyy="3.57468269891799E-08"
-        iyz="3.16769631333481E-24"
+        iyz="3.15477161626367E-24"
         izz="6.85231877031537E-08" />
     </inertial>
     <visual>
@@ -649,7 +669,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/front_dock.STL" />
+          filename="package://iota/meshes/front_dock.STL" />
       </geometry>
       <material
         name="">
@@ -663,7 +683,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/front_dock.STL" />
+          filename="package://iota/meshes/front_dock.STL" />
       </geometry>
     </collision>
   </link>
@@ -679,6 +699,11 @@
       link="front_dock" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="front_panel">
@@ -690,7 +715,7 @@
         value="0.00230993788046124" />
       <inertia
         ixx="1.84355003500156E-07"
-        ixy="4.92118238422236E-10"
+        ixy="4.92118238422235E-10"
         ixz="6.42000422942462E-11"
         iyy="7.76879023285739E-07"
         iyz="-1.26888192426726E-08"
@@ -702,7 +727,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/front_panel.STL" />
+          filename="package://iota/meshes/front_panel.STL" />
       </geometry>
       <material
         name="">
@@ -716,7 +741,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/front_panel.STL" />
+          filename="package://iota/meshes/front_panel.STL" />
       </geometry>
     </collision>
   </link>
@@ -737,16 +762,16 @@
     name="top_panel">
     <inertial>
       <origin
-        xyz="-0.00103502685327945 0.0012757185280504 5.45868716478326E-08"
+        xyz="-0.00103502685327945 0.0012757185280504 5.45868716547715E-08"
         rpy="0 0 0" />
       <mass
         value="0.00796322972446395" />
       <inertia
         ixx="1.89450555012974E-06"
         ixy="-2.37803553056497E-09"
-        ixz="-1.24263355358396E-12"
+        ixz="-1.24263355359548E-12"
         iyy="3.84203982307735E-06"
-        iyz="-6.58215271117168E-12"
+        iyz="-6.58215271117157E-12"
         izz="1.95572515456215E-06" />
     </inertial>
     <visual>
@@ -755,7 +780,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/top_panel.STL" />
+          filename="package://iota/meshes/top_panel.STL" />
       </geometry>
       <material
         name="">
@@ -769,7 +794,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/top_panel.STL" />
+          filename="package://iota/meshes/top_panel.STL" />
       </geometry>
     </collision>
   </link>
@@ -790,13 +815,13 @@
     name="ub_l_motor">
     <inertial>
       <origin
-        xyz="-1.73472347597681E-18 0 0.0106870527000651"
+        xyz="0 0 0.0106870527000651"
         rpy="0 0 0" />
       <mass
         value="0.000645828982770904" />
       <inertia
         ixx="2.61519018844216E-08"
-        ixy="0"
+        ixy="2.06795153138257E-25"
         ixz="5.61589267348415E-25"
         iyy="2.61519018844216E-08"
         iyz="-1.11456021242263E-26"
@@ -808,7 +833,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/ub_l_motor.STL" />
+          filename="package://iota/meshes/ub_l_motor.STL" />
       </geometry>
       <material
         name="">
@@ -822,7 +847,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/ub_l_motor.STL" />
+          filename="package://iota/meshes/ub_l_motor.STL" />
       </geometry>
     </collision>
   </link>
@@ -861,7 +886,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/ub_l_wheel.STL" />
+          filename="package://iota/meshes/ub_l_wheel.STL" />
       </geometry>
       <material
         name="">
@@ -875,7 +900,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/ub_l_wheel.STL" />
+          filename="package://iota/meshes/ub_l_wheel.STL" />
       </geometry>
     </collision>
   </link>
@@ -891,6 +916,11 @@
       link="ub_l_wheel" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="ub_r_motor">
@@ -914,7 +944,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/ub_r_motor.STL" />
+          filename="package://iota/meshes/ub_r_motor.STL" />
       </geometry>
       <material
         name="">
@@ -928,7 +958,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/ub_r_motor.STL" />
+          filename="package://iota/meshes/ub_r_motor.STL" />
       </geometry>
     </collision>
   </link>
@@ -967,7 +997,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/ub_r_wheel.STL" />
+          filename="package://iota/meshes/ub_r_wheel.STL" />
       </geometry>
       <material
         name="">
@@ -981,7 +1011,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/ub_r_wheel.STL" />
+          filename="package://iota/meshes/ub_r_wheel.STL" />
       </geometry>
     </collision>
   </link>
@@ -997,6 +1027,11 @@
       link="ub_r_wheel" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="uf_l_motor">
@@ -1020,7 +1055,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/uf_l_motor.STL" />
+          filename="package://iota/meshes/uf_l_motor.STL" />
       </geometry>
       <material
         name="">
@@ -1034,7 +1069,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/uf_l_motor.STL" />
+          filename="package://iota/meshes/uf_l_motor.STL" />
       </geometry>
     </collision>
   </link>
@@ -1073,7 +1108,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/uf_l_wheel.STL" />
+          filename="package://iota/meshes/uf_l_wheel.STL" />
       </geometry>
       <material
         name="">
@@ -1087,7 +1122,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/uf_l_wheel.STL" />
+          filename="package://iota/meshes/uf_l_wheel.STL" />
       </geometry>
     </collision>
   </link>
@@ -1103,6 +1138,11 @@
       link="uf_l_wheel" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="uf_r_motor">
@@ -1126,7 +1166,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/uf_r_motor.STL" />
+          filename="package://iota/meshes/uf_r_motor.STL" />
       </geometry>
       <material
         name="">
@@ -1140,7 +1180,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/uf_r_motor.STL" />
+          filename="package://iota/meshes/uf_r_motor.STL" />
       </geometry>
     </collision>
   </link>
@@ -1179,7 +1219,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/uf_r_wheel.STL" />
+          filename="package://iota/meshes/uf_r_wheel.STL" />
       </geometry>
       <material
         name="">
@@ -1193,7 +1233,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/uf_r_wheel.STL" />
+          filename="package://iota/meshes/uf_r_wheel.STL" />
       </geometry>
     </collision>
   </link>
@@ -1209,6 +1249,11 @@
       link="uf_r_wheel" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="r_panel">
@@ -1232,7 +1277,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/r_panel.STL" />
+          filename="package://iota/meshes/r_panel.STL" />
       </geometry>
       <material
         name="">
@@ -1246,7 +1291,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/r_panel.STL" />
+          filename="package://iota/meshes/r_panel.STL" />
       </geometry>
     </collision>
   </link>
@@ -1273,10 +1318,10 @@
         value="0.000238824" />
       <inertia
         ixx="6.20472712773207E-08"
-        ixy="-1.49698236656339E-24"
-        ixz="-4.07210097102362E-13"
+        ixy="-1.50881528014171E-24"
+        ixz="-4.07210097102682E-13"
         iyy="6.204727128E-08"
-        iyz="7.67734671986729E-20"
+        iyz="7.67742774156206E-20"
         izz="1.59216002679355E-10" />
     </inertial>
     <visual>
@@ -1285,7 +1330,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/upper_bracket.STL" />
+          filename="package://iota/meshes/upper_bracket.STL" />
       </geometry>
       <material
         name="">
@@ -1299,7 +1344,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/upper_bracket.STL" />
+          filename="package://iota/meshes/upper_bracket.STL" />
       </geometry>
     </collision>
   </link>
@@ -1320,13 +1365,13 @@
     name="back_servo">
     <inertial>
       <origin
-        xyz="-0.000369716820088163 -3.52395606977723E-05 -0.00131147866176589"
+        xyz="-0.000369716820088163 -3.52395606977654E-05 -0.00131147866176589"
         rpy="0 0 0" />
       <mass
         value="0.00677100575579448" />
       <inertia
         ixx="4.31149666383788E-07"
-        ixy="8.82221194039368E-11"
+        ixy="8.82221194039352E-11"
         ixz="-3.10904728009683E-08"
         iyy="6.71938564058982E-07"
         iyz="1.06335363009129E-09"
@@ -1338,7 +1383,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/back_servo.STL" />
+          filename="package://iota/meshes/back_servo.STL" />
       </geometry>
       <material
         name="">
@@ -1352,7 +1397,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/back_servo.STL" />
+          filename="package://iota/meshes/back_servo.STL" />
       </geometry>
     </collision>
   </link>
@@ -1379,10 +1424,10 @@
         value="0.000967710002344181" />
       <inertia
         ixx="3.46441388332059E-08"
-        ixy="8.27180612553028E-24"
+        ixy="6.61744490042422E-24"
         ixz="1.44084636105986E-09"
-        iyy="3.574682698918E-08"
-        iyz="7.4057999744573E-24"
+        iyy="3.57468269891799E-08"
+        iyz="6.52692057361971E-24"
         izz="6.85231877031537E-08" />
     </inertial>
     <visual>
@@ -1391,7 +1436,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/back_dock.STL" />
+          filename="package://iota/meshes/back_dock.STL" />
       </geometry>
       <material
         name="">
@@ -1405,7 +1450,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/back_dock.STL" />
+          filename="package://iota/meshes/back_dock.STL" />
       </geometry>
     </collision>
   </link>
@@ -1421,6 +1466,11 @@
       link="back_dock" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
   </joint>
   <link
     name="back_panel">
@@ -1444,7 +1494,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/back_panel.STL" />
+          filename="package://iota/meshes/back_panel.STL" />
       </geometry>
       <material
         name="">
@@ -1458,7 +1508,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="meshes/back_panel.STL" />
+          filename="package://iota/meshes/back_panel.STL" />
       </geometry>
     </collision>
   </link>
