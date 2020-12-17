@@ -17,11 +17,11 @@ maxForce = 1000
 extra = 0
 while(1):
 
-    p.setJointMotorControl2(iota,15  ,p.VELOCITY_CONTROL, targetVelocity=targetVel, force=maxForce)
-    p.setJointMotorControl2(iota,19  ,p.VELOCITY_CONTROL, targetVelocity=targetVel, force=maxForce)
-    p.setJointMotorControl2(iota,17  ,p.VELOCITY_CONTROL, targetVelocity=-targetVel, force=maxForce)
-    p.setJointMotorControl2(iota,21  ,p.VELOCITY_CONTROL, targetVelocity=-targetVel, force=maxForce)
-    p.setJointMotorControl2(iota,25  ,p.VELOCITY_CONTROL, targetVelocity=10*targetVel, force=maxForce) 
+    p.setJointMotorControl2(iota,1  ,p.VELOCITY_CONTROL, targetVelocity=targetVel, force=maxForce)
+    p.setJointMotorControl2(iota,5  ,p.VELOCITY_CONTROL, targetVelocity=targetVel, force=maxForce)
+    p.setJointMotorControl2(iota,3  ,p.VELOCITY_CONTROL, targetVelocity=-targetVel, force=maxForce)
+    p.setJointMotorControl2(iota,7  ,p.VELOCITY_CONTROL, targetVelocity=-targetVel, force=maxForce)
+    p.setJointMotorControl2(iota,16  ,p.VELOCITY_CONTROL, targetVelocity=10*targetVel, force=maxForce) 
     p.setJointMotorControl2(iota,11  ,p.VELOCITY_CONTROL, targetVelocity=10*targetVel, force=maxForce)
     p.stepSimulation()
     time.sleep(0.05)
