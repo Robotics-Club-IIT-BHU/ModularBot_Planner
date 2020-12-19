@@ -1,11 +1,9 @@
-# Swarmbot
-2D platform on box2D to understand basic algos
-
+# Robot Designing
+The Branch contains all the designs and low level control algorithms
 ## ToDo
-- [ ] Environment design on box2D
-- [ ] Clustering algo to fetch state( observation for model ), representation of each module with respect to the master node
-- [ ] Diff drive to control the bot
-- [ ] Create tests for all your algo (they should have random initialization)
+- [X] Diff drive to control the bot
+- [X] Create tests for all your algo (they should have random initialization)
+- [ ] Design a simple and an efficient low level planning algorithm
 
 ## Resources
 - Add in as you wish.
