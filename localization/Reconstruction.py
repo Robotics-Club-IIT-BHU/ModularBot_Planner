@@ -1,7 +1,9 @@
 import cv2
 import numpy as np
 from vector import Vect2d, Vect3d
-def get_pos(arr_masks, camera_coor=None, camera_Rot=None):
+def get_pos(arr_masks, camera_coor=None, camera_Rot=None, cameraMatrix=None):
+    if camera_coor is None and camera_Rot is None:
+        raise Exception('Either Camera\'s coordinates or Camera\'s Rotation Matrix has to be passed')
     '''
     This calculates the exact position of the masked object
     '''

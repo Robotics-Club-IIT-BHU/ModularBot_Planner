@@ -5,7 +5,7 @@ from time import time, sleep
 import cv2
 from vector import Vect3d, Vect2d
 from cameraSetup import pybullet_Camera
-from Reconstruction import vec2rotm
+from Reconstruction import vec2rotm, get_pos
 
 if p.isNumpyEnabled(): print('Numpy enabled cooolll!!.')
 
@@ -51,13 +51,22 @@ for cam in cams:
     t = Vect3d(*cam.self_info['position']) - origin
     point_vec = (Vect3d(*cam.self_info['target_pos']) - Vect3d(*cam.self_info['position'])).my_unit()
     R = vec2rotm(point_vec, Vect3d(*cam.self_info['up_vec']))
+    t = np.array([*t.get_values()]).reshape(3,1)
     Rt_vec.append([R,t])
     print(R,'\n', t, "\n")
+
+HIGH_BLUE = (130,205,200)
+LOW_BLUE = (100,30,30)
 while True:
     p.stepSimulation()
     for i, cam in enumerate(cams):
         img = cam.read()
-        cv2.imshow('frame'+str(i),img[:,:,[2,1,0]])
+        hsv = cv2.cvtColor(img[:,:,:3], cv2.COLOR_RGB2HSV)
+        img = img[:,:,[2,1,0]]
+        mask = cv2.inRange(hsv, LOW_BLUE, HIGH_BLUE)
+        get_pos(mask, camera_Rot=np.append(Rt_vec[i][0],Rt_vec[i][1],axis=1), cameraMatrix=None)
+        #cv2.imshow('frame'+str(i),img[:,:,[2,1,0]])
+        cv2.imshow('frame'+str(i),mask)
     cv2.waitKey(1)
 
     sleep(0.01)
