@@ -20,36 +20,29 @@ iota = p.loadURDF('../iota/absolute/iota.urdf',
                                 (rnd()-0.5)/0.5,
                                 0.001
                                 ])
-
-camView = p.computeViewMatrix(cameraEyePosition = [0,0,1.2],
-                              cameraTargetPosition = [0,0,0],
-                              cameraUpVector = [0,1,0],
-                              physicsClientId = pClient
-                              )
-camProj = p.computeProjectionMatrixFOV(fov = 90,
-                                       aspect = 1.778,
-                                       nearVal = 0.1,
-                                       farVal = 6,
-                                       physicsClientId = pClient
-                                       )
-cam = lambda : p.getCameraImage(width = HEIGHT,
-                              height = WIDTH,
-                              viewMatrix = camView,
-                              projectionMatrix = camProj,
-                              renderer = p.ER_BULLET_HARDWARE_OPENGL,
-                              physicsClientId = pClient
-                              ) [2]
-cam1 = pybullet_Camera(pos = [0,0,1.2],
-                       target_pos=[0,0,0],
-                       up_vec=[0,1,0],
-                       pClient=pClient,
-                       sleep_rate=1             ### only for simulator
-                       )
-cam1.connect()
+cams = []
+no_of_cams = 4
+cam_poses = [[1,1,1.2], [-1,1,1.2], [-1,-1,1.2], [1,-1,1.2]]
+target_pos = [0, 0, 0]
+for i in range(no_of_cams):
+    per = [0,0,0]
+    for j in range(3): per[j] = target_pos[j] - cam_poses[i][j]
+    per[2] += 2.4
+    cam = pybullet_Camera(pos = cam_poses[i],
+                           target_pos=target_pos,
+                           up_vec=per,
+                           pClient=pClient,
+                           frame_rate=15,
+                           sleep_rate=1             ### only for simulator
+                          )
+    cams.append(cam)
+for cam in cams:
+    cam.connect()
 while True:
     p.stepSimulation()
-    img = cam1.read()
-    cv2.imshow('frame',img[:,:,[2,1,0]])
+    for i, cam in enumerate(cams):
+        img = cam.read()
+        cv2.imshow('frame'+str(i),img[:,:,[2,1,0]])
     cv2.waitKey(1)
 
     sleep(0.01)

@@ -4,7 +4,7 @@ import time
 import pybullet as p
 class pybullet_Camera:
 
-    def __init__(self,pos, target_pos, up_vec, width=640, height=360, pClient=None,sleep_rate=0.7):
+    def __init__(self,pos, target_pos, up_vec, width=640, height=360, pClient=None,sleep_rate=0.7,frame_rate=None):
         self.camView = p.computeViewMatrix(cameraEyePosition = pos,
                                       cameraTargetPosition = target_pos,
                                       cameraUpVector = up_vec,
@@ -22,7 +22,11 @@ class pybullet_Camera:
         self.running = False
         self.grabbed = False
         self.sleep_rate = sleep_rate
-        self.frame_rate = 30
+        if frame_rate is not None:
+            print('Warning: you should not set frame rate manually for hardware :)')
+            self.frame_rate = frame_rate
+        else:
+            self.frame_rate = 30
         self.self_info = [pos, target_pos, up_vec]
 
     def __refresh(self,flag):
