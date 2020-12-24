@@ -27,7 +27,7 @@ class pybullet_Camera:
             self.frame_rate = frame_rate
         else:
             self.frame_rate = 30
-        self.self_info = [pos, target_pos, up_vec]
+        self.self_info = {'position':pos, 'target_pos':target_pos, 'up_vec':up_vec }
         self.sync = sync
 
     def __refresh(self,flag):

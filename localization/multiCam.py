@@ -5,12 +5,12 @@ from time import time, sleep
 import cv2
 from vector import Vect3d, Vect2d
 from cameraSetup import pybullet_Camera
-from Reconstruction import vec2euler
+from Reconstruction import vec2rotm
 
 if p.isNumpyEnabled(): print('Numpy enabled cooolll!!.')
 
-WIDTH = 360
-HEIGHT = 640
+WIDTH = 640
+HEIGHT = 360
 rnd = np.random.random
 
 pClient = p.connect(p.GUI)
@@ -34,6 +34,8 @@ for i in range(no_of_cams):
     cam = pybullet_Camera(pos = cam_poses[i],
                            target_pos = target_pos,
                            up_vec = per,
+                           width=WIDTH,
+                           height=HEIGHT,
                            pClient = pClient,
                            frame_rate = 15,
                            sync = True,
@@ -44,7 +46,13 @@ for i in range(no_of_cams):
 for cam in cams:
     cam.connect()
 origin = Vect3d(0,0,0)
-
+Rt_vec = []
+for cam in cams:
+    t = Vect3d(*cam.self_info['position']) - origin
+    point_vec = (Vect3d(*cam.self_info['target_pos']) - Vect3d(*cam.self_info['position'])).my_unit()
+    R = vec2rotm(point_vec, Vect3d(*cam.self_info['up_vec']))
+    Rt_vec.append([R,t])
+    print(R,'\n', t, "\n")
 while True:
     p.stepSimulation()
     for i, cam in enumerate(cams):
