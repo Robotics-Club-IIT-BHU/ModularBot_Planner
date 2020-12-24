@@ -3,7 +3,10 @@ import pybullet_data
 import numpy as np
 from time import time, sleep
 import cv2
+from vector import Vect3d, Vect2d
 from cameraSetup import pybullet_Camera
+from Reconstruction import vec2euler
+
 if p.isNumpyEnabled(): print('Numpy enabled cooolll!!.')
 
 WIDTH = 360
@@ -40,7 +43,7 @@ for i in range(no_of_cams):
     cams.append(cam)
 for cam in cams:
     cam.connect()
-origin = np.zeros((3,1))
+origin = Vect3d(0,0,0)
 
 while True:
     p.stepSimulation()

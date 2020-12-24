@@ -1,13 +1,23 @@
 import cv2
 import numpy as np
-
+from vector import Vect2d, Vect3d
 def get_pos(arr_masks, camera_coor=None, camera_Rot=None):
     '''
     This calculates the exact position of the masked object
     '''
     return [0,0]
-def vec2euler(point_vec, up_vec):
-    r_y = point_vec
+def vec2rotm(point_vec, up_vec):
+    if not isinstance(up_vec, Vect3d):
+        up_vec = Vect3d(*up_vec)
+    if not isinstance(point_vec, Vect3d):
+        point_vec = Vect3d(*point_vec)
+    r_y = up_vec*point_vec
+    return np.array([
+                    list(point_vec.get_values()),
+                    list(r_y.get_values()),
+                    list(up_vec.get_values()),
+                    ])
+
 def euler2rotm(theta):
     R_x = np.array([[1,         0,                  0                   ],
                     [0,         math.cos(theta[0]), -math.sin(theta[0]) ],

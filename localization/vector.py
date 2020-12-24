@@ -28,18 +28,19 @@ class Vect2d(Vector):
         if isinstance(x, Vect3d) or isinstance(x, Vect2d):
             self.x = x.x
             self.y = x.y
+            self.z = None
     def dst(self,resp=None):
-        temp = self - (resp or Vector(0,0))
+        temp = self - (resp or Vect2d(0,0))
         return (temp.x)**2 + (temp.y)**2
 
     def my_unit(self):
         return self / np.sqrt(self.dst())
 
     def __truediv__(self,val):
-        return Vector(self.x / val,self.y / val, self.z / val)
+        return Vector(self.x / val,self.y / val)
 
     def __sub__(self, other):
-        return Vector(self.x-other.x,self.y-other.y, self.z-other.z)
+        return Vector(self.x-other.x,self.y-other.y, None if other.z is None else -other.z )
 
     def __mul__(self,other): ## sin of the angle between them
         temp_self = self.my_unit()
@@ -49,10 +50,13 @@ class Vect2d(Vector):
     def __and__(self,other): ## cos of the angle between them
         temp_self = self.my_unit()
         temp_other = other.my_unit()
-        return temp_self.x*temp_other.x - temp_self.y*temp_other.y
+        return temp_self.x*temp_other.x + temp_self.y*temp_other.y
+
+    def get_values(self):
+        return (self.x, self.y)
 
     def __repr__(self):
-        return "<Vector "+str(self.x)+","+str(self.y)+" = "+str(self.dst())+">"
+        return "<Vect2d "+str(self.x)+","+str(self.y)+" = "+str(self.dst())+">"
 
 
 
@@ -67,8 +71,8 @@ class Vect3d(Vector):
             self.y = y or 0
             self.z = z or 0
     def dst(self,resp=None):
-        temp = self - (resp or Vector(0,0))
-        return (temp.x)**2 + (temp.y)**2
+        temp = self - (resp or Vect3d(0,0))
+        return (temp.x)**2 + (temp.y)**2 + (temp.z)**2
 
     def my_unit(self):
         return self / np.sqrt(self.dst())
@@ -77,17 +81,24 @@ class Vect3d(Vector):
         return Vector(self.x / val,self.y / val, self.z / val)
 
     def __sub__(self, other):
-        return Vector(self.x-other.x,self.y-other.y, self.z-other.z)
+        return Vector(self.x-other.x,self.y-other.y, (self.z or 0)-(other.z or 0))
 
     def __mul__(self,other): ## sin of the angle between them
         temp_self = self.my_unit()
         temp_other = other.my_unit()
-        return temp_self.x*temp_other.y - temp_self.y*temp_other.x
+        return Vect3d(
+                      temp_self.y*temp_other.z - temp_other.y*temp_self.z,
+                      temp_other.x*temp_self.z - temp_self.x*temp_other.z,
+                      temp_self.x*temp_other.y - temp_self.y*temp_other.x,
+                      )
 
     def __and__(self,other): ## cos of the angle between them
         temp_self = self.my_unit()
         temp_other = other.my_unit()
-        return temp_self.x*temp_other.x - temp_self.y*temp_other.y
+        return (temp_self.x*temp_other.x, temp_self.y*temp_other.y, temp_self.z*temp_other.z)
+
+    def get_values(self):
+        return (self.x, self.y)
 
     def __repr__(self):
-        return "<Vector "+str(self.x)+","+str(self.y)+" = "+str(self.dst())+">"
+        return "<Vect3d "+str(self.x)+","+str(self.y)+','+str(self.z)+" = "+str(self.dst())+">"
