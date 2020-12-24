@@ -3,7 +3,7 @@ import pybullet_data
 import numpy as np
 from time import time, sleep
 import cv2
-
+from cameraSetup import pybullet_Camera
 if p.isNumpyEnabled(): print('Numpy enabled cooolll!!.')
 
 WIDTH = 360
@@ -39,9 +39,16 @@ cam = lambda : p.getCameraImage(width = HEIGHT,
                               renderer = p.ER_BULLET_HARDWARE_OPENGL,
                               physicsClientId = pClient
                               ) [2]
+cam1 = pybullet_Camera(pos = [0,0,1.2],
+                       target_pos=[0,0,0],
+                       up_vec=[0,1,0],
+                       pClient=pClient,
+                       sleep_rate=1             ### only for simulator
+                       )
+cam1.connect()
 while True:
     p.stepSimulation()
-    img = cam()
+    img = cam1.read()
     cv2.imshow('frame',img[:,:,[2,1,0]])
     cv2.waitKey(1)
 
