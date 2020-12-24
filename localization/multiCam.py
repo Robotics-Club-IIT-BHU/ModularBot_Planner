@@ -27,13 +27,14 @@ target_pos = [0, 0, 0]
 for i in range(no_of_cams):
     per = [0,0,0]
     for j in range(3): per[j] = target_pos[j] - cam_poses[i][j]
-    per[2] += 2.4
+    per[2] += 2*cam_poses[i][2]
     cam = pybullet_Camera(pos = cam_poses[i],
-                           target_pos=target_pos,
-                           up_vec=per,
-                           pClient=pClient,
-                           frame_rate=15,
-                           sleep_rate=1             ### only for simulator
+                           target_pos = target_pos,
+                           up_vec = per,
+                           pClient = pClient,
+                           frame_rate = 15,
+                           sleep_rate = 1             ### only for simulator
+                           #sync = False,             USe only and aonly if the camera is rarely used
                           )
     cams.append(cam)
 for cam in cams:

@@ -4,7 +4,7 @@ import time
 import pybullet as p
 class pybullet_Camera:
 
-    def __init__(self,pos, target_pos, up_vec, width=640, height=360, pClient=None,sleep_rate=0.7,frame_rate=None):
+    def __init__(self,pos, target_pos, up_vec, width=640, height=360, pClient=None,sleep_rate=0.7,frame_rate=None, sync=True):
         self.camView = p.computeViewMatrix(cameraEyePosition = pos,
                                       cameraTargetPosition = target_pos,
                                       cameraUpVector = up_vec,
@@ -28,6 +28,7 @@ class pybullet_Camera:
         else:
             self.frame_rate = 30
         self.self_info = [pos, target_pos, up_vec]
+        self.sync = sync
 
     def __refresh(self,flag):
         while self.running:
@@ -41,6 +42,8 @@ class pybullet_Camera:
         return True
 
     def read(self):
+        if not self.sync:
+            return self.get_image()
         self.lock.acquire()
         try:
             if not self.grabbed:
@@ -52,8 +55,9 @@ class pybullet_Camera:
 
     def connect(self):
         self.running = True
-        refresh_loop = threading.Thread(target= self.__refresh, args=(1,))
-        refresh_loop.start()
+        if self.sync:
+            refresh_loop = threading.Thread(target= self.__refresh, args=(1,))
+            refresh_loop.start()
 
     def close(self):
         self.running = False
