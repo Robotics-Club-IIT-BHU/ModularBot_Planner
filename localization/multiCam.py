@@ -33,12 +33,15 @@ for i in range(no_of_cams):
                            up_vec = per,
                            pClient = pClient,
                            frame_rate = 15,
+                           sync = True,
                            sleep_rate = 1             ### only for simulator
-                           #sync = False,             USe only and aonly if the camera is rarely used
+                                        #USe only and aonly if the camera is rarely used
                           )
     cams.append(cam)
 for cam in cams:
     cam.connect()
+origin = np.zeros((3,1))
+
 while True:
     p.stepSimulation()
     for i, cam in enumerate(cams):
