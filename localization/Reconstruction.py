@@ -27,6 +27,7 @@ def get_pos(mask, camera_coor=None, camera_Rot=None, cameraMatrix=None,draw=Fals
     if draw:
         cv2.circle(img, (int(mc[0]),int(mc[1])), 5, (255,0,0) , 2 )
     mc = np.array([ *mc, 1.0]).reshape(3,1)
+    print('mc',mc)
     P = np.linalg.inv(cameraMatrix)@mc
     P -= camera_Rot[1]
     P = np.linalg.inv(camera_Rot[0])@(P)

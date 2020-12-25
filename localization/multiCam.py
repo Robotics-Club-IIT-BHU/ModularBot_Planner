@@ -17,12 +17,15 @@ pClient = p.connect(p.GUI)
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
 p.loadURDF('plane.urdf')
 p.setGravity(0, 0, -10)
-
+basePosition=[(rnd()-0.5)/0.5,
+              (rnd()-0.5)/0.5,
+              0.05
+              ]
 iota = p.loadURDF('../iota/absolute/iota.urdf',
-                  basePosition = [(rnd()-0.5)/0.5,
-                                (rnd()-0.5)/0.5,
-                                0.001
-                                ])
+                  basePosition = basePosition )
+for i in range(p.getNumJoints(iota)):
+    print(p.getJointInfo(iota,i))
+print("basePosition",basePosition)
 cams = []
 no_of_cams = 4
 cam_poses = [[1,1,1.2], [-1,1,1.2], [-1,-1,1.2], [1,-1,1.2]]
@@ -31,7 +34,7 @@ for i in range(no_of_cams):
     per = [0,0,0]
     for j in range(3): per[j] = target_pos[j] - cam_poses[i][j]
     per[2] += 2*cam_poses[i][2]
-    print('perpendicular'+str(i),per)
+    print('perpendicular'+str(i), per)
     cam = pybullet_Camera(pos = cam_poses[i],
                            target_pos = target_pos,
                            up_vec = per,
@@ -74,6 +77,8 @@ while True:
         #cv2.imshow('frame'+str(i),img[:,:,[2,1,0]])
         #cv2.imshow('can'+str(i),can)
         cv2.imshow('frame'+str(i), img)
+
+    print(p.getBasePositionAndOrientation(iota))
     cv2.waitKey(1)
 
     sleep(0.01)
