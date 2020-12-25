@@ -31,18 +31,20 @@ for i in range(no_of_cams):
     per = [0,0,0]
     for j in range(3): per[j] = target_pos[j] - cam_poses[i][j]
     per[2] += 2*cam_poses[i][2]
+    print('perpendicular'+str(i),per)
     cam = pybullet_Camera(pos = cam_poses[i],
                            target_pos = target_pos,
                            up_vec = per,
                            width=WIDTH,
                            height=HEIGHT,
                            pClient = pClient,
-                           frame_rate = 15,
+                           frame_rate = 5,
                            sync = True,
                            sleep_rate = 1             ### only for simulator
                                         #USe only and aonly if the camera is rarely used
                           )
     cams.append(cam)
+cameraMatrix = np.load('calibration.npz')['leftCameraMatrix']
 for cam in cams:
     cam.connect()
 origin = Vect3d(0,0,0)
@@ -57,16 +59,21 @@ for cam in cams:
 
 HIGH_BLUE = (130,205,200)
 LOW_BLUE = (100,30,30)
+thresh = 250
 while True:
     p.stepSimulation()
     for i, cam in enumerate(cams):
         img = cam.read()
         hsv = cv2.cvtColor(img[:,:,:3], cv2.COLOR_RGB2HSV)
-        img = img[:,:,[2,1,0]]
+        img = cv2.cvtColor(img, cv2.COLOR_RGBA2BGR)
         mask = cv2.inRange(hsv, LOW_BLUE, HIGH_BLUE)
-        get_pos(mask, camera_Rot=np.append(Rt_vec[i][0],Rt_vec[i][1],axis=1), cameraMatrix=None)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        can = cv2.Canny(gray, thresh, thresh*2)
+        pos = get_pos(can, camera_Rot=Rt_vec[i], cameraMatrix=cameraMatrix,draw=True,img=img)
+        print(pos)
         #cv2.imshow('frame'+str(i),img[:,:,[2,1,0]])
-        cv2.imshow('frame'+str(i),mask)
+        #cv2.imshow('can'+str(i),can)
+        cv2.imshow('frame'+str(i), img)
     cv2.waitKey(1)
 
     sleep(0.01)
