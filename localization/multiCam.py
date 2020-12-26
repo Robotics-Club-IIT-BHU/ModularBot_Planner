@@ -66,6 +66,7 @@ thresh = 250
 while True:
     p.stepSimulation()
     for i, cam in enumerate(cams):
+        poses = []
         img = cam.read()
         hsv = cv2.cvtColor(img[:,:,:3], cv2.COLOR_RGB2HSV)
         img = cv2.cvtColor(img, cv2.COLOR_RGBA2BGR)
@@ -73,12 +74,14 @@ while True:
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         can = cv2.Canny(gray, thresh, thresh*2)
         pos = get_pos(can, camera_Rot=Rt_vec[i], cameraMatrix=cameraMatrix,draw=True,img=img)
-        print(pos)
+        poses.append(pos)
         #cv2.imshow('frame'+str(i),img[:,:,[2,1,0]])
         #cv2.imshow('can'+str(i),can)
         cv2.imshow('frame'+str(i), img)
-
-    print(p.getBasePositionAndOrientation(iota))
+    pose = np.array(poses).mean(axis=0).reshape(-1)
+    real_pose = p.getBasePositionAndOrientation(iota)(0) ### The pose outputed is of the baseplates edge and not of the center of mass.
+    err = sum(abs(real_pose[i]-pose[i]) for i in range(3
+    print(err)          ### This metrics is somewhat representative of the performance
     cv2.waitKey(1)
 
     sleep(0.01)
