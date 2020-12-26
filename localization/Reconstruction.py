@@ -27,10 +27,17 @@ def get_pos(mask, camera_coor=None, camera_Rot=None, cameraMatrix=None,draw=Fals
     if draw:
         cv2.circle(img, (int(mc[0]),int(mc[1])), 5, (255,0,0) , 2 )
     mc = np.array([ *mc, 1.0]).reshape(3,1)
-    print('mc',mc)
-    P = np.linalg.inv(cameraMatrix)@mc
+    default_z = 0.04
+    s = 0.01
+    P = np.linalg.inv(cameraMatrix)@(s*mc)
     P -= camera_Rot[1]
     P = np.linalg.inv(camera_Rot[0])@(P)
+    z = P[-1,0]
+    while abs(z-default_z)>0.1*default_z:
+        P = np.linalg.inv(cameraMatrix)@(s*mc)
+        P -= camera_Rot[1]
+        P = np.linalg.inv(camera_Rot[0])@(P)
+        z = P[-1,0]
     return P
 
 def vec2rotm(point_vec, up_vec):
