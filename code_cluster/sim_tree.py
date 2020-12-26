@@ -3,16 +3,15 @@ sys.path.append('C:\\Users\\RTG\\my-pc\\ml\\Modular-Bot\\ModularBot_Planner')
 import numpy as np
 import math
 
-from mst import Graph 
+from mst import Graph
 
 import pybullet as p
 import time
 import pybullet_data
 
-def create_tree(cubePos,cubeOrn):
+def create_tree(cubePos):
 	#converting list->np array for better handling
 	cubePos = np.array(cubePos)
-	cubeOrn = np.array(cubeOrn)
 
 	print(f'Cube shape {cubePos.shape} \n pos\n{cubePos}')
 
@@ -61,7 +60,7 @@ def sim():
 	#loading positions
 	cubeStartPos = np.array([[0,1,1],[1,0,1],[2,0,1],[3,1,1],[3,2,1],[4,0,1],[5,0,1],[6,0,1]])
 
-	#save all boxes 
+	#save all boxes
 	boxId = []
 	#spawn boxes
 	for i in range(cubeStartPos.shape[0]):
@@ -76,16 +75,12 @@ def sim():
 			for i in range(cubeStartPos.shape[0]):
 				pos, orn = p.getBasePositionAndOrientation(boxId[i])
 				cubePos.append(pos)
-				cubeOrn.append(orn)
 
 			#calling func to create graph
-			parent = create_tree(cubePos,cubeOrn)
+			parent = create_tree(cubePos)
 
 		time.sleep(1./240.)
 
 	#close connection
-	p.disconnect()
-
-
 if __name__ == "__main__":
-	sim()
+	sim();time.sleep(1000000000)
