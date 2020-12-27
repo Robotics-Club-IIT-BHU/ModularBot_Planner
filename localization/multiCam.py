@@ -79,8 +79,8 @@ while True:
         #cv2.imshow('can'+str(i),can)
         cv2.imshow('frame'+str(i), img)
     pose = np.array(poses).mean(axis=0).reshape(-1)
-    real_pose = p.getBasePositionAndOrientation(iota)(0) ### The pose outputed is of the baseplates edge and not of the center of mass.
-    err = sum(abs(real_pose[i]-pose[i]) for i in range(3
+    real_pose = p.getBasePositionAndOrientation(iota)[0] ### The pose outputed is of the baseplates edge and not of the center of mass.
+    err = sum(abs(real_pose[i]-pose[i]) for i in range(3))
     print(err)          ### This metrics is somewhat representative of the performance
     cv2.waitKey(1)
 
