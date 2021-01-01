@@ -127,7 +127,7 @@ class iOTA():
                                   self.docks[dock_id],
                                   self.pClient)[0]
             vel = 10*(angle - curr)
-            if vel < 0.02:
+            if vel < 0.05:
                 self.dock_encoders[dock_id] = curr
                 break
             p.setJointMotorControl2(bodyUniqueId=self.id,
@@ -137,7 +137,7 @@ class iOTA():
                                     force=self.servo_force,
                                     physicsClientId=self.pClient)
             p.stepSimulation(self.pClient)
-            time.sleep(0.05)
+            time.sleep(0.01)
     def stop(self):
         for i,wheel_set in enumerate([self.r_wheels, self.l_wheels]):
             for wheel in wheel_set:
@@ -212,22 +212,18 @@ while True:
     pos1, orie1 = p.getBasePositionAndOrientation(iota1.id,pClient)
     if distance(pos1,setpoint)<0.005:
         iota1.stop()
-        #iota1.dock_servo(1,np.pi)
+        iota1.dock_servo(1,np.pi)
         break
     vec = [50*(setpoint[i]-pos1[i]) for i in range(3)]
     iota1.control(vec)
     for i in range(10):p.stepSimulation()
     time.sleep(0.05)
 r = 0.005
-iota1.stop()
-iota1.dock(iota2)
-iota2.stop()
-'''
 setpoint = [pos2[0] - r*np.cos(euler2[1])*np.cos(euler2[2]), pos2[1] - r*np.cos(euler2[1])*np.sin(euler2[2]), pos2[2] - r*np.sin(euler2[1])]
-print(setpoint)
+print("NEW setpoint",setpoint)
 while True:
     pos1, orie1 = p.getBasePositionAndOrientation(iota1.id,pClient)
-    if distance(pos1,setpoint)<0.005:
+    if distance(pos1,setpoint)<0.004:
         break
     vec = [100*(setpoint[i]-pos1[i]) for i in range(3)]
     iota1.control(vec)
@@ -237,6 +233,5 @@ print("done")
 iota1.stop()
 iota1.dock(iota2)
 iota2.stop()
-'''
 while True:
     p.stepSimulation()
