@@ -14,7 +14,7 @@ class iOTA():
     min_vel = 1
     motor_force = 10
     dock_encoders = [0,0]
-    servo_force = 1
+    servo_force = 10
     def __init__(self, path=None,init_pos = None, physicsClient=None):
         if path is None:
             path="../iota/absolute/iota.urdf"
@@ -77,16 +77,19 @@ class iOTA():
     def dock(self,other):
         self.dockees.append(other)
         other.dockees.append(self)
+        pos11,_ = p.getBasePositionAndOrientation(self.id,self.pClient)
+
+        pos22, _ = p.getBasePositionAndOrientation(other.id,other.pClient)
         diff12 = [0,0,0]
         diff21 = [0,0,0]
 
         for i in range(3):
-            diff12[i] = (pos1[i] - pos2[i])/2
-            diff21[i] = (pos2[i] - pos1[i])/2
+            diff12[i] = (pos11[i] - pos22[i])/2
+            diff21[i] = (pos22[i] - pos11[i])/2
 
-        cid = p.createConstraint(iota1.id,
+        cid = p.createConstraint(self.id,
                                 -1,                 ## front docking plate
-                                iota2.id,
+                                other.id,
                                 -1,                 ## back docking plate
                                 p.JOINT_FIXED,
                                 [0,0,0],
@@ -117,14 +120,24 @@ class iOTA():
         self.undock(other)
         return -1
 
-    def dock_servo(self,dock_id=0,angle=0):
-        p.setJointMotorControl2(self.id,
-                                self.docks[dock_id],
-                                controlMode=p.POSITION_CONTROL,
-                                targetPosition=angle,
-                                force=self.servo_force,
-                                physicsClientId=self.pClient)
-        return True
+    def dock_servo(self,dock_id,angle):
+        self.dock_encoders[dock_id] = angle
+        while True:
+            curr = p.getJointState(self.id,
+                                  self.docks[dock_id],
+                                  self.pClient)[0]
+            vel = 10*(angle - curr)
+            if vel < 0.02:
+                self.dock_encoders[dock_id] = curr
+                break
+            p.setJointMotorControl2(bodyUniqueId=self.id,
+                                    jointIndex=self.docks[dock_id],
+                                    controlMode=p.VELOCITY_CONTROL,
+                                    targetVelocity=vel,
+                                    force=self.servo_force,
+                                    physicsClientId=self.pClient)
+            p.stepSimulation(self.pClient)
+            time.sleep(0.05)
     def stop(self):
         for i,wheel_set in enumerate([self.r_wheels, self.l_wheels]):
             for wheel in wheel_set:
@@ -164,7 +177,7 @@ pos1,orie1 = p.getBasePositionAndOrientation(iota1.id,pClient)
 
 pos2, orie2 = p.getBasePositionAndOrientation(iota2.id,pClient)
 euler2 = p.getEulerFromQuaternion(orie2, pClient)
-r = 0.05
+r = 0.01
 print("euler",euler2)
 setpoint = [pos2[0] - r*np.cos(euler2[1])*np.cos(euler2[2]), pos2[1] - r*np.cos(euler2[1])*np.sin(euler2[2]), pos2[2] - r*np.sin(euler2[1])]
 print("setpoint",setpoint)
@@ -197,24 +210,33 @@ while True:
     #p.setJointMotorControl2(iota,16  ,p.VELOCITY_CONTROL, targetVelocity=10*targetVel, force=maxForce)
     #p.setJointMotorControl2(iota,11  ,p.VELOCITY_CONTROL, targetVelocity=10*targetVel, force=maxForce)
     pos1, orie1 = p.getBasePositionAndOrientation(iota1.id,pClient)
-    iota1.dock_servo(1,0)
     if distance(pos1,setpoint)<0.005:
         iota1.stop()
-
+        #iota1.dock_servo(1,np.pi)
         break
     vec = [50*(setpoint[i]-pos1[i]) for i in range(3)]
     iota1.control(vec)
     for i in range(10):p.stepSimulation()
     time.sleep(0.05)
+r = 0.005
+iota1.stop()
+iota1.dock(iota2)
+iota2.stop()
+'''
+setpoint = [pos2[0] - r*np.cos(euler2[1])*np.cos(euler2[2]), pos2[1] - r*np.cos(euler2[1])*np.sin(euler2[2]), pos2[2] - r*np.sin(euler2[1])]
+print(setpoint)
 while True:
     pos1, orie1 = p.getBasePositionAndOrientation(iota1.id,pClient)
-    if distance(pos1,setpoint)<0.001:
+    if distance(pos1,setpoint)<0.005:
         break
-    vec = [5*(setpoint[i]-pos1[i]) for i in range(3)]
+    vec = [100*(setpoint[i]-pos1[i]) for i in range(3)]
     iota1.control(vec)
     for i in range(10):p.stepSimulation()
     time.sleep(0.05)
+print("done")
 iota1.stop()
 iota1.dock(iota2)
+iota2.stop()
+'''
 while True:
     p.stepSimulation()
