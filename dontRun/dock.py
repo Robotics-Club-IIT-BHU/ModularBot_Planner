@@ -10,18 +10,26 @@ class iOTA():
     l_wheels = [15, 19]
     r_wheels = [17, 21]
     docks = [25, 11]
-    def __init__(self, path=None, physicsClient=None):
+    max_vel = 10
+    min_vel = 1
+    motor_force = 10
+    dock_encoders = [0,0]
+    servo_force = 1
+    def __init__(self, path=None,init_pos = None, physicsClient=None):
         if path is None:
             path="../iota/absolute/iota.urdf"
         self.pClient = physicsClient
-        self.vel = [6*(rnd()-0.5)/0.5, 6*(rnd()-0.5)/0.5]
+        self.vel = [12,1e-9]
+        #self.vel = [6*(rnd()-0.5)/0.5, 6*(rnd()-0.5)/0.5]
         theta = np.arctan(self.vel[1]/self.vel[0]) +np.pi
         if self.vel[0] < 0 and self.vel[1]>0:
             theta += np.pi
         orie = p.getQuaternionFromEuler((0,0,theta))
+        if init_pos is None:
+            init_pos = self.init_pos()
         self.id = p.loadURDF(path,
-                            basePosition=self.init_pos(),
-                            baseOrientation=orie,
+                            basePosition=init_pos,
+                            #baseOrientation=orie,
                             physicsClientId=self.pClient)
         self.dockees = []
         self.constraints = []
@@ -50,14 +58,25 @@ class iOTA():
                 p.setJointMotorControl2(self.id,
                                         wheel,
                                         controlMode=p.VELOCITY_CONTROL,
-                                        targetVelocity=(for_vec[i]+rot_vec[i]),
+                                        targetVelocity=self.signum_fn(for_vec[i]+rot_vec[i]),
                                         force=100,
                                         physicsClientId=self.pClient)
         self.vel = vel_vec
         #p.setJointMotorControl2()
+    def signum_fn(self,val):
+        if val>0:
+            if val > self.min_vel:
+                return min(self.max_vel,val)
+            else:
+                return 0
+        else:
+            if val < -1*self.min_vel:
+                return max(-1*self.max_vel, val)
+            else:
+                return 0
     def dock(self,other):
         self.dockees.append(other)
-        other.dockess.append(self)
+        other.dockees.append(self)
         diff12 = [0,0,0]
         diff21 = [0,0,0]
 
@@ -65,9 +84,9 @@ class iOTA():
             diff12[i] = (pos1[i] - pos2[i])/2
             diff21[i] = (pos2[i] - pos1[i])/2
 
-        cid = p.createConstraint(iota1,
+        cid = p.createConstraint(iota1.id,
                                 -1,                 ## front docking plate
-                                iota2,
+                                iota2.id,
                                 -1,                 ## back docking plate
                                 p.JOINT_FIXED,
                                 [0,0,0],
@@ -82,7 +101,7 @@ class iOTA():
         try:
             ind = self.dockees.index(other)
         except:
-            raise Exception("These two modules have not been docked before")
+            raise Exception(str(self.id)+" "+str(other.id )+", These two modules have not been docked before")
             # print(self.id, other.id, "Are not docked before")
         finally:
             if ind is not None:
@@ -98,7 +117,23 @@ class iOTA():
         self.undock(other)
         return -1
 
-
+    def dock_servo(self,dock_id=0,angle=0):
+        p.setJointMotorControl2(self.id,
+                                self.docks[dock_id],
+                                controlMode=p.POSITION_CONTROL,
+                                targetPosition=angle,
+                                force=self.servo_force,
+                                physicsClientId=self.pClient)
+        return True
+    def stop(self):
+        for i,wheel_set in enumerate([self.r_wheels, self.l_wheels]):
+            for wheel in wheel_set:
+                p.setJointMotorControl2(self.id,
+                                        wheel,
+                                        controlMode=p.VELOCITY_CONTROL,
+                                        targetVelocity=0,
+                                        force=self.motor_force,
+                                        physicsClientId=self.pClient)
 def distance(pos, target):
     return ((pos[0]-target[0])**2+(pos[1]-target[1])**2)
 
@@ -113,30 +148,28 @@ carpos = [0,0,0.01]
 carpos2 = [0.4,0,0.01]
 carpos3 = [0.8,0,0.01]
 carpos4 = [1.2,0,0.01]
-iota1 = p.loadURDF("../iota/absolute/iota.urdf",*carpos)
-iota2 = p.loadURDF("../iota/absolute/iota.urdf",*carpos2)
+iota1 = iOTA("../iota/absolute/iota.urdf",init_pos = carpos, physicsClient=pClient)
+iota2 = iOTA("../iota/absolute/iota.urdf",init_pos = carpos2, physicsClient=pClient)
 #iota3 = p.loadURDF("../iota/absolute/iota.urdf",*carpos3)
 
-numJoints = p.getNumJoints(iota1)
+numJoints = p.getNumJoints(iota1.id)
 for joint in range(numJoints):
-    print(p.getJointInfo(iota1, joint))
+    print(p.getJointInfo(iota1.id, joint))
 
 targetVel = 0.001
 maxForce = 0.125
 extra = 0
 
-pos1,orie1 = p.getBasePositionAndOrientation(iota1,pClient)
+pos1,orie1 = p.getBasePositionAndOrientation(iota1.id,pClient)
 
-pos2, orie2 = p.getBasePositionAndOrientation(iota2,pClient)
-
-diff12 = [0,0,0]
-diff21 = [0,0,0]
-
-for i in range(3):
-    diff12[i] = (pos1[i] - pos2[i])/2
-    diff21[i] = (pos2[i] - pos1[i])/2
-print(diff12,diff21)
-cid = p.createConstraint(iota1,
+pos2, orie2 = p.getBasePositionAndOrientation(iota2.id,pClient)
+euler2 = p.getEulerFromQuaternion(orie2, pClient)
+r = 0.05
+print("euler",euler2)
+setpoint = [pos2[0] - r*np.cos(euler2[1])*np.cos(euler2[2]), pos2[1] - r*np.cos(euler2[1])*np.sin(euler2[2]), pos2[2] - r*np.sin(euler2[1])]
+print("setpoint",setpoint)
+#print(diff12,diff21)
+'''cid = p.createConstraint(iota1,
                         -1,                 ## front docking plate
                         iota2,
                         -1,                 ## back docking plate
@@ -145,7 +178,7 @@ cid = p.createConstraint(iota1,
                         diff21,
                         diff12)
 
-'''cid2 = p.createConstraint(iota3,
+cid2 = p.createConstraint(iota3,
                          25,
                          iota2,
                          11,
@@ -154,13 +187,34 @@ cid = p.createConstraint(iota1,
                          [0,0,0],
                          [0.05,0,0])
 '''
-while(1):
 
+
+while True:
     #p.setJointMotorControl2(iota,1  ,p.VELOCITY_CONTROL, targetVelocity=targetVel, force=maxForce)
     #p.setJointMotorControl2(iota,5  ,p.VELOCITY_CONTROL, targetVelocity=targetVel, force=maxForce)
     #p.setJointMotorControl2(iota,3  ,p.VELOCITY_CONTROL, targetVelocity=-targetVel, force=maxForce)
     #p.setJointMotorControl2(iota,7  ,p.VELOCITY_CONTROL, targetVelocity=-targetVel, force=maxForce)
     #p.setJointMotorControl2(iota,16  ,p.VELOCITY_CONTROL, targetVelocity=10*targetVel, force=maxForce)
     #p.setJointMotorControl2(iota,11  ,p.VELOCITY_CONTROL, targetVelocity=10*targetVel, force=maxForce)
-    p.stepSimulation()
+    pos1, orie1 = p.getBasePositionAndOrientation(iota1.id,pClient)
+    iota1.dock_servo(1,0)
+    if distance(pos1,setpoint)<0.005:
+        iota1.stop()
+
+        break
+    vec = [50*(setpoint[i]-pos1[i]) for i in range(3)]
+    iota1.control(vec)
+    for i in range(10):p.stepSimulation()
     time.sleep(0.05)
+while True:
+    pos1, orie1 = p.getBasePositionAndOrientation(iota1.id,pClient)
+    if distance(pos1,setpoint)<0.001:
+        break
+    vec = [5*(setpoint[i]-pos1[i]) for i in range(3)]
+    iota1.control(vec)
+    for i in range(10):p.stepSimulation()
+    time.sleep(0.05)
+iota1.stop()
+iota1.dock(iota2)
+while True:
+    p.stepSimulation()
