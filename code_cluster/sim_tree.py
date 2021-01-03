@@ -1,5 +1,3 @@
-import sys
-sys.path.append('C:\\Users\\RTG\\my-pc\\ml\\Modular-Bot\\ModularBot_Planner')
 import numpy as np
 import math
 
