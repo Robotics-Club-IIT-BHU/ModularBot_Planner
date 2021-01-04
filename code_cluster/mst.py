@@ -2,10 +2,11 @@ import sys
 import numpy as np
 
 class Graph:
-	def __init__(self,vertices):
+	def __init__(self,vertices, dicts):
 		self.vertices = vertices
 		self.graph = [ [0.0 for _ in range(vertices)] for _ in range(vertices)]
 		self.graph = np.array(self.graph)
+		self.dicts = dicts
 
 	#edit graph manually
 	def makeEdge(self,v1,v2,weight):
@@ -18,12 +19,13 @@ class Graph:
 
 		print(self.graph)
 
+	#print nodes along with parent
 	def printTree(self,parent):
 		print('parent child')
 		for v in range(self.vertices):
 			if parent[v]==-1:
 				continue
-			print(f'{parent[v]} - {v} (weight {self.graph[v][parent[v]]})')
+			print(f'parent {parent[v]} boxid:{self.dicts[parent[v]]} - {v} boxid:{self.dicts[v]} (weight {self.graph[v][parent[v]]})')
 
 	#find the vertex with least key value not included in mstSet
 	def minKey(self,mstSet,key):
