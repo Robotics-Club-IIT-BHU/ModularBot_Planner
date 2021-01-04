@@ -28,7 +28,7 @@ class iOTA():
 
 
 def neighbour(X,i,j,v):
-  if (j!=j_max and X[i][j+1]==0): 
+  if (j!=j_max and X[i][j+1]==0):
     X[i][j+1]=v
   if (j!=0 and X[i][j-1]==0):
     X[i][j-1]=v
@@ -46,7 +46,7 @@ def neighbour(X,i,j,v):
     X[i+1][j]=v
 
 def second_neighbour(X,i,j,v):
-  if (j<j_max-1 and X[i][j+2]==0): 
+  if (j<j_max-1 and X[i][j+2]==0):
     X[i][j+2]=v
   if (j>1 and X[i][j-2]==0):
     X[i][j-2]=v
@@ -62,8 +62,8 @@ def second_neighbour(X,i,j,v):
     X[i-2][j]=v
   if (i< i_max-1 and X[i+2][j]==0) :
     X[i+2][j]=v
- 
-  if (j<j_max and i<i_max-1 and X[i-2][j+1]==0): 
+
+  if (j<j_max and i<i_max-1 and X[i-2][j+1]==0):
     X[i-2][j+1]=v
   if (i<i_max-1 and j!=0 and X[i-2][j-1]==0):
     X[i-2][j-1]=v
@@ -84,23 +84,23 @@ def second_neighbour(X,i,j,v):
 
 def list_n(V,i,j,pre):
       if(i>0 and j>0):
-                a_dash = [(i,j+1), (i,j-1), (i+1,j+1), (i-1,j+1), (i+1,j-1), (i-1,j-1), (i-1,j), (i+1,j)]  
-		
+                a_dash = [(i,j+1), (i,j-1), (i+1,j+1), (i-1,j+1), (i+1,j-1), (i-1,j-1), (i-1,j), (i+1,j)]
+
       elif(i>0 and j==0):
                 a_dash = [(i,j+1), (i+1,j+1), (i-1,j+1), (i-1,j), (i+1,j)]
-    
+
       elif(i==0 and j>0):
                 a_dash = [(i,j+1), (i,j-1), (i+1,j+1), (i+1,j-1), (i+1,j)]
-            
-      else:     
+
+      else:
 	        a_dash = [(i,j+1) , (i+1,j+1), (i+1,j)]
-                
+
       a_dash.remove(pre)
-      a=[[0] for i in range(len(a_dash))] 
+      a=[[0] for i in range(len(a_dash))]
       for index in range(len(a_dash)):
-           a[index] = V[a_dash[index][0]][a_dash[index][1]]   
+           a[index] = V[a_dash[index][0]][a_dash[index][1]]
       minposition = a.index(min(a))
-      loc = a_dash[minposition]	
+      loc = a_dash[minposition]
 
       return loc
 
@@ -123,12 +123,12 @@ def quaternion_to_euler(x, y, z, w):
         return X, Y, Z
 
 planeID = p.loadURDF("plane.urdf")
-dabba = p.loadURDF("dot.urdf",basePosition=[10,12,0])
-car = p.loadURDF("iota.urdf")
+dabba = p.loadURDF("dot.urdf",basePosition=[10,5,0])
+car = p.loadURDF("../iota/absolute/iota.urdf")
 min_pos = [-20,-20,0]
 max_pos = [20,20,0]
 target_pos = p.getBasePositionAndOrientation(dabba)[0]
-iotas = [ iOTA("dabba.urdf", physicsClient=physicsClient) for i in range(25) ]
+iotas = [ iOTA("../iota/absolute/iota.urdf", physicsClient=physicsClient) for i in range(25) ]
 
 base_pos=p.getBasePositionAndOrientation(car)[0]
 particle_optim = [ list(p.getBasePositionAndOrientation(iota.id)[0]) for iota in iotas ]
@@ -152,7 +152,7 @@ for i in range(25):
        B[ii][jj]=150
        neighbour(B,ii,jj,100)
        #second_neighbour(B,ii,jj,50)
-    
+
 
 
 D[i_target][j_target]=2
@@ -165,34 +165,34 @@ while index_i>=0:
    index_j =j_target
    while index_j >=0:
          neighbour(D,index_i,index_j,(D[index_i][index_j]+1))
-         index_j=index_j-1 
+         index_j=index_j-1
    index_i=index_i-1
 
-index_i =i_target 
-   
+index_i =i_target
+
 while index_i<i_max:
    index_j =j_target
    while index_j <j_max:
          neighbour(D,index_i,index_j,(D[index_i][index_j]+1))
-         index_j=index_j+1 
+         index_j=index_j+1
    index_i=index_i+1
 
 index_i =i_target
-   
+
 while index_i<i_max:
    index_j =j_target
    while index_j >=0:
          neighbour(D,index_i,index_j,(D[index_i][index_j]+1))
-         index_j=index_j-1 
+         index_j=index_j-1
    index_i=index_i+1
 
 index_i =i_target
-   
+
 while index_i>=0:
    index_j =j_target
    while index_j <j_max:
          neighbour(D,index_i,index_j,(D[index_i][index_j]+1))
-         index_j=index_j+1 
+         index_j=index_j+1
    index_i=index_i-1
 
 D[i_target][j_target]=-150
@@ -221,8 +221,8 @@ pre=(i_base,j_base-1)
 while (run_i!=i_target or run_j!=j_target):
   pos = list_n(Final,run_i,run_j,pre)
   #print(pos)
-  
-  pre = (run_i,run_j)  
+
+  pre = (run_i,run_j)
   run_i=pos[0]
   run_j=pos[1]
   i_p = (0.5*pos[0]+min_pos[0])
@@ -230,9 +230,9 @@ while (run_i!=i_target or run_j!=j_target):
   k_p = 0.01
   print(i_p,j_p)
   path.append([i_p,j_p])
-  pathway = p.loadURDF("random.urdf",basePosition=[i_p,j_p,k_p])
+  pathway = p.loadURDF("dot.urdf",basePosition=[i_p,j_p,k_p])
   #k=k+1
-  
+
 while(1):
    p.stepSimulation()
 time.sleep(0.05)
