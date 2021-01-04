@@ -87,6 +87,8 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
 			for i in range(num_bots):
 				pos, orn = p.getBasePositionAndOrientation(boxId[i])
 				cubePos.append(pos)
+				if debug == True:
+					p.addUserDebugText(str(boxId[i]), [pos[0],pos[1],pos[2]+0.2],[255,0,0])
 
 			on_whole = {}
 			for i in range(num_bots):
@@ -123,7 +125,8 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
 					g = int(np.random.normal(0,0.8,1)*255)
 					b = int(np.random.normal(0,0.7,1)*255)
 					for o in range(len(parent)):
-						p.addUserDebugLine(groups[i][o],groups[i][parent[o]],[r,g,b])
+						if parent[o]!=-1:
+							p.addUserDebugLine(groups[i][o],groups[i][parent[o]],[r,g,b])
 
 			#pause
 			print("**Enter q to continue:")
