@@ -128,7 +128,7 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
 			#pause
 			print("**Enter q to continue:")
 			while input() == 'q':
-				break	
+				break
 
 		time.sleep(1./240.)
 
