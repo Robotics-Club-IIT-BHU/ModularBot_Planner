@@ -7,5 +7,5 @@
 ### Executing the files 
 In terminal
 ```
-python3 main.py --num_bots 8 --num_clusters 2 --seed 0
+python3 main.py --num_bots 8 --num_clusters 2 --seed 0 --debug False
 ```

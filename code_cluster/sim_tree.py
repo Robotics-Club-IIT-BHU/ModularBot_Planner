@@ -56,7 +56,7 @@ def form_cluster(X, n_clusters=2):
 	print(f"--> cluster label {Kmean.labels_}")
 	return Kmean.labels_
 
-def sim(num_bots=8,seed=0,num_clusters=2):
+def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
 	#random seed
 	np.random.seed(seed)
 	#setup
@@ -68,7 +68,7 @@ def sim(num_bots=8,seed=0,num_clusters=2):
 	#loading all objects with same orientation
 	cubeStartOrientation = p.getQuaternionFromEuler([0,0,0])
 	#loading positions
-	area = num_bots
+	area = num_bots/10
 	cubeStartPos = np.random.randint(low=[-area,-area,0], high=[area,area,1], size=(num_bots,3),dtype=np.int8)
 	print("cube poses ",cubeStartPos)
 
@@ -110,15 +110,25 @@ def sim(num_bots=8,seed=0,num_clusters=2):
 				#box ids
 				dictionaries[i].append(dd)
 
-				# print("groups ",groups)
-				# print("dictionay ", dictionaries)
-
 				# calling func to create graph
 				for _ in range(3):
 					print("")
 				print(f"------------- %%creating cluster #{i+1} %% -------------")
-				parents[i].append(create_tree(groups[i],dictionaries[i][0]))
+				#store parent connections
+				parent = create_tree(groups[i],dictionaries[i][0])
+				parents[i].append(parent)
+				#add debugging lines
+				if debug==True:
+					r = int(np.random.normal(0,0.5,1)*255)
+					g = int(np.random.normal(0,0.8,1)*255)
+					b = int(np.random.normal(0,0.7,1)*255)
+					for o in range(len(parent)):
+						p.addUserDebugLine(groups[i][o],groups[i][parent[o]],[r,g,b])
 
+			#pause
+			print("**Enter q to continue:")
+			while input() == 'q':
+				break	
 
 		time.sleep(1./240.)
 
