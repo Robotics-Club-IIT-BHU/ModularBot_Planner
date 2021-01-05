@@ -19,5 +19,5 @@ if opt.debug is True:
 ######################################################################
 #starting sim and ending
 # --------
-help(sim)
+# help(sim)
 sim(num_bots=opt.num_bots, seed=opt.seed, num_clusters=opt.num_clusters, debug=opt.debug)

@@ -159,7 +159,7 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
 					b = int(np.random.normal(0,0.7,1)*255)
 					for o in range(len(parent)):
 						if parent[o]!=-1:
-							p.addUserDebugLine(groups[i][o],groups[i][parent[o]],[r,g,b])
+							p.addUserDebugLine(groups[i][o],groups[i][parent[o]],[0,0,0],2)
 
 			if debug == True:
 				#pause
