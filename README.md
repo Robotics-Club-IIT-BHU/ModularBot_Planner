@@ -1,5 +1,8 @@
 # ModularBot_Planner
 This is your virtual world derby to break and make bots as you wish
+
+![](ezgif.com-gif-maker.gif)
+
 ## ToDo
 - [ ] Make a whole set of challenges and obstacles.
 - [ ] Try out few clustering algorithms to see which makes more sense to use here.
