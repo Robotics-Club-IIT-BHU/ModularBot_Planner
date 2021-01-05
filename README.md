@@ -1,5 +1,5 @@
 # ModularBot_Planner
-Swarm robotics
+*Swarm robotics*:
 Our primary goal is create [swarm intelligence](https://en.wikipedia.org/wiki/Swarm_intelligence) as seen in animals and insects such as bees and schools of fishes, in a collection of bots by making them learn planning algorithms which help coordinate between themselves in creating a unified system.</br>
 A key component is the communication between the members of the group that build a system of constant feedback. The swarm behaviour involves constant change of individuals in cooperation with others, as well as the behaviour of the whole group. The main features to tackle in such a system which may have hundreds and thousands of bots are to simplify and miniaturization of the problem so that it can be tackled locally.</br>
 One way to achieve that is shown here is to create a decentralized system by creating clusters and cluster heads and allowing local computation to occur hence reducing the overall complexity and computation. The cluster nodes are connected and controlled using [minimum spanning tree](https://en.wikipedia.org/wiki/Minimum_spanning_tree), which connects nodes without any cycles and with minimum possible edges and edge weights.
