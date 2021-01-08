@@ -11,17 +11,28 @@ from mst import Graph
 
 
 def create_tree(cubePos, dicts):
+	"""
+	Create minimum spaning tree with nodes
+
+	Parameters:
+	cubePos : position of all nodes in 3d space
+	dicts : mapping from cluster index to box id to uniquely identify boxes
+
+	Return :
+	parent : list of parent vertex indicies
+	"""
+
 	#converting list->np array for better handling
 	cubePos = np.array(cubePos)
 
 	print(f'--> Cube shape {cubePos.shape} \n pos\n{cubePos}')
 
-	#-------------building graph and mst--------------
+	#-------------building graph and minimum spaning tree--------------
 	nodes = cubePos.shape[0]
 	g = Graph(nodes, dicts)
 
 	#creating graph (edges to nodes)
-	#finding distances from one to all other nodes
+	#finding distances between each node
 	dis_oth = np.zeros(nodes,np.float32)
 
 	for i in range(nodes):
@@ -29,7 +40,7 @@ def create_tree(cubePos, dicts):
 			distance = 0
 			for k in range(3):
 				distance += (cubePos[i][k]-cubePos[j][k])**2
-
+			#creating edge with weight distance
 			g.makeEdge(i,j,math.sqrt(distance*1.0))
 
 		for l in range(nodes):
@@ -50,6 +61,16 @@ def create_tree(cubePos, dicts):
 	return parent
 
 def form_cluster(X, n_clusters=2):
+	"""
+	Form clusters from given points in 3d space using k means algorithm
+
+	Parameters:
+	X : collection of 3d points to be put into clusters
+	n_clusters : equal to argument num_clusters, number clusters to be formed
+
+	Return:
+	labels : list of labels of cluster to which the points belong
+	"""
 	Kmean = KMeans(n_clusters=n_clusters)
 	Kmean.fit(X)
 	print(f"--> cluster centers {Kmean.cluster_centers_}")
@@ -57,6 +78,15 @@ def form_cluster(X, n_clusters=2):
 	return Kmean.labels_
 
 def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
+	"""
+	Spawn blocks and call clustering related functions
+
+	Parameters:
+	num_bots : number of bots to spawn
+	seed : random seed
+	num_clusters : number of clusters to group data into
+	debug : bool - help in debugging and visualisation
+	"""
 	#random seed
 	np.random.seed(seed)
 	#setup
@@ -68,8 +98,9 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
 	#loading all objects with same orientation
 	cubeStartOrientation = p.getQuaternionFromEuler([0,0,0])
 	#loading positions
-	area = num_bots/10
-	cubeStartPos = np.random.randint(low=[-area,-area,0], high=[area,area,1], size=(num_bots,3),dtype=np.int8)
+	area = num_bots
+	cubeStartPos = np.random.randint(low=-area,high=area,size=(num_bots,2))
+	cubeStartPos = np.append(cubeStartPos, np.zeros((num_bots,1)), axis=1)
 	print("cube poses ",cubeStartPos)
 
 	#save all boxes
@@ -116,9 +147,11 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
 				for _ in range(3):
 					print("")
 				print(f"------------- %%creating cluster #{i+1} %% -------------")
+
 				#store parent connections
 				parent = create_tree(groups[i],dictionaries[i][0])
 				parents[i].append(parent)
+
 				#add debugging lines
 				if debug==True:
 					r = int(np.random.normal(0,0.5,1)*255)
@@ -126,12 +159,13 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
 					b = int(np.random.normal(0,0.7,1)*255)
 					for o in range(len(parent)):
 						if parent[o]!=-1:
-							p.addUserDebugLine(groups[i][o],groups[i][parent[o]],[r,g,b])
+							p.addUserDebugLine(groups[i][o],groups[i][parent[o]],[0,0,0],2)
 
-			#pause
-			print("**Enter q to continue:")
-			while input() == 'q':
-				break
+			if debug == True:
+				#pause
+				print("**Enter q to continue:")
+				while input() == 'q':
+					break
 
 		time.sleep(1./240.)
 

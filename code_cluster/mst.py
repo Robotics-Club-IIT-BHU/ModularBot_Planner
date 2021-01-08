@@ -8,27 +8,52 @@ class Graph:
 		self.graph = np.array(self.graph)
 		self.dicts = dicts
 
-	#edit graph manually
+
 	def makeEdge(self,v1,v2,weight):
+		"""
+		Create any edge between two points
+
+		Parameters:
+		v1 : vertice one
+		v2 : vertice two
+		weight : edge weight
+		"""
 
 		self.graph[v1][v2] = weight;
 		self.graph[v2][v1] = weight;
 
-	#print graph
-	def printGraph(self):
 
+	def printGraph(self):
+		"""
+		Print graph
+		"""
 		print(self.graph)
 
-	#print nodes along with parent
+
 	def printTree(self,parent):
-		print('parent child')
+		"""
+		Print each node's parent in mst
+
+		Parameter:
+		parent : array of vertices of parents
+		"""
+		print('parent 			child')
 		for v in range(self.vertices):
 			if parent[v]==-1:
 				continue
-			print(f'parent {parent[v]} boxid:{self.dicts[parent[v]]} - {v} boxid:{self.dicts[v]} (weight {self.graph[v][parent[v]]})')
+			print(f'{parent[v]} boxid:{self.dicts[parent[v]]} - {v} boxid:{self.dicts[v]} (weight {self.graph[v][parent[v]]})')
 
-	#find the vertex with least key value not included in mstSet
 	def minKey(self,mstSet,key):
+		"""
+		Find the vertex with least key value not included in mstSet
+
+		Parameter:
+		mstSet : set of visited or traversed nodes
+		key : list of distances or weights between nodes
+
+		Return:
+		min_index : list of index closest to given node
+		"""
 
 		min = sys.maxsize
 		min_index = None
@@ -40,8 +65,16 @@ class Graph:
 
 		return min_index 
 
-	#build the minimum spanning tree
 	def mnst(self,head):
+		"""
+		Build the minimum spanning tree
+
+		Parameter:
+		head : starting node index
+
+		Return:
+		parent : list of indices of parent of nodes
+		"""
 
 		#creating the key list
 		key = [sys.maxsize]*self.vertices
