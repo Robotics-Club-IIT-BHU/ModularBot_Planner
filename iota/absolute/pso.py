@@ -5,8 +5,8 @@ import numpy as np
 rnd = np.random.random
 
 class iOTA():
-    arena_x = 5
-    arena_y = 5
+    arena_x = 2
+    arena_y = 2
     l_wheels = [15, 19]
     r_wheels = [17, 21]
     docks = [25, 11]
@@ -56,15 +56,15 @@ class iOTA():
 
 def distance(pos, target):
     return ((pos[0]-target[0])**2+(pos[1]-target[1])**2)
-
 pClient = p.connect(p.GUI)
 
 
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
 p.setGravity(0,0,-10)
 p.loadURDF('plane.urdf')
+
 iotas = [ iOTA("iota.urdf", physicsClient=pClient) for i in range(40) ]
-box = p.loadURDF("dabba.urdf", basePosition=((5*(rnd()-0.5)/0.5),(5*(rnd()-0.5)/0.5),0.08 ))
+box = p.loadURDF("dabba.urdf", basePosition=(-1,0,0.1 ))
 target = p.getBasePositionAndOrientation(box, pClient)[0]
 #poses = [list(p.getBasePositionAndOrientation(iota.id, pClient)[0]) for iota in iotas]
 particle_optim = [ list(p.getBasePositionAndOrientation(iota.id)[0]) for iota in iotas ]
