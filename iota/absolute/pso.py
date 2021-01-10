@@ -1,11 +1,12 @@
 import pybullet as p
 import pybullet_data
 import numpy as np
+import math
 rnd = np.random.random
 
 class iOTA():
-    arena_x = 3
-    arena_y = 3
+    arena_x = 2
+    arena_y = 2
     l_wheels = [15, 19]
     r_wheels = [17, 21]
     docks = [25, 11]
@@ -22,13 +23,13 @@ class iOTA():
                             physicsClientId=self.pClient)
 
     def init_pos(self):
-        return [arena_x*(rnd()-0.5)/0.5,
-                arena_y*(rnd()-0.5)/0.5,
+        return [self.arena_x*(rnd()-0.5)/0.5,
+                self.arena_y*(rnd()-0.5)/0.5,
                 0.001
                 ]
     def dist(self, target):
         pos = p.getBasePositionAndOrientation(self.id, physicsClientId=self.pClient)[0]
-        return sqrt((target[0]-pos[0])**2 + (target[1]-pos[1])**2)
+        return math.sqrt((target[0]-pos[0])**2 + (target[1]-pos[1])**2)
     def control(self,velocity_vector):
         '''
         Implement differencial drive for one time step
@@ -42,9 +43,10 @@ pClient = p.connect(p.GUI)
 
 
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
+p.loadURDF('plane.urdf')
 p.setGravity(0,0,-10)
-iotas = [ iOTA("iota.urdf") for i in range(6) ]
-box = p.loadURDF("dabba.urdf", basePosition=((3*(rnd()-0.5)/0.5),(3*(rnd()-0.5)/0.5),0.08 ))
+iotas = [ iOTA("iota.urdf",physicsClient=pClient) for i in range(6) ]
+box = p.loadURDF("dabba.urdf", basePosition=(1,0,0.1))
 target = p.getBasePositionAndOrientation(box, pClient)[0]
 particle_optim = [ list(p.getBasePositionAndOrientation(iota.id)[0]) for iota in iotas]
 global_optim = (0,0,0.08)
