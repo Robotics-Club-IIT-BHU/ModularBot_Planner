@@ -72,10 +72,16 @@ def list_n(V,i,j,pre):
 
     return min(a_dash, key = lambda x: V[x[0]][x[1]])
 
-def planning(base_pos, target_pos, ratio, obstacles,debug=False):
+def planning(base_pos, target_pos, obstacles, ratio,debug=False):
     '''
-    This does the planning required for
+    This does the planning using Potential Field Algorithm
+    args:
+        Base Position, Target Position, Positions of obstacles, Ratio for resolution, Debug flag to display additional info
+    returns:
+        X vector of coordinates, Y vector of coordinates.
     '''
+
+    t = time.time()
 
     min_pos = [-5,-5,0] ## Needs to be changed
     max_pos = [5,5,0] ## Needs to be changed
@@ -166,10 +172,13 @@ def planning(base_pos, target_pos, ratio, obstacles,debug=False):
         pre = (run_i, run_j)
         run_i=pos[0]
         run_j=pos[1]
-        i_p = (0.5*pos[0]+min_pos[0])
-        j_p =(0.5*pos[1]+min_pos[1])
+        i_p = (0.5/ratio*pos[0]+min_pos[0])
+        j_p =(0.5/ratio*pos[1]+min_pos[1])
         k_p = 0.01
         x.append(i_p)
         y.append(j_p)
 
-    return x,y 
+    if debug:
+        print(time.time()-t)
+
+    return x,y

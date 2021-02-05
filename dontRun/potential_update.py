@@ -4,15 +4,17 @@ import time
 import math
 import pybullet_data
 from cubic_spline import Spline2D
+from iOTA import iOTA
 rnd = np.random.random
 physicsClient = p.connect(p.GUI)
 
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
-p.setGravity(0,0,-50)
+p.setGravity(0,0,-10)
 
+'''
 class iOTA():
-    arena_x = 3
-    arena_y = 3
+    arena_x = 1.5
+    arena_y = 1.5
     def __init__(self, path=None, physicsClient=None):
         if path is None:
             path="urdf/dabba.urdf"
@@ -26,6 +28,7 @@ class iOTA():
                 self.arena_y*(rnd()-0.5)/0.5,
                 0.001
                 ]
+'''
 
 
 def neighbour(X,i,j,v):
@@ -148,14 +151,14 @@ def quaternion_to_euler(x, y, z, w):
 
 ## Spawining plane, dabba, and self and other cars as obstacle.
 planeID = p.loadURDF("plane.urdf")
-dabba = p.loadURDF("dot.urdf",basePosition=[2,3,0])
-car = p.loadURDF("../iota/absolute/iota.urdf")
+dabba = p.loadURDF("dot.urdf",basePosition=[0,1.5,0])
+car = iOTA("../iota/absolute/iota.urdf",physicsClient=physicsClient,arena=[1.5,1.5])
 min_pos = [-5,-5,0]       ## A grid world setup with corner
 max_pos = [5,5,0]         ## A grid world setup with corner
 target_pos = p.getBasePositionAndOrientation(dabba)[0]  ## SETPOINT
-iotas = [ iOTA("../iota/absolute/iota.urdf", physicsClient=physicsClient) for i in range(50) ]
+iotas = [ iOTA("../iota/absolute/iota.urdf", physicsClient=physicsClient, arena=[1.5,1.5]) for i in range(50) ]
 
-base_pos=p.getBasePositionAndOrientation(car)[0]    ## Self location
+base_pos=car.get_pos()[0]    ## Self location
 particle_optim = [ list(p.getBasePositionAndOrientation(iota.id)[0]) for iota in iotas ]    ## Location of all the obstacles
 
 print("\n"+ 5*"=" + "SPAWNED ALL BOTS" + 5*"="+"\n")
@@ -263,8 +266,8 @@ while (run_i!=i_target or run_j!=j_target):
   pre = (run_i,run_j)
   run_i=pos[0]
   run_j=pos[1]
-  i_p = (0.5*pos[0]+min_pos[0])
-  j_p =(0.5*pos[1]+min_pos[1])
+  i_p = (0.5/rto*pos[0]+min_pos[0])
+  j_p =(0.5/rto*pos[1]+min_pos[1])
   k_p = 0.01
   #print(i_p,j_p)
   x.append(i_p)
@@ -293,8 +296,26 @@ plt.xlabel("x[m]")
 plt.ylabel("y[m]")
 plt.legend()
 plt.show()
+
+## Implementation Notes
 i = 0
-while i<500:
-   p.stepSimulation(0.1)
-   i+=1
+ds = 0.05
+sp = Spline2D(x,y)
+s = np.arange(0,sp.s[-1], ds)
+rx ,ry = [],[]
+for i_s in s:
+    ix, iy = sp.calc_position(i_s)
+    rx.append(ix)
+    ry.append(iy)
+rx = np.array(rx).reshape(-1,1)
+ry = np.array(ry).reshape(-1,1)
+vecx = np.diff(rx, axis=0)
+vecy = np.diff(ry, axis=0)
+while True:
+    bp =car.get_pos()[0]
+
+    while ((rx[i]-bp[0])**2+(ry[i]-bp[1])**2) > 0.1:
+        car.control((50 * (rx[i]-bp[0]) , 50*(ry[i]-bp[1]) ))
+        p.stepSimulation()
+    i+=1
 time.sleep(0.05)
