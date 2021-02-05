@@ -11,8 +11,8 @@ p.setAdditionalSearchPath(pybullet_data.getDataPath())
 p.setGravity(0,0,-50)
 
 class iOTA():
-    arena_x = 10
-    arena_y = 14
+    arena_x = 3
+    arena_y = 3
     def __init__(self, path=None, physicsClient=None):
         if path is None:
             path="urdf/dabba.urdf"
@@ -148,21 +148,26 @@ def quaternion_to_euler(x, y, z, w):
 
 ## Spawining plane, dabba, and self and other cars as obstacle.
 planeID = p.loadURDF("plane.urdf")
-dabba = p.loadURDF("dot.urdf",basePosition=[10,5,0])
+dabba = p.loadURDF("dot.urdf",basePosition=[2,3,0])
 car = p.loadURDF("../iota/absolute/iota.urdf")
-min_pos = [-20,-20,0]       ## A grid world setup with corner
-max_pos = [20,20,0]         ## A grid world setup with corner
+min_pos = [-5,-5,0]       ## A grid world setup with corner
+max_pos = [5,5,0]         ## A grid world setup with corner
 target_pos = p.getBasePositionAndOrientation(dabba)[0]  ## SETPOINT
-iotas = [ iOTA("../iota/absolute/iota.urdf", physicsClient=physicsClient) for i in range(25) ]
+iotas = [ iOTA("../iota/absolute/iota.urdf", physicsClient=physicsClient) for i in range(50) ]
 
 base_pos=p.getBasePositionAndOrientation(car)[0]    ## Self location
 particle_optim = [ list(p.getBasePositionAndOrientation(iota.id)[0]) for iota in iotas ]    ## Location of all the obstacles
 
+print("\n"+ 5*"=" + "SPAWNED ALL BOTS" + 5*"="+"\n")
+
+t = time.time()
+
+rto = 5
 
 ## Getting the coordinates in grid world coordinates i.e., Indices of cell
-[i_base,j_base]= [2*int(round(10*(base_pos[0]-min_pos[0]))),2*int(round(10*(base_pos[1]-min_pos[1])))]   ## Multiplied with 10 to increase the resolution of the grid world
-[i_max,j_max]= [2*int(round(10*(max_pos[0]-min_pos[0]))),2*int(round(10*(max_pos[1]-min_pos[1])))]
-[i_target,j_target]=[2*int(round(10*(target_pos[0]-min_pos[0]))), 2*int(round(10*(target_pos[1]-min_pos[1])))]
+[i_base,j_base]= [2*int(round(rto*(base_pos[0]-min_pos[0]))),2*int(round(rto*(base_pos[1]-min_pos[1])))]   ## Multiplied with 10 to increase the resolution of the grid world
+[i_max,j_max]= [2*int(round(rto*(max_pos[0]-min_pos[0]))),2*int(round(rto*(max_pos[1]-min_pos[1])))]
+[i_target,j_target]=[2*int(round(rto*(target_pos[0]-min_pos[0]))), 2*int(round(rto*(target_pos[1]-min_pos[1])))]
 
 ## Initializing lookup tables
 D=[[0] * (j_max+1) for i in range(i_max+1)] ## positive Potential due to target
@@ -170,10 +175,10 @@ D=[[0] * (j_max+1) for i in range(i_max+1)] ## positive Potential due to target
 B=[[0] * (j_max+1) for i in range(i_max+1)] ## monotonic potential due to obstacles
 Final=[[0] * (j_max+1) for i in range(i_max+1)]
 
-for i in range(25):
+for i in range(50):
     ## Doing the same conversion into indicies for all the obstacles
-    ii = 2*int(round(10*(particle_optim[i][0]-min_pos[0])))
-    jj =  2*int(round(10*(particle_optim[i][1]-min_pos[1])))
+    ii = 2*int(round(rto*(particle_optim[i][0]-min_pos[0])))
+    jj =  2*int(round(rto*(particle_optim[i][1]-min_pos[1])))
    # print(ii,jj)
     if(ii>=0 and jj>=0):## If valid point as min_pos is used
        B[ii][jj]=150
@@ -269,6 +274,7 @@ while (run_i!=i_target or run_j!=j_target):
   #pathway = p.loadURDF("dot.urdf",basePosition=[i_p,j_p,k_p])
   #k=k+1
 
+print("\nTime Elapsed: ",time.time()-t,"\n")
 ds = 0.05
 sp = Spline2D(x, y)
 import matplotlib.pyplot as plt
@@ -288,6 +294,8 @@ plt.xlabel("x[m]")
 plt.ylabel("y[m]")
 plt.legend()
 plt.show()
-while(1):
-   p.stepSimulation()
+i = 0
+while i<500:
+   p.stepSimulation(0.1)
+   i+=1
 time.sleep(0.05)
