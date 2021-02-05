@@ -170,10 +170,10 @@ rto = 5
 [i_target,j_target]=[2*int(round(rto*(target_pos[0]-min_pos[0]))), 2*int(round(rto*(target_pos[1]-min_pos[1])))]
 
 ## Initializing lookup tables
-D=[[0] * (j_max+1) for i in range(i_max+1)] ## positive Potential due to target
+D = np.array([[0 for j in range(j_max+1)] for i in range(i_max+1)]) ## positive Potential due to target
 
-B=[[0] * (j_max+1) for i in range(i_max+1)] ## monotonic potential due to obstacles
-Final=[[0] * (j_max+1) for i in range(i_max+1)]
+B = np.array([[0 for j in range(j_max+1)] for i in range(i_max+1)]) ## monotonic potential due to obstacles
+Final = np.array([[0 for j in range(j_max+1)] for i in range(i_max+1)])
 
 for i in range(50):
     ## Doing the same conversion into indicies for all the obstacles
