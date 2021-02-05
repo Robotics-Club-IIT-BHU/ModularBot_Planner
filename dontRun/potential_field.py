@@ -1,5 +1,4 @@
 import numpy as np
-import pybullet as p
 import time
 import math
 
@@ -72,3 +71,105 @@ def list_n(V,i,j,pre):
                     a_dash.append((i+di, j+dj))
 
     return min(a_dash, key = lambda x: V[x[0]][x[1]])
+
+def planning(base_pos, target_pos, ratio, obstacles,debug=False):
+    '''
+    This does the planning required for
+    '''
+
+    min_pos = [-5,-5,0] ## Needs to be changed
+    max_pos = [5,5,0] ## Needs to be changed
+
+    ## Getting the coordinates in grid world coordinates i.e., Indices of cell
+    [i_base,j_base]= [2*int(round(ratio*(base_pos[0]-min_pos[0]))),2*int(round(ratio*(base_pos[1]-min_pos[1])))]   ## Multiplied with 10 to increase the resolution of the grid world
+    [i_max,j_max]= [2*int(round(ratio*(max_pos[0]-min_pos[0]))),2*int(round(ratio*(max_pos[1]-min_pos[1])))]
+    [i_target,j_target]=[2*int(round(ratio*(target_pos[0]-min_pos[0]))), 2*int(round(ratio*(target_pos[1]-min_pos[1])))]
+
+    ## Initializing lookup tables
+    D = np.array([[0 for j in range(j_max+1)] for i in range(i_max+1)])     ## positive Potential due to target
+    B = np.array([[0 for j in range(j_max+1)] for i in range(i_max+1)])     ## monotonic potential due to obstacles
+    Final = np.array([[0 for j in range(j_max+1)] for i in range(i_max+1)])
+
+    for obstacle in obstacles:
+        ## Doing the same conversion into indicies for all the obstacles
+        ii = 2*int(round(rto*(particle_optim[i][0]-min_pos[0])))
+        jj =  2*int(round(rto*(particle_optim[i][1]-min_pos[1])))
+        if(ii>=0 and jj>=0): ## If valid point as min_pos is used
+           B[ii][jj]=150
+           neighbour(B,ii,jj,100)
+    D[i_target][j_target]=2
+    index_i = i_target
+    v=2
+
+
+    ## Each while loop to facilitate a corner of the grid world
+
+    while index_i>=0:
+       index_j = j_target
+       while index_j >=0:
+             neighbour(D,index_i,index_j,(D[index_i][index_j]+1))
+             ## marking higher potential for neighbourhood
+             ## the gradient is +1 per cell in all directions
+             ## loop runs from i_target, j_target to (0,0)
+             index_j=index_j-1
+       index_i=index_i-1
+
+    index_i =i_target
+
+    while index_i<i_max:
+       index_j =j_target
+       while index_j <j_max:
+             neighbour(D,index_i,index_j,(D[index_i][index_j]+1))
+             ## marking higher potential for neighbourhood
+             ## the gradient is +1 per cell in all directions
+             ## loop runs from i_target, j_target to (i_max,j_max)
+             index_j=index_j+1
+       index_i=index_i+1
+
+    index_i =i_target
+
+    while index_i<i_max:
+       index_j =j_target
+       while index_j >=0:
+             neighbour(D,index_i,index_j,(D[index_i][index_j]+1))
+             ## marking higher potential for neighbourhood
+             ## the gradient is 1 per cell in all directions
+             ## loop runs from i_target, j_target to (i_max,0)
+             index_j=index_j-1
+       index_i=index_i+1
+
+    index_i =i_target
+
+    while index_i>=0:
+       index_j =j_target
+       while index_j <j_max:
+             neighbour(D,index_i,index_j,(D[index_i][index_j]+1))
+             ## marking higher potential for neighbourhood
+             ## the gradient is 1 per cell in all directions
+             ## loop runs from i_target, j_target to (0,j_max)
+             index_j=index_j+1
+       index_i=index_i-1
+
+    ## Setting the target potential to the minimum
+    D[i_target][j_target]=-150
+
+    for run_i in range(i_max+1):
+        for run_j in range(j_max+1):
+            Final[run_i][run_j] = B[run_i][run_j] +D[run_i][run_j]
+            ## super-imposing the two Potential fields
+    run_i = i_base
+    run_j = j_base
+    pre=(i_base,j_base-1)
+    x, y = [], []
+    while (run_i!=i_target or run_j!=j_target):
+        pos = list_n(Final,run_i,run_j,pre)
+        pre = (run_i, run_j)
+        run_i=pos[0]
+        run_j=pos[1]
+        i_p = (0.5*pos[0]+min_pos[0])
+        j_p =(0.5*pos[1]+min_pos[1])
+        k_p = 0.01
+        x.append(i_p)
+        y.append(j_p)
+
+    return x,y 
