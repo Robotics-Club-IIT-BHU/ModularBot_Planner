@@ -89,7 +89,9 @@ def cluster(cubePos, botIds, num_clusters, debug=False):
     debug : Flag to enable debugging or auxilary outputs
 
     Return:
-    None : None
+    parents : For each cluster contains details of its Minimum Spanning Tree by having parent index of each bot
+    groups : Stores the 3D coordinates for each bot in each cluster
+    dictionaries : Maps from the cluster index to the spawned id for each bot in each cluster
     """
     on_whole = {}
     for i in range(len(botIds)):
@@ -132,7 +134,7 @@ def cluster(cubePos, botIds, num_clusters, debug=False):
             for o in range(len(parent)):
                 if parent[o]!=-1:
                     p.addUserDebugLine(groups[i][o],groups[i][parent[o]], [r,g,b], 2)
-    return parents, group
+    return parents, groups, dictionaries
 	
 def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
     """
@@ -176,7 +178,7 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
             for i in range(num_bots):
                 pos, _ = p.getBasePositionAndOrientation(boxId[i])
                 cubePos.append(pos)
-            print(cluster(cubePos, boxId, num_clusters, debug))			
+            cluster(cubePos, boxId, num_clusters, debug)			
         i+=1
         time.sleep(1./240.)
     
