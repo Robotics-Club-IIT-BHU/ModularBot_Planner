@@ -98,9 +98,9 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
 	#loading all objects with same orientation
 	cubeStartOrientation = p.getQuaternionFromEuler([0,0,0])
 	#loading positions
-	area = num_bots
-	cubeStartPos = np.random.randint(low=-area,high=area,size=(num_bots,2))
-	cubeStartPos = np.append(cubeStartPos, np.zeros((num_bots,1)), axis=1)
+	area = 3
+	cubeStartPos = 2*area*(np.random.random((num_bots,2)) - 0.5)
+	cubeStartPos = np.append(cubeStartPos, 0.01*np.ones((num_bots,1)), axis=1)
 	print("cube poses ",cubeStartPos)
 
 	#save all boxes
@@ -159,7 +159,7 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
 					b = int(np.random.normal(0,0.7,1)*255)
 					for o in range(len(parent)):
 						if parent[o]!=-1:
-							p.addUserDebugLine(groups[i][o],groups[i][parent[o]],[0,0,0],2)
+							p.addUserDebugLine(groups[i][o],groups[i][parent[o]], [r,g,b], 2)
 
 			if debug == True:
 				#pause
