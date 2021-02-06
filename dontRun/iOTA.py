@@ -92,7 +92,7 @@ class iOTA():
         if vel_vec[0]<0:
             set_vec += np.pi
         r = sqrt(vel_vec[0]**2 + vel_vec[1]**2)                                     ## The Magnitude of velocity
-        print(set_vec, yaw)
+        #print(set_vec, yaw)
         theta = set_vec - yaw                                                       ## The amount of angle to be rotated
         ## Please REMEMBER the orientation is inverse hence the sign is inversed
         for_vec = [-np.cos(theta)*r, -np.cos(theta)*r]                                ## Components of Velocity - Forward

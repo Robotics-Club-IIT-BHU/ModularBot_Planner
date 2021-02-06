@@ -152,11 +152,11 @@ def quaternion_to_euler(x, y, z, w):
 ## Spawining plane, dabba, and self and other cars as obstacle.
 planeID = p.loadURDF("plane.urdf")
 dabba = p.loadURDF("dot.urdf",basePosition=[0,1.5,0])
-car = iOTA("../iota/absolute/iota.urdf",physicsClient=physicsClient,arena=[1.5,1.5])
+car = iOTA("../iota/absolute/iota.urdf",physicsClient=physicsClient,arena=[1,1])
 min_pos = [-5,-5,0]       ## A grid world setup with corner
 max_pos = [5,5,0]         ## A grid world setup with corner
 target_pos = p.getBasePositionAndOrientation(dabba)[0]  ## SETPOINT
-iotas = [ iOTA("../iota/absolute/iota.urdf", physicsClient=physicsClient, arena=[1.5,1.5]) for i in range(50) ]
+iotas = [ iOTA("../iota/absolute/iota.urdf", physicsClient=physicsClient, arena=[1,1]) for i in range(30) ]
 
 base_pos=car.get_pos()[0]    ## Self location
 particle_optim = [ list(p.getBasePositionAndOrientation(iota.id)[0]) for iota in iotas ]    ## Location of all the obstacles
@@ -177,7 +177,7 @@ D = np.array([[0 for j in range(j_max+1)] for i in range(i_max+1)])     ## posit
 B = np.array([[0 for j in range(j_max+1)] for i in range(i_max+1)])     ## monotonic potential due to obstacles
 Final = np.array([[0 for j in range(j_max+1)] for i in range(i_max+1)])
 
-for i in range(50):
+for i in range(30):
     ## Doing the same conversion into indicies for all the obstacles
     ii = 2*int(round(rto*(particle_optim[i][0]-min_pos[0])))
     jj =  2*int(round(rto*(particle_optim[i][1]-min_pos[1])))
@@ -314,8 +314,10 @@ vecy = np.diff(ry, axis=0)
 while True:
     bp =car.get_pos()[0]
 
-    while ((rx[i]-bp[0])**2+(ry[i]-bp[1])**2) > 0.1:
-        car.control((50 * (rx[i]-bp[0]) , 50*(ry[i]-bp[1]) ))
+    while ((rx[i]-bp[0])**2+(ry[i]-bp[1])**2) > 0.05:
+        car.control((100 * (rx[i][0]-bp[0]) , 100*(ry[i][0]-bp[1]) ))
         p.stepSimulation()
+        bp = car.get_pos()[0]
     i+=1
+    print(rx[i],ry[i])
 time.sleep(0.05)
