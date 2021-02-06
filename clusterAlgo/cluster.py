@@ -78,17 +78,22 @@ def form_cluster(X, n_clusters=2, debug=False):
         print(f"--> cluster label {Kmean.labels_}")
     return Kmean.labels_
 
-def cluster(boxId, num_bots, num_clusters, debug=False):
-    cubePos, cubeOrn = [], []
-    for i in range(num_bots):
-        pos, orn = p.getBasePositionAndOrientation(boxId[i])
-        cubePos.append(pos)
-        if debug == True:
-            p.addUserDebugText(str(boxId[i]), [pos[0],pos[1],pos[2]+0.2],[255,0,0])
+def cluster(cubePos, botIds, num_clusters, debug=False):
+    """
+    Clusters the objects and creates the Tree for each cluster
 
+    Parameters:
+    cubePos : set of 3D coordinates of each bot
+    botIds : spawned Id each of these bots
+    num_clusters : Numbers of clusters the bots must be divided into
+    debug : Flag to enable debugging or auxilary outputs
+
+    Return:
+    None : None
+    """
     on_whole = {}
-    for i in range(num_bots):
-        on_whole[i]=boxId[i]
+    for i in range(len(botsIds)):
+        on_whole[i]=botIds[i]
 
     km_labels = form_cluster(cubePos,num_clusters)
     groups = [[] for _ in range(num_clusters)]
@@ -126,7 +131,7 @@ def cluster(boxId, num_bots, num_clusters, debug=False):
             for o in range(len(parent)):
                 if parent[o]!=-1:
                     p.addUserDebugLine(groups[i][o],groups[i][parent[o]], [r,g,b], 2)
-    return km_labels 
+    return groups
 	
 def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
     """
@@ -166,7 +171,11 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
         p.stepSimulation()
 
         if i%100==0:
-            print(cluster(boxId, num_bots, num_clusters, debug=False))			
+            cubePos = []
+            for i in range(num_bots):
+                pos, _ = p.getBasePositionAndOrientation(boxId[i])
+                cubePos.append(pos)
+            print(cluster(cubePos, boxId, num_clusters, debug=False))			
         i+=1
         time.sleep(1./240.)
     
