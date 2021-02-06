@@ -1,7 +1,7 @@
 import numpy as np
 import time
 import math
-
+from multiprocessing import Pool
 def is_inside(i,j,i_max,j_max):
     '''
     This simply checks if the index (i,j) is in side the grid
@@ -72,51 +72,32 @@ def list_n(V,i,j,pre):
 
     return min(a_dash, key = lambda x: V[x[0]][x[1]])
 
-def planning(base_pos, target_pos, obstacles, ratio,debug=False):
+def planning_feedforward(base_pos, target_pos, B, min_pos, max_pos):
     '''
-    This does the planning using Potential Field Algorithm
+    This computes the path for the given obstacle lookup table this is independent for each bot.
     args:
-        Base Position, Target Position, Positions of obstacles, Ratio for resolution, Debug flag to display additional info
+        Base Position, Target Position, Lookup table of obstacles, Minimum position, Maximum position
     returns:
-        X vector of coordinates, Y vector of coordinates.
+        X vector of coordinates, Y vector of coordinates for the base and target position
     '''
-
-    t = time.time()
-
-    min_pos = [-5,-5,0] ## Needs to be changed
-    max_pos = [5,5,0] ## Needs to be changed
-
-    ## Getting the coordinates in grid world coordinates i.e., Indices of cell
+    
     [i_base,j_base]= [2*int(round(ratio*(base_pos[0]-min_pos[0]))),2*int(round(ratio*(base_pos[1]-min_pos[1])))]   ## Multiplied with 10 to increase the resolution of the grid world
     [i_max,j_max]= [2*int(round(ratio*(max_pos[0]-min_pos[0]))),2*int(round(ratio*(max_pos[1]-min_pos[1])))]
     [i_target,j_target]=[2*int(round(ratio*(target_pos[0]-min_pos[0]))), 2*int(round(ratio*(target_pos[1]-min_pos[1])))]
-
-    ## Initializing lookup tables
-    D = np.array([[0 for j in range(j_max+1)] for i in range(i_max+1)])     ## positive Potential due to target
-    B = np.array([[0 for j in range(j_max+1)] for i in range(i_max+1)])     ## monotonic potential due to obstacles
-    Final = np.array([[0 for j in range(j_max+1)] for i in range(i_max+1)])
-
-    for obstacle in obstacles:
-        ## Doing the same conversion into indicies for all the obstacles
-        ii = 2*int(round(rto*(particle_optim[i][0]-min_pos[0])))
-        jj =  2*int(round(rto*(particle_optim[i][1]-min_pos[1])))
-        if(ii>=0 and jj>=0): ## If valid point as min_pos is used
-           B[ii][jj]=150
-           neighbour(B,ii,jj,100)
+    D = np.array([[0 for j in range(j_max+2)] for i in range(i_max+2)])     ## positive Potential due to target
+    
+    ## Setting a low potential for the target.
     D[i_target][j_target]=2
     index_i = i_target
     v=2
 
-
     ## Each while loop to facilitate a corner of the grid world
-
+    ## marking higher potential for neighbourhood
+    ## the gradient is +1 per cell in all directions
     while index_i>=0:
        index_j = j_target
        while index_j >=0:
              neighbour(D,index_i,index_j,(D[index_i][index_j]+1))
-             ## marking higher potential for neighbourhood
-             ## the gradient is +1 per cell in all directions
-             ## loop runs from i_target, j_target to (0,0)
              index_j=index_j-1
        index_i=index_i-1
 
@@ -126,9 +107,6 @@ def planning(base_pos, target_pos, obstacles, ratio,debug=False):
        index_j =j_target
        while index_j <j_max:
              neighbour(D,index_i,index_j,(D[index_i][index_j]+1))
-             ## marking higher potential for neighbourhood
-             ## the gradient is +1 per cell in all directions
-             ## loop runs from i_target, j_target to (i_max,j_max)
              index_j=index_j+1
        index_i=index_i+1
 
@@ -138,9 +116,6 @@ def planning(base_pos, target_pos, obstacles, ratio,debug=False):
        index_j =j_target
        while index_j >=0:
              neighbour(D,index_i,index_j,(D[index_i][index_j]+1))
-             ## marking higher potential for neighbourhood
-             ## the gradient is 1 per cell in all directions
-             ## loop runs from i_target, j_target to (i_max,0)
              index_j=index_j-1
        index_i=index_i+1
 
@@ -150,12 +125,9 @@ def planning(base_pos, target_pos, obstacles, ratio,debug=False):
        index_j =j_target
        while index_j <j_max:
              neighbour(D,index_i,index_j,(D[index_i][index_j]+1))
-             ## marking higher potential for neighbourhood
-             ## the gradient is 1 per cell in all directions
-             ## loop runs from i_target, j_target to (0,j_max)
              index_j=index_j+1
        index_i=index_i-1
-
+    
     ## Setting the target potential to the minimum
     D[i_target][j_target]=-150
 
@@ -177,8 +149,54 @@ def planning(base_pos, target_pos, obstacles, ratio,debug=False):
         k_p = 0.01
         x.append(i_p)
         y.append(j_p)
+    
+    return x,y
+
+
+def wrapper(args):
+    '''
+    Helper function to unpack multiple arguements for the Pool.map
+    '''
+    
+    return planning_feedforward(*args)
+
+def planning(base_poses, target_poses, centroid, obstacles, ratio,debug=False):
+    '''
+    This does the planning using Potential Field Algorithm
+    args:
+        Base Positions, Target Positions, Positions of obstacles, Ratio for resolution, Debug flag to display additional info
+    returns:
+        X vector of coordinates, Y vector of coordinates for each base and target positions
+    '''
+
+    t = time.time()
+
+    min_pos = [np.array(obstacles)[:,0].min()-0.2,np.array(obstacles)[:,1].min()-0.2,0] ## Needs to be changed
+    max_pos = [np.array(obstacles)[:,0].max()+0.2,np.array(obstacles)[:,1].max()+0.2,0] ## Needs to be changed
+
+    ## Getting the coordinates in grid world coordinates i.e., Indices of cell
+    #[i_base,j_base]= [2*int(round(ratio*(base_pos[0]-min_pos[0]))),2*int(round(ratio*(base_pos[1]-min_pos[1])))]   ## Multiplied with 10 to increase the resolution of the grid world
+    [i_max,j_max]= [2*int(round(ratio*(max_pos[0]-min_pos[0]))),2*int(round(ratio*(max_pos[1]-min_pos[1])))]
+    #[i_target,j_target]=[2*int(round(ratio*(target_pos[0]-min_pos[0]))), 2*int(round(ratio*(target_pos[1]-min_pos[1])))]
+
+    ## Initializing lookup tables
+    B = np.array([[0 for j in range(j_max+1)] for i in range(i_max+1)])     ## monotonic potential due to obstacles
+    Final = np.array([[0 for j in range(j_max+1)] for i in range(i_max+1)])
+
+    for obstacle in obstacles:
+        ## Doing the same conversion into indicies for all the obstacles
+        ii = 2*int(round(rto*(particle_optim[i][0]-min_pos[0])))
+        jj = 2*int(round(rto*(particle_optim[i][1]-min_pos[1])))
+        if(ii>=0 and jj>=0): ## If valid point as min_pos is used
+           B[ii][jj]=150
+           neighbour(B,ii,jj,100)
+    
+    ## Pooling the computation as they are independent to each other
+    with Pool(5) as p:
+        Paths = p.map(wrapper, [(base_pos, target_pos, B.copy(), min_pos, max_pos) for base_pos, target_pos in zip(base_poses, target_poses) ]
+        
 
     if debug:
         print(time.time()-t)
 
-    return x,y
+    return Paths
