@@ -31,7 +31,7 @@ def neighbour(X,i,j,v):
 
     for di in range(-1,2,1):
         for dj in range(-1,2,1):
-            if is_inside(i+di,j+dj) and (i+di, j+dj) != (i, j):
+            if is_inside(i+di,j+dj,X.shape[0]-2,X.shape[1]-2) and (i+di, j+dj) != (i, j):
                 if X[i+di][j+dj] == 0:
                     X[i+di][j+dj] = v
     return None
@@ -49,7 +49,7 @@ def second_neighbour(X,i,j,v):
 
     for di in range(-2,3,1):
         for dj in range(-2,3,1):
-            if is_inside(i+di, j+dj) and (i+di, j+dj) != (i, j):
+            if is_inside(i+di, j+dj,X.shape[0]-2,X.shape[1]-2) and (i+di, j+dj) != (i, j):
                 if X[i+di][j+dj] == 0:
                     X[i+di][j+dj] = v
     return None
@@ -66,17 +66,17 @@ def list_n(V,i,j,pre):
     a_dash = []
     for di in range(-1,2,1):
         for dj in range(-1,2,1):
-            if is_inside(i+di, j+dj) and (i+di, j+dj) != (i, j):
+            if is_inside(i+di, j+dj, V.shape[0]-2,V.shape[1]-2) and (i+di, j+dj) != (i, j):
                 if (i+di, j+dj) != pre:
                     a_dash.append((i+di, j+dj))
-
+    
     return min(a_dash, key = lambda x: V[x[0]][x[1]])
 
-def planning_feedforward(base_pos, target_pos, B, min_pos, max_pos):
+def planning_feedforward(base_pos, target_pos, B, ratio, min_pos, max_pos):
     '''
     This computes the path for the given obstacle lookup table this is independent for each bot.
     args:
-        Base Position, Target Position, Lookup table of obstacles, Minimum position, Maximum position
+        Base Position, Target Position, Lookup table of obstacles, Ratio for resolution of the grid world, Minimum position, Maximum position
     returns:
         X vector of coordinates, Y vector of coordinates for the base and target position
     '''
@@ -85,7 +85,8 @@ def planning_feedforward(base_pos, target_pos, B, min_pos, max_pos):
     [i_max,j_max]= [2*int(round(ratio*(max_pos[0]-min_pos[0]))),2*int(round(ratio*(max_pos[1]-min_pos[1])))]
     [i_target,j_target]=[2*int(round(ratio*(target_pos[0]-min_pos[0]))), 2*int(round(ratio*(target_pos[1]-min_pos[1])))]
     D = np.array([[0 for j in range(j_max+2)] for i in range(i_max+2)])     ## positive Potential due to target
-    
+    Final = np.array([[0 for j in range(j_max+2)] for i in range(i_max+2)])
+
     ## Setting a low potential for the target.
     D[i_target][j_target]=2
     index_i = i_target
@@ -149,7 +150,7 @@ def planning_feedforward(base_pos, target_pos, B, min_pos, max_pos):
         k_p = 0.01
         x.append(i_p)
         y.append(j_p)
-    
+    print("done")
     return x,y
 
 
@@ -157,7 +158,7 @@ def wrapper(args):
     '''
     Helper function to unpack multiple arguements for the Pool.map
     '''
-    
+
     return planning_feedforward(*args)
 
 def planning(base_poses, target_poses, centroid, obstacles, ratio,debug=False):
@@ -185,18 +186,16 @@ def planning(base_poses, target_poses, centroid, obstacles, ratio,debug=False):
 
     for obstacle in obstacles:
         ## Doing the same conversion into indicies for all the obstacles
-        ii = 2*int(round(rto*(particle_optim[i][0]-min_pos[0])))
-        jj = 2*int(round(rto*(particle_optim[i][1]-min_pos[1])))
+        ii = 2*int(round(ratio*(obstacle[0]-min_pos[0])))
+        jj = 2*int(round(ratio*(obstacle[1]-min_pos[1])))
         if(ii>=0 and jj>=0): ## If valid point as min_pos is used
            B[ii][jj]=150
            neighbour(B,ii,jj,100)
     
     ## Pooling the computation as they are independent to each other
     with Pool(5) as p:
-        Paths = p.map(wrapper, [(base_pos, target_pos, B.copy(), min_pos, max_pos) for base_pos, target_pos in zip(base_poses, target_poses) ]
+        Paths = p.map(wrapper, [(base_pos, target_pos, B.copy(), ratio, min_pos, max_pos) for base_pos, target_pos in zip(base_poses, target_poses) ] )
         
-
-    if debug:
+    if debug :
         print(time.time()-t)
-
     return Paths
