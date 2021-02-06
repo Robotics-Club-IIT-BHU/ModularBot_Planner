@@ -1,5 +1,5 @@
 import argparse
-from sim_tree import sim
+from cluster import sim
 
 ######################################################################
 # Options
