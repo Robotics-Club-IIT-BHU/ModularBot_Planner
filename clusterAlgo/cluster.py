@@ -92,7 +92,7 @@ def cluster(cubePos, botIds, num_clusters, debug=False):
     None : None
     """
     on_whole = {}
-    for i in range(len(botsIds)):
+    for i in range(len(botIds)):
         on_whole[i]=botIds[i]
 
     km_labels = form_cluster(cubePos,num_clusters)
@@ -100,6 +100,7 @@ def cluster(cubePos, botIds, num_clusters, debug=False):
     dictionaries = [[] for _ in range(num_clusters)]
     parents = [[] for _ in range(num_clusters)]
 
+    if debug:p.removeAllUserDebugItems()
     for i in range(num_clusters):
         dd = {}
         k=0
@@ -108,7 +109,7 @@ def cluster(cubePos, botIds, num_clusters, debug=False):
                 #splitting into their respective clusters
                 groups[i].append(cubePos[j])
                 #storing their boxid
-                dd[k]=boxId[j]
+                dd[k]=botIds[j]
                 k+=1
         #box ids
         dictionaries[i].append(dd)
@@ -131,7 +132,7 @@ def cluster(cubePos, botIds, num_clusters, debug=False):
             for o in range(len(parent)):
                 if parent[o]!=-1:
                     p.addUserDebugLine(groups[i][o],groups[i][parent[o]], [r,g,b], 2)
-    return groups
+    return parents, group
 	
 def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
     """
@@ -157,7 +158,7 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
     #loading positions
     area = 3
     cubeStartPos = 2*area*(np.random.random((num_bots,2)) - 0.5)
-    cubeStartPos = np.append(cubeStartPos, 0.01*np.ones((num_bots,1)), axis=1)
+    cubeStartPos = np.append(cubeStartPos, 0.15*np.ones((num_bots,1)), axis=1)
     if debug : print("cube poses ",cubeStartPos)
 
     #save all boxes
@@ -170,12 +171,12 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
     while True:
         p.stepSimulation()
 
-        if i%100==0:
+        if i%1000==0:
             cubePos = []
             for i in range(num_bots):
                 pos, _ = p.getBasePositionAndOrientation(boxId[i])
                 cubePos.append(pos)
-            print(cluster(cubePos, boxId, num_clusters, debug=False))			
+            print(cluster(cubePos, boxId, num_clusters, debug))			
         i+=1
         time.sleep(1./240.)
     
