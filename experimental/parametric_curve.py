@@ -3,13 +3,15 @@ import matplotlib.pyplot as plt
 from cmath import polar, rect
 class ParamPoly2D:
     def __init__(self,r ,n):
-        
+        '''
+        '''
         self.r = r
         self.n = n
         self.root_coor, self.curve = self.generate_curve()
 
     def generate_curve(self):
-        
+        '''
+        '''
         self.diff_angle = 2 * np.pi/ self.n
         self.init_phasor = rect(self.r,0)
         roots = [ (self.r, i*self.diff_angle) for i in range(self.n) ]
@@ -28,7 +30,8 @@ class ParamPoly2D:
         return root_coors, (x,y)
     
     def plot(self,x,y,points=True):
-        
+        '''
+        '''
         plt.plot(x,y, "xb" if points else "-r", label="input")
         plt.grid(True)
         plt.axis("equal")
@@ -36,12 +39,26 @@ class ParamPoly2D:
         plt.ylabel("y[m]")
         plt.legend()
 
+    def __call__(self, r, n):
+        '''
+        '''
+        self.__init__(r,n)
+        return self
 
-    
-    
+    def sample(self, point):
+        '''
+        '''
+        best_point = min([root for root in zip(*self.root_coor)], key=lambda x: (x[0]-point[0])**2+(x[1]-point[1])**2 )
+        plt.plot(*best_point,"xg")
+        return best_point
+
 if __name__ == "__main__":
     polygon = ParamPoly2D(50,10)
     plt.subplots(1)
     polygon.plot(*polygon.root_coor, points=True)
-    polygon.plot(*polygon.curve, points=False)    
+    polygon.plot(*polygon.curve, points=False)
+    polygon.sample((1,2))
+    polygon = polygon(5,3)
+    polygon.plot(*polygon.root_coor, points=True)
+    polygon.plot(*polygon.curve, points=False)
     plt.show()
