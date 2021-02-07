@@ -7,7 +7,7 @@ import pybullet_data
 
 from sklearn.cluster import KMeans
 
-from mst import Graph
+from .mst import Graph
 
 
 def create_tree(cubePos, dicts, debug=False):
@@ -135,7 +135,8 @@ def cluster(cubePos, botIds, num_clusters, debug=False):
                 if parent[o]!=-1:
                     p.addUserDebugLine(groups[i][o],groups[i][parent[o]], [r,g,b], 2)
     return parents, groups, dictionaries
-	
+
+
 def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
     """
     Spawn blocks and call clustering related functions
@@ -149,7 +150,7 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
     #random seed
     np.random.seed(seed)
     #setup
-	
+
     physicsClient = p.connect(p.GUI)#or p.DIRECT for non-graphical version
     p.setAdditionalSearchPath(pybullet_data.getDataPath()) #optionally
     p.setGravity(0,0,-10)
@@ -167,7 +168,7 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
     boxId = []
     #spawn boxes
     for i in range(num_bots):
-        boxId.append(p.loadURDF("dabba.urdf",cubeStartPos[i], cubeStartOrientation))
+        boxId.append(p.loadURDF("archive/dabba.urdf",cubeStartPos[i], cubeStartOrientation))
     #simulate
     i = 0
     while True:
@@ -183,5 +184,3 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
         time.sleep(1./240.)
     
     #close connection
-if __name__ == "__main__":
-    sim();time.sleep(1000000000)
