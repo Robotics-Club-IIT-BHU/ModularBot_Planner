@@ -16,7 +16,7 @@ class ParamPoly2D:
         self.init_phasor = rect(self.r,0)
         roots = [ (self.r, i*self.diff_angle) for i in range(self.n) ]
         self.edge = 2*self.r*np.sin(self.diff_angle/2)
-        ds = 0.1/self.edge
+        ds = 0.05/self.edge
         self.s = np.arange(0,self.n,ds)
         x, y = [], []
         for i_s in self.s:
@@ -53,12 +53,12 @@ class ParamPoly2D:
         return best_point
 
 if __name__ == "__main__":
-    polygon = ParamPoly2D(50,10)
+    polygon = ParamPoly2D(50,9)
     plt.subplots(1)
     polygon.plot(*polygon.root_coor, points=True)
     polygon.plot(*polygon.curve, points=False)
-    polygon.sample((1,2))
-    polygon = polygon(5,3)
-    polygon.plot(*polygon.root_coor, points=True)
-    polygon.plot(*polygon.curve, points=False)
+    #polygon.sample((1,2))
+    #polygon = polygon(5,3)
+    #polygon.plot(*polygon.root_coor, points=True)
+    #polygon.plot(*polygon.curve, points=False)
     plt.show()

@@ -7,8 +7,10 @@ import pybullet_data
 
 from sklearn.cluster import KMeans
 
-from .mst import Graph
-
+try:
+    from .mst import Graph
+except:
+    from mst import Graph
 
 def create_tree(cubePos, dicts, debug=False):
     """
@@ -159,16 +161,16 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
     #loading all objects with same orientation
     cubeStartOrientation = p.getQuaternionFromEuler([0,0,0])
     #loading positions
-    area = 3
+    area = 1.5
     cubeStartPos = 2*area*(np.random.random((num_bots,2)) - 0.5)
-    cubeStartPos = np.append(cubeStartPos, 0.15*np.ones((num_bots,1)), axis=1)
+    cubeStartPos = np.append(cubeStartPos, -0.01*np.ones((num_bots,1)), axis=1)
     if debug : print("cube poses ",cubeStartPos)
 
     #save all boxes
     boxId = []
     #spawn boxes
     for i in range(num_bots):
-        boxId.append(p.loadURDF("archive/dabba.urdf",cubeStartPos[i], cubeStartOrientation))
+        boxId.append(p.loadURDF("../iota/absolute/iota.urdf",cubeStartPos[i], cubeStartOrientation))
     #simulate
     i = 0
     while True:
@@ -179,8 +181,8 @@ def sim(num_bots=8, seed=0, num_clusters=2, debug=False):
             for i in range(num_bots):
                 pos, _ = p.getBasePositionAndOrientation(boxId[i])
                 cubePos.append(pos)
-            cluster(cubePos, boxId, num_clusters, debug)			
+            cluster(cubePos, boxId, num_clusters, debug)
         i+=1
         time.sleep(1./240.)
-    
+
     #close connection
