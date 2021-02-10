@@ -80,7 +80,7 @@ def form_cluster(X, n_clusters=2, debug=False):
         print(f"--> cluster label {Kmean.labels_}")
     return Kmean.labels_
 
-def cluster(cubePos, botIds, num_clusters, debug=False):
+def cluster(cubePos, botIds, num_clusters, debug=False, pClient=None):
     """
     Clusters the objects and creates the Tree for each cluster
 
@@ -127,15 +127,15 @@ def cluster(cubePos, botIds, num_clusters, debug=False):
 		#store parent connections
         parent = create_tree(groups[i],dictionaries[i][0])
         parents[i].append(parent)
-
+        
 		#add debugging lines
-        if debug==True:
+        if debug==True and pClient is not None:
             r = int(np.random.normal(0,0.5,1)*255)
             g = int(np.random.normal(0,0.8,1)*255)
             b = int(np.random.normal(0,0.7,1)*255)
             for o in range(len(parent)):
                 if parent[o]!=-1:
-                    p.addUserDebugLine(groups[i][o],groups[i][parent[o]], [r,g,b], 2)
+                    p.addUserDebugLine(groups[i][o],groups[i][parent[o]], [r,g,b], 2, physicsClientId = pClient)
     return parents, groups, dictionaries
 
 
