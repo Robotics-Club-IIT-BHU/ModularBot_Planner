@@ -1,13 +1,10 @@
-**Note** - naming of files, functions and variables may not be very intuitive, please do read the comments that come prior to it.
-
 ## File Description
 - main.py : the main file that needs to be executed, calls and uses code from other files listed.
 - sim_tree.py : pybullet simulation, creation of trees and clusters in specific time steps.
 - mst.py : file which creates graph, and corresponding minimum spanning tree.
 - dabba.urdf : the block object.
 
-### Understanding the code
-We have tried to make code very readable and easy to use. The files contain alot of comments and the logic is very intuitive. We have added function descriptions which can be accessed by typing ``` help(function_name)```  in the file which imports it, press q to exit from the prompt. 
+
 
 ## Executing the files 
 In terminal </br>
