@@ -2,6 +2,10 @@ import numpy as np
 import time
 import math
 from multiprocessing import Pool
+from gevent import Timeout
+from gevent import monkey
+monkey.patch_all()
+
 def is_inside(i,j,i_max,j_max):
     '''
     This simply checks if the index (i,j) is in side the grid
@@ -79,8 +83,7 @@ def planning_feedforward(base_pos, target_pos, B, ratio, min_pos, max_pos):
         Base Position, Target Position, Lookup table of obstacles, Ratio for resolution of the grid world, Minimum position, Maximum position
     returns:
         X vector of coordinates, Y vector of coordinates for the base and target position
-    '''
-    
+    '''    
     [i_base,j_base]= [2*int(round(ratio*(base_pos[0]-min_pos[0]))),2*int(round(ratio*(base_pos[1]-min_pos[1])))]   ## Multiplied with 10 to increase the resolution of the grid world
     [i_max,j_max]= [2*int(round(ratio*(max_pos[0]-min_pos[0]))),2*int(round(ratio*(max_pos[1]-min_pos[1])))]
     [i_target,j_target]=[2*int(round(ratio*(target_pos[0]-min_pos[0]))), 2*int(round(ratio*(target_pos[1]-min_pos[1])))]
@@ -150,7 +153,7 @@ def planning_feedforward(base_pos, target_pos, B, ratio, min_pos, max_pos):
         k_p = 0.01
         x.append(i_p)
         y.append(j_p)
-    print("done")
+    #print("done")
     return x,y
 
 
@@ -158,8 +161,15 @@ def wrapper(args):
     '''
     Helper function to unpack multiple arguements for the Pool.map
     '''
-
-    return planning_feedforward(*args)
+    path = []
+    try:
+        tout = Timeout(0.5)
+        tout.start()
+        path = planning_feedforward(*args)
+    except:
+        path = []
+    finally:
+        return path
 
 def planning(base_poses, target_poses, centroid, obstacles, ratio,debug=False):
     '''
@@ -172,7 +182,11 @@ def planning(base_poses, target_poses, centroid, obstacles, ratio,debug=False):
 
     t = time.time()
 
-    min_pos = [np.array(obstacles)[:,0].min()-0.2,np.array(obstacles)[:,1].min()-0.2,0] ## Needs to be changed
+    min_pos = [
+                min(np.array(obstacles)[:,0].min(),np.array(target_poses)[:,0].min())-0.2,
+                min(np.array(obstacles)[:,1].min()-0.2),
+                0
+                ] ## Needs to be changed
     max_pos = [np.array(obstacles)[:,0].max()+0.2,np.array(obstacles)[:,1].max()+0.2,0] ## Needs to be changed
 
     ## Getting the coordinates in grid world coordinates i.e., Indices of cell
