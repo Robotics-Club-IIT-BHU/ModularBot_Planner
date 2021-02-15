@@ -2,7 +2,7 @@
 
 This is to make learn a decentralized planning algorithm for a big cluster of modular bots
 # *LETS GET IT DONE*
-![Lets get done](https://static.gosunoob.com/img/1/2015/06/Batman_Arkham_Knight_Heir_to_the_Cowl_3.jpg)
+![Lets get done](images/ModularBot.png)
 ## ToDo
 - [X] Choosing a modular bot platform and making mechanical design of a approximate system.
 - [ ] Get Shape Shifting and basically control algos for a small cluster
@@ -17,13 +17,13 @@ One way to achieve that is shown here is to create a decentralized system by cre
 
 ![](ezgif.com-gif-maker.gif)
 
-## Workflow 
+## Workflow
 
 **Creating clusters for decentralized planning and use distributed computation**</br>
 We start by getting position and orientation of each bot using its unique id. We then create clusters using [scikit-learn](https://scikit-learn.org/)'s clustering algorithm [Kmeans](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html), tutorial explaining [Kmeans algorithm in machine learning](https://towardsdatascience.com/understanding-k-means-clustering-in-machine-learning-6a6e67336aa1). This Kmeans algorithm classifies the bot based on their location into the specified number of cluster or bins using unsupervised learning.
 
 **Creating MST for each cluster**</br>
-After placing each bot into its respective cluster, we form a minimum spanning tree from for each cluster using [Prim's Minimum Spaning Tree algorithm](https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/). Then we chose the cluster head for each cluster which controls the rest of the bots in its cluster, now we use only the representation of the cluster heads for furthure computation instead of all the nodes, other nodes are taken wrt to these heads. 
+After placing each bot into its respective cluster, we form a minimum spanning tree from for each cluster using [Prim's Minimum Spaning Tree algorithm](https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/). Then we chose the cluster head for each cluster which controls the rest of the bots in its cluster, now we use only the representation of the cluster heads for furthure computation instead of all the nodes, other nodes are taken wrt to these heads.
 
 
 
@@ -32,4 +32,3 @@ After placing each bot into its respective cluster, we form a minimum spanning t
 - code -> code_cluster folder
 - [Docs with all the links](https://docs.google.com/document/d/1KEJf-jeIi0BJtAnXddLB5JF5d1Ci-cbfW9H89qSSHl4/edit?usp=sharing)
 - [Drive with extra pdfs](https://drive.google.com/drive/folders/1T1NNpkDUduwzQ99P27nm3KUAkobiAlMo?usp=sharing)
-
