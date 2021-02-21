@@ -183,11 +183,14 @@ def planning(base_poses, target_poses, centroid, obstacles, ratio,debug=False):
     t = time.time()
 
     min_pos = [
-                min(np.array(obstacles)[:,0].min(),np.array(target_poses)[:,0].min())-0.2,
-                min(np.array(obstacles)[:,1].min()-0.2),
+                min(np.array(obstacles)[:,0].min(), np.array(target_poses)[:,0].min())-0.2,
+                min(np.array(obstacles)[:,1].min(), np.array(target_poses)[:,1].min())-0.2,
                 0
                 ] ## Needs to be changed
-    max_pos = [np.array(obstacles)[:,0].max()+0.2,np.array(obstacles)[:,1].max()+0.2,0] ## Needs to be changed
+    max_pos = [
+                max(np.array(obstacles)[:,0].max(), np.array(target_poses)[:,0].max())+0.2,
+                max(np.array(obstacles)[:,1].max(), np.array(target_poses)[:,1].max())+0.2,
+                0] ## Needs to be changed
 
     ## Getting the coordinates in grid world coordinates i.e., Indices of cell
     #[i_base,j_base]= [2*int(round(ratio*(base_pos[0]-min_pos[0]))),2*int(round(ratio*(base_pos[1]-min_pos[1])))]   ## Multiplied with 10 to increase the resolution of the grid world
@@ -209,7 +212,7 @@ def planning(base_poses, target_poses, centroid, obstacles, ratio,debug=False):
     ## Pooling the computation as they are independent to each other
     with Pool(5) as p:
         Paths = p.map(wrapper, [(base_pos, target_pos, B.copy(), ratio, min_pos, max_pos) for base_pos, target_pos in zip(base_poses, target_poses) ] )
-        
+    print("done Planning")
     if debug :
         print(time.time()-t)
     return Paths
