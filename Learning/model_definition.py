@@ -67,4 +67,5 @@ class Actor(nn.Module):
         hx, cx = self.lstm(x, (hx, cx))
         x = hx
 
-    return self.critic_linear(x), self.actor_linear(x), (hx, cx)
+        return self.critic_linear(x), self.actor_linear(x), (hx, cx)
+
