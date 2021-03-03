@@ -29,6 +29,5 @@ After placing each bot into its respective cluster, we form a minimum spanning t
 
 
 ## Resources
-- code -> code_cluster folder
 - [Docs with all the links](https://docs.google.com/document/d/1KEJf-jeIi0BJtAnXddLB5JF5d1Ci-cbfW9H89qSSHl4/edit?usp=sharing)
 - [Drive with extra pdfs](https://drive.google.com/drive/folders/1T1NNpkDUduwzQ99P27nm3KUAkobiAlMo?usp=sharing)
