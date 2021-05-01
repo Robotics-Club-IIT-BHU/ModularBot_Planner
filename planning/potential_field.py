@@ -89,7 +89,7 @@ def planning_feedforward(base_pos, target_pos, B, ratio, min_pos, max_pos):
     [i_target,j_target]=[2*int(round(ratio*(target_pos[0]-min_pos[0]))), 2*int(round(ratio*(target_pos[1]-min_pos[1])))]
     D = np.array([[0 for j in range(j_max+2)] for i in range(i_max+2)])     ## positive Potential due to target
     Final = np.array([[0 for j in range(j_max+2)] for i in range(i_max+2)])
-
+    print("target_pose", target_pos, "base_pose", base_pos, "min_pose", min_pos, "max_pose", max_pos)
     ## Setting a low potential for the target.
     D[i_target][j_target]=2
     index_i = i_target
@@ -144,6 +144,7 @@ def planning_feedforward(base_pos, target_pos, B, ratio, min_pos, max_pos):
     pre=(i_base,j_base-1)
     x, y = [], []
     cnt = 0
+    print("starting search")
     while cnt<=1000 and (run_i!=i_target or run_j!=j_target):
         pos = list_n(Final,run_i,run_j,pre)
         pre = (run_i, run_j)
@@ -155,7 +156,7 @@ def planning_feedforward(base_pos, target_pos, B, ratio, min_pos, max_pos):
         x.append(i_p)
         y.append(j_p)
         cnt += 1
-    #print("done")
+    print("done")
     return x,y
 
 
@@ -165,8 +166,8 @@ def wrapper(args):
     '''
     path = []
     try:
-        tout = Timeout(0.5)
-        tout.start()
+        #tout = Timeout(5)
+        #tout.start()
         path = planning_feedforward(*args)
     except:
         path = []
@@ -210,9 +211,9 @@ def planning(base_poses, target_poses, centroid, obstacles, ratio,debug=False):
         if(ii>=0 and jj>=0): ## If valid point as min_pos is used
            B[ii][jj]=150
            neighbour(B,ii,jj,100)
-    
+    print("starting")
     ## Pooling the computation as they are independent to each other
-    with Pool(5) as p:
+    with Pool(1) as p:
         Paths = p.map(wrapper, [(base_pos, target_pos, B.copy(), ratio, min_pos, max_pos) for base_pos, target_pos in zip(base_poses, target_poses) ] )
     print("done Planning")
     if debug :
