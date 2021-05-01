@@ -1,0 +1,3 @@
+[submodule "gym-iOTA"]
+	path = gym-iOTA
+	url = git@github.com:Robotics-Club-IIT-BHU/gym-iOTA.git

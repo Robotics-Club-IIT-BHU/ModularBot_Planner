@@ -143,7 +143,8 @@ def planning_feedforward(base_pos, target_pos, B, ratio, min_pos, max_pos):
     run_j = j_base
     pre=(i_base,j_base-1)
     x, y = [], []
-    while (run_i!=i_target or run_j!=j_target):
+    cnt = 0
+    while cnt<=1000 and (run_i!=i_target or run_j!=j_target):
         pos = list_n(Final,run_i,run_j,pre)
         pre = (run_i, run_j)
         run_i=pos[0]
@@ -153,6 +154,7 @@ def planning_feedforward(base_pos, target_pos, B, ratio, min_pos, max_pos):
         k_p = 0.01
         x.append(i_p)
         y.append(j_p)
+        cnt += 1
     #print("done")
     return x,y
 
