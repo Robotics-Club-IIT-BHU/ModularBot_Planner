@@ -1,11 +1,13 @@
 import gym
-import pybullet as p
+#import pybullet as p
 import gym_iOTA
 import numpy as np
 import time
 from clustering import cluster
 from planning import *
 from experimental import ParamPoly2D
+import matplotlib.pyplot as plt
+
 env = gym.make('iOTA-v0',
                 render=True,
                 no_of_modules=10,
@@ -28,6 +30,7 @@ smooth_path = []
 progress = []
 ds = 0.05
 for path in paths:
+    print(path)
     sp = Spline2D(*path)
     s = np.arange(0, sp.s[-1], ds)
     rx, ry = [], []
@@ -37,7 +40,19 @@ for path in paths:
         ry.append(iy)
     smooth_path.append(list(zip(rx,ry)))
     progress.append(0)
+
+    plt.subplots(1)
+    plt.plot(*path, "xb", label="input")
+    plt.plot(rx, ry, "-r", label="spline")
+    plt.grid(True)
+    plt.axis("equal")
+    plt.xlabel("x[m]")
+    plt.ylabel("y[m]")
+    plt.legend()
+    plt.show()
+print("spline done")
 while i>=0: 
+    print(i)
     action = np.ones((env.no_of_modules, 3))
     for j in range(env.no_of_modules):
         if progress[j]!=-1:

@@ -164,13 +164,13 @@ def wrapper(args):
     '''
     Helper function to unpack multiple arguements for the Pool.map
     '''
-    path = []
+    path = ([],[])
     try:
         #tout = Timeout(5)
         #tout.start()
         path = planning_feedforward(*args)
     except:
-        path = []
+        path = ([],[])
     finally:
         return path
 
@@ -213,8 +213,11 @@ def planning(base_poses, target_poses, centroid, obstacles, ratio,debug=False):
            neighbour(B,ii,jj,100)
     print("starting")
     ## Pooling the computation as they are independent to each other
-    with Pool(1) as p:
-        Paths = p.map(wrapper, [(base_pos, target_pos, B.copy(), ratio, min_pos, max_pos) for base_pos, target_pos in zip(base_poses, target_poses) ] )
+    #with Pool(1) as p:
+    #    Paths = p.map(wrapper, [(base_pos, target_pos, B.copy(), ratio, min_pos, max_pos) for base_pos, target_pos in zip(base_poses, target_poses) ] )
+    Paths = []
+    for base_pos, target_pos in zip(base_poses, target_poses):
+        Paths.append(wrapper((base_pos, target_pos, B.copy(), ratio, min_pos, max_pos)))
     print("done Planning")
     if debug :
         print(time.time()-t)
