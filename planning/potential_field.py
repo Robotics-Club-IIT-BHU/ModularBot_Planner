@@ -145,7 +145,7 @@ def planning_feedforward(base_pos, target_pos, B, ratio, min_pos, max_pos):
     x, y = [], []
     cnt = 0
     print("starting search")
-    while cnt<=1000 and (run_i!=i_target or run_j!=j_target):
+    while cnt<=25 and (run_i!=i_target or run_j!=j_target):
         pos = list_n(Final,run_i,run_j,pre)
         pre = (run_i, run_j)
         run_i=pos[0]

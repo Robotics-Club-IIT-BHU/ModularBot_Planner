@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 env = gym.make('iOTA-v0',
                 render=True,
                 no_of_modules=10,
-                no_of_clusters=2,
+                no_of_clusters=4,
                 arena=(3,3),
                 low_control=False,
                 )
@@ -66,10 +66,10 @@ while i>=0:
               env.no_of_modules))             
     observation, reward, done, info = env.step(action, dock)
     ## Try pooling the control
-    if i%1000==0:
+    if i%20==0:
         for j in range(env.no_of_modules):
             setpoints[j,:] = [*poly.sample(observation[j,:2]),0.01] 
-        cluster(observation, [iota.id for iota in env.iotas], env.no_of_clusters, debug=True, pClient=env.pClient )
-    time.sleep(0.1)
+        cluster(observation, [iota.base_id for iota in env.iotas], env.no_of_clusters, debug=True, pClient=env.pClient )
+    # time.sleep(0.1)
     i+=1
 env.close()
