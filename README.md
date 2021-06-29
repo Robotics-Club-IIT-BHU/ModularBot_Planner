@@ -2,7 +2,9 @@
 
 This is to make learn a decentralized planning algorithm for a big cluster of modular bots
 # *LETS GET IT DONE*
+
 ![Lets get done](images/ModularBot.png)
+
 ## ToDo
 - [X] Choosing a modular bot platform and making mechanical design of a approximate system.
 - [ ] Get Shape Shifting and basically control algos for a small cluster
