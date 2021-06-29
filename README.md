@@ -29,7 +29,7 @@ After placing each bot into its respective cluster, we form a minimum spanning t
 
 ## Current plan of action
 
-- [] Train a high level planner using the given approach and use a 2D simulator for getting preliminary results without docking.
+- [ ] Train a high level planner using the given approach and use a 2D simulator for getting preliminary results without docking.
 - [x] lowlevel planner and controller using classical algorithms.
 
 
