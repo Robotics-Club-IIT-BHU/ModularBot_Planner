@@ -25,7 +25,9 @@ We start by getting position and orientation of each bot using its unique id. We
 **Creating MST for each cluster**</br>
 After placing each bot into its respective cluster, we form a minimum spanning tree from for each cluster using [Prim's Minimum Spaning Tree algorithm](https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/). Then we chose the cluster head for each cluster which controls the rest of the bots in its cluster, now we use only the representation of the cluster heads for furthure computation instead of all the nodes, other nodes are taken wrt to these heads.
 
+## Current plan of action
 
+Train a high level planner using the given approach and use a 2D simulator for getting preliminary results without docking.
 
 
 ## Resources
