@@ -3,9 +3,10 @@ import gym
 import gym_iOTA
 import numpy as np
 import time
-from clustering import cluster
-from planning import *
-from experimental import ParamPoly2D
+#from clustering import cluster
+#from planning import *
+#from experimental import ParamPoly2D
+from ModuBot_Planner_utils import clustering, planning, experimental
 import matplotlib.pyplot as plt
 
 env = gym.make('iOTA-v0',
@@ -18,7 +19,7 @@ env = gym.make('iOTA-v0',
 
 observation = env.reset()
 i = 0
-poly = ParamPoly2D(2,10)
+poly = experimental.ParamPoly2D(2,10)
 #print(poly.root_coor)
 setpoints = np.zeros((env.no_of_modules, 3))
 for j in range(env.no_of_modules):
@@ -69,7 +70,7 @@ while i>=0:
     if i%20==0:
         for j in range(env.no_of_modules):
             setpoints[j,:] = [*poly.sample(observation[j,:2]),0.01] 
-        cluster(observation, [iota.base_id for iota in env.iotas], env.no_of_clusters, debug=True, pClient=env.pClient )
+        clustering.cluster(observation, [iota.base_id for iota in env.iotas], env.no_of_clusters, debug=True, pClient=env.pClient )
     # time.sleep(0.1)
     i+=1
 env.close()
