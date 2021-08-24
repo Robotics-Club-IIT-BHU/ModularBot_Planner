@@ -45,8 +45,9 @@ def create_tree(cubePos, dicts, debug=False):
             g.makeEdge(i,j,math.sqrt(distance*1.0))
 
         for l in range(nodes):
-            dis_oth[i]+=g.graph[i][l]
+            dis_oth[i] += g.graph[i][l]
 
+    
 	#print the graph
     if debug: print('-------------graph -------------\n',g.graph)
 
