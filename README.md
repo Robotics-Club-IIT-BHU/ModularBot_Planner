@@ -151,9 +151,10 @@ The equation for update for the two policies are given by the following.
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B120%7D%20%5Cbg_white%20%5Clarge%20%5Cdelta_2%20%3D%20V%28s_%7Bt-1%7D%29%20+%20%5Cgamma*R_t%20-%20V%28s_%7Bt%7D%29"/><br/>
 </p>
-Here <img src="https://latex.codecogs.com/png.image?\tau" /> is the number of time steps <img src="https://latex.codecogs.com/png.image?\pi_2" /> steps between consecutive steps of <img src="https://latex.codecogs.com/png.image?\pi_1" />
+<p>Here <img src="https://latex.codecogs.com/png.image?\tau" /> is the number of time steps <img src="https://latex.codecogs.com/png.image?\pi_2" /> steps between consecutive steps of <img src="https://latex.codecogs.com/png.image?\pi_1" /></p>
 
 The final output of both combined is.
+
 ![](images/probability_distribution.png)
 
 Where the estimated polygon is seen in green, and the distribution is seen in orange. And the sampled point is seen in red.
