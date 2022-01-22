@@ -10,9 +10,12 @@ Abstraction of policy for Multi Agent to generalize the Swarm Behaviour. Allowin
 
 The testing has been done on a custom robot platform named iOTA. Which is a simple 4 Wheel drive on both top and bottom plates and hypotetically capable of docking(All tests are simulations with constraints added by simulator, this is done to reduce the complexity of physics).
 
+8 Wheeled Drive             |  Docking Mechanism
+:-------------------------:|:-------------------------:
+![](https://raw.githubusercontent.com/Robotics-Club-IIT-BHU/gym-iOTA/master/media/bRoll.gif)  |  ![](images/ModularDock.png)
 
-<img src="https://raw.githubusercontent.com/Robotics-Club-IIT-BHU/gym-iOTA/master/media/bRoll.gif" width="47.3%" align="left"/><img src="images/ModularDock.png" width="52.7%" align="right"/>
-<hr/><br/>
+<!--<img src="https://raw.githubusercontent.com/Robotics-Club-IIT-BHU/gym-iOTA/master/media/bRoll.gif" width="47.3%" align="left"/> <img src="images/ModularDock.png" width="52.7%" align="right"/>-->
+
 
 The whole setup is simulated in PyBullet, and we have made a simple env for our experimental testbed [`gym-iOTA`](https://github.com/Robotics-Club-IIT-BHU/gym-iOTA). There has been on a simpler 2D version of the Env for easier training and debuggin for representation learning of the environment [`gym-iOTA_2D`](https://github.com/hex-plex/gym-iOTA_2D).
 
