@@ -22,7 +22,7 @@ poly = ParamPoly2D(2,10)
 #print(poly.root_coor)
 setpoints = np.zeros((env.no_of_modules, 3))
 for j in range(env.no_of_modules):
-    setpoints[j,:] = [*poly.sample(observation[j,:]),0.01] 
+    setpoints[j,:] = [*poly.sample_near(observation[j,:]),0.01] 
 #print(observation, setpoints)
 paths = planning(observation, setpoints, (0,0,0), observation, 5)
 print("planning done")
@@ -68,7 +68,7 @@ while i>=0:
     ## Try pooling the control
     if i%20==0:
         for j in range(env.no_of_modules):
-            setpoints[j,:] = [*poly.sample(observation[j,:2]),0.01] 
+            setpoints[j,:] = [*poly.sample_near(observation[j,:2]),0.01] 
         cluster(observation, [iota.base_id for iota in env.iotas], env.no_of_clusters, debug=True, pClient=env.pClient )
     # time.sleep(0.1)
     i+=1

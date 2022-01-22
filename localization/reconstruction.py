@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from vector import Vect2d, Vect3d
+
 def get_pos(mask, camera_coor=None, camera_Rot=None, cameraMatrix=None,draw=False,img=None):
     '''
     This calculates the exact position of the masked object

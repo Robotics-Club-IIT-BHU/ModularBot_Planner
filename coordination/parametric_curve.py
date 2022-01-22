@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from cmath import polar, rect
+
 class ParamPoly2D:
     def __init__(self,r ,n):
         '''
@@ -8,6 +9,7 @@ class ParamPoly2D:
         self.r = r
         self.n = n
         self.root_coor, self.curve = self.generate_curve()
+        self.plotting = False
 
     def generate_curve(self):
         '''
@@ -38,6 +40,7 @@ class ParamPoly2D:
         plt.xlabel("x[m]")
         plt.ylabel("y[m]")
         plt.legend()
+        self.plotting = True
 
     def __call__(self, r, n):
         '''
@@ -45,19 +48,31 @@ class ParamPoly2D:
         self.__init__(r,n)
         return self
 
-    def sample(self, point):
+    def sample(self, point, dist):
         '''
         '''
+        pass
+
+    def sample_near(self, point):
         best_point = min([root for root in zip(*self.root_coor)], key=lambda x: (x[0]-point[0])**2+(x[1]-point[1])**2 )
-        plt.plot(*best_point,"xg")
+        if self.plotting: 
+            plt.plot(*best_point,"xg")
         return best_point
+
+    def lookup(self, obs_point, cen_point):
+        '''
+        For the given input point returns features of the polygon
+        '''
+        point   = [obs_point[i] - cen_point[i] for i in range(2)]
+        obs2cen = [cen_point[i] - obs_point[i] for i in range(2)]
+        vec     = [self.n, self.r, *self.sample_near(point), *obs2cen]
 
 if __name__ == "__main__":
     polygon = ParamPoly2D(50,9)
     plt.subplots(1)
     polygon.plot(*polygon.root_coor, points=True)
     polygon.plot(*polygon.curve, points=False)
-    #polygon.sample((1,2))
+    #polygon.sample_near((1,2))
     #polygon = polygon(5,3)
     #polygon.plot(*polygon.root_coor, points=True)
     #polygon.plot(*polygon.curve, points=False)
