@@ -139,7 +139,7 @@ action = gym_iOTA.utils.to_action(action_dict)
 obs, rew, done, _ = env.step(action)
 ```
 
-As it can be seen one policy is under the heirarchy of the other policy and as policy $\pi_1$ is updated less frequently compared to $\pi_2$ The return will not be the same for every action taken by $\pi_1$. **Hierarchical Reinforcement Learning** is much suited in this **Semi-Markov Decision Process** over traditional Reinforcement Learning.
+As it can be seen one policy is under the heirarchy of the other policy and as policy <img src="https://latex.codecogs.com/png.download?\pi_1" /> is updated less frequently compared to <img src="https://latex.codecogs.com/png.download?\pi_2" /> The return will not be the same for every action taken by <img src="https://latex.codecogs.com/png.download?\pi_1" />. **Hierarchical Reinforcement Learning** is much suited in this **Semi-Markov Decision Process** over traditional Reinforcement Learning.
 This also allows to learn a heirarchically optimal policy that will facilitates meta learning to different tasks. 
 
 The equation for update for the two policies are given by the following.
@@ -151,7 +151,7 @@ The equation for update for the two policies are given by the following.
 <p align="center">
 <img src="https://latex.codecogs.com/png.download?%5Cdpi%7B120%7D%20%5Cbg_white%20%5Clarge%20%5Cdelta_2%20%3D%20V%28s_%7Bt-1%7D%29%20+%20%5Cgamma*R_t%20-%20V%28s_%7Bt%7D%29"/><br/>
 </p>
-Here $\tau$ is the number of time steps $\pi_2$ steps between consecutive steps of $\pi_1$
+Here <img src="https://latex.codecogs.com/png.download?\tau" /> is the number of time steps <img src="https://latex.codecogs.com/png.download?\pi_2" /> steps between consecutive steps of <img src="https://latex.codecogs.com/png.download?\pi_1" />
 
 The final output of both combined is.
 ![](images/probability_distribution.png)
@@ -221,7 +221,7 @@ env.step(action)
 
 After Enumerous reiteration on code, and brainstroming of ideas the project only received limited success. The project was a continual part of learning and implementation of year long journey. There are a few points of failure in the current architecture that I would like to point out.
 
-- **Insufficient Observation** :- The observation for individual agent is complex for a policy \pi_2 to learn, and the representation of the cluster is done with insufficient features to policy \pi_1.
+- **Insufficient Observation** :- The observation for individual agent is complex for a policy <img src="https://latex.codecogs.com/png.download?\pi_2" /> to learn, and the representation of the cluster is done with insufficient features to policy <img src="https://latex.codecogs.com/png.download?\pi_1" />.
 - **Constrained Action Space** :- The current action space for both the policy are rather no encouraging to move away from the cluster or move towards a specific direction to complete the task. The architecture for the highlevel planning must be improved to allow motion in and out the cluster.
 - **Bugs in the Environment** :- The potential field algorithm is notourious for its suboptimal or worse infinite loops at corner cases for given parameters. The control is a bare minimum position control using PD and doesnt model the highly complex and dynamic System, hence the interaction of these robots in tightly packed regions are very bad as they are unable to trace the given trajectories. This is mainly true once the robots are docked.
 

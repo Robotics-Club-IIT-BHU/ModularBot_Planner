@@ -2,6 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from cmath import polar, rect
 
+def cal_dist(point):
+    return sum([p**2 for p in point])
+
 class ParamPoly2D:
     def __init__(self,r ,n):
         '''
@@ -48,10 +51,57 @@ class ParamPoly2D:
         self.__init__(r,n)
         return self
 
-    def sample(self, point, dist):
+    def sample(self, point, dist, cen_point=[0, 0]):
         '''
         '''
-        pass
+        relative_dist = sorted([root for root in zip(*self.root_coor)], key=lambda x: (x[0]-point[0])**2+(x[1]-point[1])**2 )
+        
+        root_1 = relative_dist[0]
+        root_2 = relative_dist[0]
+        poly_edge = [ root_1[i]-root_2[i] for i in range(2) ]
+        cen_loc   = [ cen_point[i]-point[i] for i in range(2) ]
+        a = np.array(
+            [
+                [ poly_edge[0], cen_loc[0] ],
+                [ poly_edge[1], cen_loc[1] ]
+            ])
+        b = np.array([
+            cen_loc[0]-root_1[0], cen_loc[1]-root_1[0]
+        ])
+        ratio = np.linalg.solve(a, b)
+        sol = [ (ratio[0]*poly_edge[i]) + root_1[i] for i in range(2) ]
+
+        delta = np.sqrt(sum([ (root_1[i] - sol[i])**2 for i in range(2)]))
+        curl = np.cross( [sol[i]-root_1[i] for i in range(2)], root_1)
+        if curl>=0:
+            dist += delta
+        else:
+            dist -= delta 
+        
+        root_ind = list(zip(*self.root_coor)).index(root_1)
+
+        if dist>=0:
+            i = (dist)//cal_dist(poly_edge)
+            root_ind += i
+            dist %= cal_dist(poly_edge)
+        else:
+            i = (-dist)//cal_dist(poly_edge)
+            root_ind -= i
+            dist = - ( (-dist)%cal_dist(poly_edge))
+        final_point = [self.root_coor[0][root_ind%n], self.root_coor[1][root_ind%n]]
+        lmd = 0
+        if dist>=0:
+            lmd = abs(dist)/cal_dist(poly_edge)
+            nxt_point = [self.root_coor[0][(root_ind+1)%n], self.root_coor[1][(root_ind+1)%n]]
+            poly_edge = [nxt_point[i]-final_point[i] for i in range(2)]
+        else:
+            lmd = abs(dist)/cal_dist(poly_edge)
+            nxt_point = [self.root_coor[0][(root_ind-1)%n], self.root_coor[1][(root_ind-1)%n]]
+            poly_edge = [nxt_point[i]-final_point[i] for i in range(2)]
+        
+        sampled_point = [(lmd*poly_edge[i]) + final_point[i] for i in range(2)]
+
+        return sampled_point
 
     def sample_near(self, point):
         best_point = min([root for root in zip(*self.root_coor)], key=lambda x: (x[0]-point[0])**2+(x[1]-point[1])**2 )

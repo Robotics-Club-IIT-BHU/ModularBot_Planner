@@ -1,6 +1,6 @@
 import torch as th
 from torch.nn import Module
-from torch.nn import Functional as F
+from torch.nn import functional as F
 from torch.distributions import Normal
 
 class Pi_One(Module):

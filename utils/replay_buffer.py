@@ -6,6 +6,6 @@ class ReplayBuffer:
         super().__init__([], maxlen=int(max_size))
 
     def sample(self, batch_size):
-
+        pass
 
 class ParallelBuffer(ReplayBuffer):

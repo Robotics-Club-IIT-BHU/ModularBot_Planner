@@ -12,7 +12,7 @@ class Coordination:
         pi_one_ll     = np.array([0.0, 0.0, 0.0, 0.0])
         pi_one_ul     = np.array([self.max_edge, self.max_r, 2*self.max_r, 2*np.pi])
         self.pi_one   = Pi_One(input_shape = 5 + 2*self.k, output_shape = 2+2)                            # output size is 2 for parametric polygon and 2 for centroid of polygon
-        self.pi_two   = Pi_Two(input_shape = , output_shape= vec_size=6)
+        self.pi_two   = Pi_Two(input_shape = 6, output_shape = 1, vec_size = 4)
         self.opt_vec  = None
 
         if pi_loc is not None:
@@ -28,7 +28,7 @@ class Coordination:
         th.save(self.pi_one.state_dict(), self.pi_loc)                  
         th.save(self.pi_two.state_dict(), self.pi_loc)
     
-    def forward(self, state_info):
+    def forward(self, state_info, poly=None):
 
         action = {}
         replan_cluster = state_info["replan_cluster"] or 0
@@ -37,7 +37,7 @@ class Coordination:
             replan_cluster = -1 if replan_cluster==1 else 1
         
         for cluster in state_info["clusters"]:
-            cluter_action = self.forward_lower(cluster)
+            cluter_action = self.forward_lower(cluster, poly)
             action.update(cluster_action)
         
         return action, replan_cluster  
@@ -65,19 +65,27 @@ class Coordination:
             opt_vec, log_prob, mean = self.pi_one.sample(cluster_state)
             self.opt_vec = opt_vec
 
-            if self.training:
-                self.pi_one_buffer.push("opt_vec", opt_vec)
-                self.pi_one_buffer.push("cluster_state", cluster_state)
-                self.pi_one_buffer.push("", )
+            # if self.training:
+            #     self.pi_one_buffer.push("opt_vec", opt_vec)
+            #     self.pi_one_buffer.push("cluster_state", cluster_state)
+            #     #self.pi_one_buffer.push("", )
 
-    def forward_lower(self, cluster_info):
+    def forward_lower(self, cluster_info, poly=None):
 
         action = {}
         for agent in cluster_info["agents"]:
             cen_x, cen_y = agent["coord"]
+            position = [cen_x, cen_y]
+            poly = poly(self.opt_vec[:2])
 
+            poly_cen = cmath.rect(*self.opt_vec[-2:])
+            poly_cen = poly_cen.real, poly_cen.imag
+            
+            agent_state = poly.lookup(position, poly_cen)
+            
             act_i = self.pi_two.sample(agent_state, self.opt_vec)
-            action[agent["id"]]=act_i
+            sampled_point = poly.sample(position, act_i, poly_cen)
+            action[agent["id"]] = sampled_point
         
         return action
     
@@ -101,5 +109,3 @@ class Coordination:
             return 1
         else:
             return 0
-
-    def train():
