@@ -143,10 +143,14 @@ As it can be seen one policy is under the heirarchy of the other policy and as p
 This also allows to learn a heirarchically optimal policy that will facilitates meta learning to different tasks. 
 
 The equation for update for the two policies are given by the following.
-$$ \pi_i = \pi_i + \alpha*\delta_i $$
-$$ \delta_1 = V(s_{t-1}) + \gamma*R_{t} + ... + \gamma^{\tau+1}*R_{t+\tau} - V(s_{t+\tau})$$
-$$ \delta_2 = V(s_{t-1}) + \gamma*R_t - V(s_{t})$$
 
+<p align="center">
+<img src="https://latex.codecogs.com/png.download?%5Cdpi%7B120%7D%20%5Cbg_white%20%5Clarge%20%5Cpi_i%20%3D%20%5Cpi_i%20+%20%5Calpha*%5Cdelta_i"/><br/></p>
+<p align="center">
+<img src="https://latex.codecogs.com/png.download?%5Cdpi%7B120%7D%20%5Cbg_white%20%5Clarge%20%5Cdelta_1%20%3D%20V%28s_%7Bt-1%7D%29%20+%20%5Cgamma*R_%7Bt%7D%20+%20...%20+%20%5Cgamma%5E%7B%5Ctau+1%7D*R_%7Bt+%5Ctau%7D%20-%20V%28s_%7Bt+%5Ctau%7D%29"/><br/></p>
+<p align="center">
+<img src="https://latex.codecogs.com/png.download?%5Cdpi%7B120%7D%20%5Cbg_white%20%5Clarge%20%5Cdelta_2%20%3D%20V%28s_%7Bt-1%7D%29%20+%20%5Cgamma*R_t%20-%20V%28s_%7Bt%7D%29"/><br/>
+</p>
 Here $\tau$ is the number of time steps $\pi_2$ steps between consecutive steps of $\pi_1$
 
 The final output of both combined is.
