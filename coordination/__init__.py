@@ -1,3 +1,3 @@
 from .parametric_curve import *
-from .model import *
+from .models import *
 from .coordination import *

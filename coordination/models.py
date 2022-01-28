@@ -128,3 +128,114 @@ class Pi_Two(Module):
         self.action_scale = self.action_scale.to(device)
         self.action_bias = self.action_bias.to(device)
         return super(Pi_Two, self).to(device)
+
+
+class CondPiOneCritic(Module):
+    def __init__(self, input_shape, cond_shape):
+
+        super(CondPiOneCritic, self).__init__()
+        self.fc1 = torch.nn.Linear(input_shape, 32)
+        self.fc2 = torch.nn.Linear(cond_shape, 16)
+        self.fc3 = torch.nn.Linear(32 + 16, 36)
+        self.fc4 = torch.nn.Linear(36, 8)
+        self.fc_mu = torch.nn.Linear(8, 1)
+        self.fc_logvar = torch.nn.Linear(8, 1)
+
+        self.optim = Adam(self.parameters(), lr=0.005)
+
+        self.obs_idx = list(range(0,input_shape))
+        self.cond_idx = list(range(input_shape, input_shape+cond_shape))
+
+    def forward(self, obs, cond):
+        
+        inter_obs = self.fc1(obs)
+        inter_cond = self.fc2(cond)
+        inter = th.cat((inter_obs, inter_cond), -1)
+        inter = th.tanh(inter)
+        inter = self.fc3(inter)
+        inter = th.tanh(inter)
+        inter = self.fc4(inter)
+        inter = th.tanh(inter)
+        
+        mu_inter = self.fc_mu(inter)
+        logvar_inter = self.fc_logvar(inter)
+
+        return mu_inter, logvar_inter
+
+    def compute(self, state, cond):
+        mean, log_var = self.forward(state, cond)
+        std = (0.5*log_var).exp()
+        normal = Normal(mean, std)
+
+        v_t = normal.rsample()
+
+        return v_t
+
+    def train(self, state_t_1, state_t, heir_return):
+        obs_t_1, cond_t_1 = state_t_1[:, self.obs_idx], state_t_1[:, self.cond_idx]
+        obs_t, cond_t = state_t[:,self.obs_idx], state_t[:, self.cond_idx]
+
+        for epoch in range(5):
+            self.optim.zero_grad()
+            v_t_1 = self.compute(obs_t_1, cond_t_1)
+            v_t   = self.compute(obs_t, cond_t)
+
+            td_loss = v_t_1 + heir_return - v_t
+            td_loss.backward()
+            self.optim.step()
+
+class CondPiTwoCritic(Module):
+    def __init__(self, input_shape, option_shape, cond_shape):
+
+        super(CondPiTwoCritic, self).__init__()
+        self.fc1 = torch.nn.Linear(input_shape, 16)
+        self.fc2 = torch.nn.Linear(option_shape, 8)
+        self.fc3 = torch.nn.Linear(cond_shape, 4)
+        self.fc4 = torch.nn.Linear(16 + 8 + 4, 18)
+        self.fc5 = torch.nn.Linear(18, 6)
+        self.fc_mu = torch.nn.Linear(6, 1)
+        self.fc_logvar = torch.nn.Linear(6, 1)
+
+        self.optim = Adam(self.parameters(), lr=0.0001)
+
+        self.obs_idx = list(range(0, input_shape))
+        self.opt_idx = list(range(input_shape, input_shape+option_shape))
+        self.cond_idx = list(range(input_shape+option_shape, input_shape+option_shape+cond_shape))
+
+    def forward(self, obs, opt, cond):
+        
+        inter_obs = self.fc1(obs)
+        inter_cond = self.fc2(cond)
+        inter = th.cat((inter_obs, inter_cond), -1)
+        inter = th.tanh(inter)
+        inter = self.fc3(inter)
+        inter = th.tanh(inter)
+        inter = self.fc4(inter)
+        inter = th.tanh(inter)
+        
+        mu_inter = self.fc_mu(inter)
+        logvar_inter = self.fc_logvar(inter)
+
+        return mu_inter, logvar_inter
+
+    def compute(self, state, opt, cond):
+        mean, log_var = self.forward(state, cond)
+        std = (0.5*log_var).exp()
+        normal = Normal(mean, std)
+
+        v_t = normal.rsample()
+
+        return v_t   
+
+    def train(self, state_t_1, state_t, heir_return):
+        obs_t_1, opt_t_1, cond_t_1 = state_t_1[:, self.obs_idx], state_t_1[:, self.opt_idx], state_t_1[:, self.cond_idx]
+        obs_t, opt_t, cond_t = state_t[:,self.obs_idx], state_t[:, self.opt_idx], state_t[:, self.cond_idx]
+
+        for epoch in range(5):
+            self.optim.zero_grad()
+            v_t_1 = self.compute(obs_t_1, opt_t_1, cond_t_1)
+            v_t   = self.compute(obs_t, opt_t, cond_t)
+
+            td_loss = v_t_1 + heir_return - v_t
+            td_loss.backward()
+            self.optim.step()

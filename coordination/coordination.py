@@ -1,10 +1,13 @@
-from .model import Pi_One, Pi_Two
+from .models import Pi_One, Pi_Two, CondPiOneCritic, CondPiTwoCritic
 import torch as th
 import numpy as np
+from modbot_planner.utils.replay_buffer import HeirReplayBuffer
 
 class Coordination:
-    def __init__(self, pi_loc=None, top_k=5, max_edge=10, max_r=2, training=False):
+    def __init__(self, k, n, pi_loc=None, top_k=5, max_edge=10, max_r=2, training=False):
         
+        self.k        = k
+        self.n        = n
         self.top_k    = top_k
         self.max_edge = max_edge
         self.max_r    = max_r
@@ -13,20 +16,30 @@ class Coordination:
         pi_one_ul     = np.array([self.max_edge, self.max_r, 2*self.max_r, 2*np.pi])
         self.pi_one   = Pi_One(input_shape = 5 + 2*self.k, output_shape = 2+2)                            # output size is 2 for parametric polygon and 2 for centroid of polygon
         self.pi_two   = Pi_Two(input_shape = 6, output_shape = 1, vec_size = 4)
+        self.pi1_V    = CondPiOneCritic(input_shape = 5 + 2*k, cond_shape = 2+2)
+        self.pi2_V    = CondPiTwoCritic(input_shape = 6, option_shape = 4, cond_shape = 1)
         self.opt_vec  = None
 
         if pi_loc is not None:
             self.pi_one.load_state_dict(th.load(pi_loc + "/pi_one.th"))  # loading the results
             self.pi_two.load_state_dict(th.load(pi_loc + "/pi_two.th"))  # loading the results
+            self.pi1_V.load_state_dict(th.load(pi_loc  + "/pi1_V.th"))  # loading the results
+            self.pi2_V.load_state_dict(th.load(pi_loc  + "/pi2_V.th"))  # loading the results
             self.pi_loc = pi_loc
             self.pi_one.eval()
             self.pi_two.eval()
         else:
             self.pi_loc = "results/models"
+
+        if self.training:
+            self.pi_1_buffer = HeirReplayBuffer(128, 32, 5 + 2*self.k, 4, self.k)
+            self.pi_2_buffer = HeirReplayBuffer(128, 32, 6+4, 1, self.n)
         
     def save(self):
-        th.save(self.pi_one.state_dict(), self.pi_loc)                  
-        th.save(self.pi_two.state_dict(), self.pi_loc)
+        th.save(self.pi_one.state_dict(), self.pi_loc+ "/pi_one.th")                  
+        th.save(self.pi_two.state_dict(), self.pi_loc+ "/pi_two.th")
+        th.save(self.pi1_V.state_dict(), self.pi_loc + "/pi1_V.th")                  
+        th.save(self.pi2_V.state_dict(), self.pi_loc + "/pi2_V.th")
     
     def forward(self, state_info, poly=None):
 

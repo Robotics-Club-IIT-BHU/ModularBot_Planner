@@ -19,7 +19,7 @@ def main():
     obs = env.reset()
     done = False
     poly = ParamPoly2D(2,10)
-    swarm = Coordination(pi_loc=FLAGS.checkpoint)
+    swarm = Coordination(env.k, env.n, pi_loc=FLAGS.checkpoint)
     sum_reward = 0.0
     gamma = 0.99
     timestep = 0
